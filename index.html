@@ -1,258 +1,785 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitor Gabriel | Criação de Sites</title>
+    <title>GV.Sweet | Gestão</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0a0f1a;
+            --bg-card: #111827;
+            --bg-hover: #1a2332;
+            --text: #e0e8f0;
+            --text-secondary: #8899aa;
+            --border: #1e2d3d;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #6366f1;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #e5e5e5;
-            line-height: 1.5;
-            padding: 2rem 1rem;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
+        .sidebar {
+            width: 60px;
+            background: var(--bg-card);
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            border-right: 1px solid var(--border);
+            z-index: 100;
+            padding: 10px 5px;
         }
 
-        /* Header */
+        .sidebar-brand {
+            text-align: center;
+            font-size: 18px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 10px;
+            color: var(--primary-light);
+            font-weight: bold;
+        }
+
+        .nav-item {
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item.active { background: var(--primary-dark); color: #fff; }
+
+        .main-content { margin-left: 60px; flex: 1; }
+
         .header {
-            text-align: center;
-            margin-bottom: 3rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+        .header-title { font-size: 16px; font-weight: 500; }
+
+        .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .header-revenue {
+            background: var(--primary-dark);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
         }
 
-        .header h1 span {
-            color: #a855f7;
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        .header p {
-            font-size: 1.2rem;
-            color: #9ca3af;
-            margin-bottom: 1rem;
-        }
+        .btn-primary { background: var(--primary-dark); color: #fff; }
+        .btn-success { background: var(--success); color: #fff; }
+        .btn-danger { background: var(--danger); color: #fff; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+        .btn-sm { padding: 5px 10px; font-size: 11px; }
 
-        .tag {
-            display: inline-block;
-            background: #1f1f1f;
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            color: #a855f7;
-        }
+        .content-area { padding: 15px; }
 
-        /* Sobre */
-        .sobre {
-            background: #111;
-            border-radius: 24px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid #222;
-        }
-
-        .sobre h2 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            color: #c084fc;
-        }
-
-        .sobre p {
-            color: #b0b0b0;
-            font-size: 1rem;
-        }
-
-        /* Projetos */
-        .projetos h2 {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: #c084fc;
-        }
-
-        .grid {
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 20px;
-            padding: 1.5rem;
-            transition: transform 0.2s, border-color 0.2s;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: #a855f7;
+        .card-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px; }
+        .card-value { font-size: 22px; font-weight: 400; color: var(--primary-light); }
+        .card-value.danger { color: var(--danger); }
+        .card-sub { font-size: 10px; color: var(--text-secondary); margin-top: 3px; }
+
+        .table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
         }
 
-        .card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
+        .table-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .card p {
-            color: #9ca3af;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
+        .table-header h3 { font-weight: 500; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            text-align: left;
+            padding: 10px 15px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+        }
+        td { padding: 10px 15px; border-bottom: 1px solid var(--border); font-size: 12px; }
+        tr:hover td { background: var(--bg-hover); }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .badge-info { background: rgba(99, 102, 241, 0.15); color: var(--info); }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 13px;
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .input-group {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        .input-group input {
+            width: 55px;
+            padding: 8px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 14px;
+            text-align: center;
+            font-family: inherit;
         }
 
-        .card .demo-link {
-            display: inline-block;
-            background: #1f1f1f;
-            color: #c084fc;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-        }
-
-        .card .demo-link:hover {
-            background: #2a2a2a;
-        }
-
-        .badge-projeto {
-            display: inline-block;
-            background: #1a1a2e;
-            color: #a855f7;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            margin-bottom: 0.8rem;
-        }
-
-        /* Contato */
-        .contato {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 24px;
-            padding: 2rem;
+        .estoque-numero {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-light);
+            min-width: 30px;
             text-align: center;
         }
 
-        .contato h2 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.show { display: flex; }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            width: 95%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
-        .contato p {
-            color: #9ca3af;
-            margin-bottom: 1.5rem;
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 { font-weight: 500; font-size: 15px; }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .modal-body { padding: 20px; }
+        .modal-footer {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
         }
 
-        .btn-whatsapp {
-            display: inline-block;
-            background: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            font-weight: bold;
-            margin-bottom: 1rem;
+        .summary-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; }
+        .summary-row.total {
+            border-top: 1px solid var(--border);
+            margin-top: 6px;
+            padding-top: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary-light);
         }
 
-        .btn-whatsapp:hover {
-            background: #128C7E;
+        .toast-container {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .toast {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            animation: slideLeft 0.3s;
+            cursor: pointer;
+            border: 1px solid;
+            font-weight: 500;
+            max-width: 280px;
+        }
+        .toast-success { background: rgba(16, 185, 129, 0.15); border-color: var(--success); color: var(--success); }
+        .toast-error { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
+        .toast-warning { background: rgba(245, 158, 11, 0.15); border-color: var(--warning); color: var(--warning); }
+
+        @keyframes slideLeft {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        .preco {
-            color: #a855f7;
-            font-weight: bold;
+        .produto-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
         }
-
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.75rem;
-            color: #555;
-        }
-
-        @media (max-width: 640px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        .produto-card h4 { margin-bottom: 8px; font-size: 13px; }
+        .produto-card input { width: 60px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- CABECALHO -->
-        <div class="header">
-            <h1>Vitor <span>Gabriel</span></h1>
-            <p>Crio sites simples e funcionais para todo tipo de negócio</p>
-            <div class="tag">Entrega rapida | Preco justo | Responsivo</div>
-        </div>
 
-        <!-- SOBRE -->
-        <div class="sobre">
-            <h2>Sobre</h2>
-            <p>Eu faco paginas HTML sob medida. Sistema de controle, cardapio digital, pagina de vendas. Tudo funcionando no celular e no PC. Voce me diz o que precisa, eu entrego pronto.</p>
-        </div>
+    <div class="toast-container" id="toastContainer"></div>
 
-        <!-- PROJETOS -->
-        <div class="projetos">
-            <h2>O que eu ja fiz</h2>
-            <div class="grid">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">GV</div>
+        <nav id="sidebarNav"></nav>
+    </aside>
 
-                <!-- PROJETO 1 - BROWNIE -->
-                <div class="card">
-                    <div class="badge-projeto">Sistema real</div>
-                    <h3>Controle de brownie</h3>
-                    <p>Sistema que eu uso para vender meus brownies. Controla vendas, estoque e metas.</p>
-                    <a href="#" class="demo-link">Ver exemplo (link em breve)</a>
-                </div>
-
-                <!-- PROJETO 2 - CARDAPIO DIGITAL -->
-                <div class="card">
-                    <div class="badge-projeto">Exemplo</div>
-                    <h3>Cardapio digital</h3>
-                    <p>Cliente escolhe o item, ve preco e manda pedido no WhatsApp. Sem app, so link.</p>
-                    <a href="#" class="demo-link">Ver demonstracao</a>
-                </div>
-
-                <!-- PROJETO 3 - PAGINA DE VENDAS -->
-                <div class="card">
-                    <div class="badge-projeto">Exemplo</div>
-                    <h3>Pagina de vendas</h3>
-                    <p>Ideal para lancar produto ou servico. Com botao de compra/whatsapp.</p>
-                    <a href="#" class="demo-link">Ver demonstracao</a>
-                </div>
-
+    <main class="main-content">
+        <header class="header">
+            <h1 class="header-title" id="pageTitle">Dashboard</h1>
+            <div class="header-actions">
+                <span class="header-revenue" id="headerRevenue">R$ 0,00</span>
+                <button class="btn btn-primary" onclick="abrirVenda()">+ Venda</button>
             </div>
-        </div>
+        </header>
+        <div class="content-area" id="contentArea"></div>
+    </main>
 
-        <!-- CONTATO -->
-        <div class="contato">
-            <h2>Quer um site assim?</h2>
-            <p>Voce me diz o que precisa (loja, cardapio, sistema, pagina simples).</p>
-            <a href="#" class="btn-whatsapp">Falar no WhatsApp</a>
-            <p>A partir de <span class="preco">R$80</span> | Entrego o link em ate 1 dia</p>
-        </div>
-
-        <div class="footer">
-            <p>Vitor Gabriel - Sites que resolvem problemas reais</p>
-        </div>
+    <div class="modal-overlay" id="modalOverlay" onclick="fecharModal()">
+        <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
     </div>
-</body>
-</html>
+
+    <script>
+        // ==================== BANCO DE DADOS ====================
+        function getDB(key) {
+            const data = localStorage.getItem('gv_' + key);
+            return data ? JSON.parse(data) : null;
+        }
+
+        function setDB(key, value) {
+            localStorage.setItem('gv_' + key, JSON.stringify(value));
+        }
+
+        function initDB() {
+            if (!getDB('vendas')) setDB('vendas', []);
+            if (!getDB('clientes')) setDB('clientes', []);
+
+            // ESTOQUE PADRÃO - 20 unidades de cada
+            const estoquePadrao = [
+                { id: 1, nome: 'Tradicional', disponivel: 20, vendido: 0 },
+                { id: 2, nome: 'Ninho', disponivel: 20, vendido: 0 },
+                { id: 3, nome: 'Nutella', disponivel: 20, vendido: 0 },
+                { id: 4, nome: 'Ninho c/ KitKat', disponivel: 20, vendido: 0 },
+                { id: 5, nome: 'Ninho c/ Nutella', disponivel: 20, vendido: 0 }
+            ];
+
+            if (!getDB('estoque')) {
+                setDB('estoque', estoquePadrao);
+            }
+
+            if (!getDB('config')) {
+                setDB('config', {
+                    produtos: [
+                        { id: 1, nome: 'Tradicional', preco: 8.00, custo: 4.00 },
+                        { id: 2, nome: 'Ninho', preco: 10.00, custo: 5.20 },
+                        { id: 3, nome: 'Nutella', preco: 13.00, custo: 6.50 },
+                        { id: 4, nome: 'Ninho c/ KitKat', preco: 11.00, custo: 6.00 },
+                        { id: 5, nome: 'Ninho c/ Nutella', preco: 15.00, custo: 8.00 }
+                    ]
+                });
+            }
+        }
+
+        initDB();
+
+        // ==================== MENU ====================
+        const menuItems = [
+            { id: 'dashboard', icon: '📊' },
+            { id: 'pedidos', icon: '📋' },
+            { id: 'estoque', icon: '📦' },
+            { id: 'clientes', icon: '👥' },
+            { id: 'relatorios', icon: '📈' },
+            { id: 'config', icon: '⚙️' }
+        ];
+
+        function renderMenu() {
+            document.getElementById('sidebarNav').innerHTML = menuItems.map(item =>
+                `<div class="nav-item${item.id === 'dashboard' ? ' active' : ''}" onclick="navegar('${item.id}')" title="${item.id}">${item.icon}</div>`
+            ).join('');
+        }
+
+        function navegar(pagina) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.target.closest('.nav-item').classList.add('active');
+
+            const titulos = {
+                dashboard: 'Dashboard',
+                pedidos: 'Pedidos',
+                estoque: 'Estoque',
+                clientes: 'Clientes',
+                relatorios: 'Relatórios',
+                config: 'Configurações'
+            };
+            document.getElementById('pageTitle').textContent = titulos[pagina];
+
+            const loaders = {
+                dashboard: loadDashboard,
+                pedidos: loadPedidos,
+                estoque: loadEstoque,
+                clientes: loadClientes,
+                relatorios: loadRelatorios,
+                config: loadConfig
+            };
+            if (loaders[pagina]) loaders[pagina]();
+        }
+
+        // ==================== UTILITÁRIOS ====================
+        function toast(msg, type) {
+            const container = document.getElementById('toastContainer');
+            const div = document.createElement('div');
+            div.className = 'toast toast-' + type;
+            div.textContent = msg;
+            div.onclick = function() { div.remove(); };
+            container.appendChild(div);
+            setTimeout(function() { div.remove(); }, 3000);
+        }
+
+        function formatMoney(val) {
+            return 'R$ ' + val.toFixed(2).replace('.', ',');
+        }
+
+        function updateHeader() {
+            const hoje = new Date().toDateString();
+            let total = 0;
+            getDB('vendas').forEach(function(v) {
+                if (new Date(v.data).toDateString() === hoje && v.status === 'pago') {
+                    total += v.total;
+                }
+            });
+            document.getElementById('headerRevenue').textContent = formatMoney(total);
+        }
+
+        function abrirModal(html) {
+            document.getElementById('modalContent').innerHTML = html;
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalOverlay').classList.remove('show');
+        }
+
+        // ==================== DASHBOARD ====================
+        function loadDashboard() {
+            const vendas = getDB('vendas');
+            const estoque = getDB('estoque');
+            const hoje = new Date().toDateString();
+
+            let faturamento = 0, lucro = 0, qtdTotal = 0;
+            const vendasHoje = vendas.filter(function(v) {
+                if (new Date(v.data).toDateString() === hoje && v.status === 'pago') {
+                    faturamento += v.total;
+                    v.produtos.forEach(function(p) {
+                        qtdTotal += p.qtd;
+                        lucro += (p.preco - p.custo) * p.qtd;
+                    });
+                    return true;
+                }
+                return false;
+            });
+
+            const pendentes = vendas.filter(function(v) {
+                return v.statusPagamento === 'pendente';
+            }).reduce(function(s, v) { return s + v.total; }, 0);
+
+            const clientes = getDB('clientes');
+            const totalEstoque = estoque.reduce(function(s, e) { return s + e.disponivel; }, 0);
+            const criticos = estoque.filter(function(e) { return e.disponivel <= 3; }).length;
+
+            document.getElementById('contentArea').innerHTML =
+                '<div class="cards-grid">' +
+                '<div class="card"><div class="card-label">Faturamento Hoje</div><div class="card-value">' + formatMoney(faturamento) + '</div><div class="card-sub">' + vendasHoje.length + ' vendas</div></div>' +
+                '<div class="card"><div class="card-label">Brownies Vendidos</div><div class="card-value">' + qtdTotal + '</div><div class="card-sub">hoje</div></div>' +
+                '<div class="card"><div class="card-label">Lucro</div><div class="card-value">' + formatMoney(lucro) + '</div><div class="card-sub">hoje</div></div>' +
+                '<div class="card"><div class="card-label">Pendentes</div><div class="card-value" style="color:var(--warning);">' + formatMoney(pendentes) + '</div></div>' +
+                '<div class="card"><div class="card-label">Estoque Total</div><div class="card-value' + (totalEstoque < 10 ? ' danger' : '') + '">' + totalEstoque + '</div><div class="card-sub">' + (criticos > 0 ? '⚠ ' + criticos + ' itens baixos' : '✅ OK') + '</div></div>' +
+                '<div class="card"><div class="card-label">Clientes</div><div class="card-value">' + clientes.length + '</div></div>' +
+                '</div>' +
+                '<div class="table-container">' +
+                '<div class="table-header"><h3>Estoque Rapido</h3></div>' +
+                '<table>' +
+                '<tr><th>Produto</th><th>Disponivel</th></tr>' +
+                estoque.map(function(e) {
+                    return '<tr><td>' + e.nome + '</td><td style="color:' + (e.disponivel <= 3 ? 'var(--danger)' : 'var(--primary-light)') + ';font-weight:bold;font-size:16px;">' + e.disponivel + '</td></tr>';
+                }).join('') +
+                '</table>' +
+                '</div>';
+
+            updateHeader();
+        }
+
+        // ==================== NOVA VENDA ====================
+        function abrirVenda() {
+            const produtos = getDB('config').produtos;
+            const estoque = getDB('estoque');
+
+            let html = '';
+            html += '<div class="modal-header"><h3>Nova Venda</h3><button class="modal-close" onclick="fecharModal()">X</button></div>';
+            html += '<div class="modal-body">';
+            html += '<div class="form-row">';
+            html += '<div class="form-group"><label>Cliente</label><input type="text" id="clienteNome"></div>';
+            html += '<div class="form-group"><label>Telefone</label><input type="tel" id="clienteFone"></div>';
+            html += '</div>';
+
+            html += '<h4 style="margin:15px 0;font-size:13px;">Produtos</h4>';
+
+            produtos.forEach(function(p) {
+                const est = estoque.find(function(e) { return e.id === p.id; });
+                const disp = est ? est.disponivel : 0;
+                html += '<div class="produto-card">';
+                html += '<h4>' + p.nome + ' - ' + formatMoney(p.preco) + ' <small style="color:' + (disp <= 3 ? 'var(--danger)' : 'var(--text-secondary)') + ';">(' + disp + ' disp.)</small></h4>';
+                html += '<div class="input-group">';
+                html += '<span>Qtd:</span>';
+                html += '<input type="number" class="prod-qtd" value="0" min="0" max="' + disp + '" data-preco="' + p.preco + '" data-custo="' + p.custo + '" data-id="' + p.id + '" data-nome="' + p.nome + '" data-disp="' + disp + '" onchange="atualizarTotais()">';
+                html += '<span class="prod-subtotal" style="margin-left:10px;font-weight:600;">R$ 0,00</span>';
+                html += '</div>';
+                html += '</div>';
+            });
+
+            html += '<div class="form-row" style="margin-top:15px;">';
+            html += '<div class="form-group"><label>Pagamento</label><select id="tipoPagamento"><option value="pix">Pix</option><option value="dinheiro">Dinheiro</option><option value="cartao">Cartao</option></select></div>';
+            html += '<div class="form-group"><label>Status</label><select id="statusPagamento"><option value="pago">Pago</option><option value="pendente">Pendente</option></select></div>';
+            html += '</div>';
+
+            html += '<div class="summary-box">';
+            html += '<div class="summary-row"><span>Qtd Itens:</span><span id="qtdItens" style="font-weight:600;">0</span></div>';
+            html += '<div class="summary-row"><span>Subtotal:</span><span id="subtotal" style="font-weight:600;">R$ 0,00</span></div>';
+            html += '<div class="summary-row"><span>Lucro:</span><span id="lucroEst" style="color:var(--success);font-weight:600;">R$ 0,00</span></div>';
+            html += '<div class="summary-row total"><span>Total:</span><span id="totalVenda">R$ 0,00</span></div>';
+            html += '</div>';
+
+            html += '</div>';
+            html += '<div class="modal-footer">';
+            html += '<button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>';
+            html += '<button class="btn btn-primary" onclick="salvarVenda()">Registrar Venda</button>';
+            html += '</div>';
+
+            abrirModal(html);
+        }
+
+        function atualizarTotais() {
+            let subtotal = 0, custoTotal = 0, qtdItens = 0;
+
+            document.querySelectorAll('.prod-qtd').forEach(function(input) {
+                let qtd = parseInt(input.value) || 0;
+                const preco = parseFloat(input.dataset.preco);
+                const custo = parseFloat(input.dataset.custo);
+                const disp = parseInt(input.dataset.disp);
+
+                if (qtd > disp) {
+                    qtd = disp;
+                    input.value = disp;
+                    toast('Maximo: ' + disp + ' unidades', 'warning');
+                }
+
+                const totalProduto = preco * qtd;
+                subtotal += totalProduto;
+                custoTotal += custo * qtd;
+                qtdItens += qtd;
+
+                const card = input.closest('.produto-card');
+                if (card) {
+                    card.querySelector('.prod-subtotal').textContent = formatMoney(totalProduto);
+                }
+            });
+
+            document.getElementById('qtdItens').textContent = qtdItens;
+            document.getElementById('subtotal').textContent = formatMoney(subtotal);
+            document.getElementById('lucroEst').textContent = formatMoney(subtotal - custoTotal);
+            document.getElementById('totalVenda').textContent = formatMoney(subtotal);
+        }
+
+        function salvarVenda() {
+            const nome = document.getElementById('clienteNome').value.trim();
+            const fone = document.getElementById('clienteFone').value.trim();
+
+            if (!nome || !fone) {
+                toast('Preencha nome e telefone!', 'warning');
+                return;
+            }
+
+            const produtos = [];
+            const estoque = getDB('estoque');
+            let temProduto = false;
+
+            document.querySelectorAll('.prod-qtd').forEach(function(input) {
+                const qtd = parseInt(input.value) || 0;
+                if (qtd > 0) {
+                    temProduto = true;
+                    const id = parseInt(input.dataset.id);
+                    produtos.push({
+                        id: id,
+                        nome: input.dataset.nome,
+                        preco: parseFloat(input.dataset.preco),
+                        custo: parseFloat(input.dataset.custo),
+                        qtd: qtd
+                    });
+
+                    const item = estoque.find(function(e) { return e.id === id; });
+                    if (item) {
+                        item.disponivel -= qtd;
+                        item.vendido += qtd;
+                    }
+                }
+            });
+
+            if (!temProduto) {
+                toast('Selecione pelo menos 1 produto!', 'warning');
+                return;
+            }
+
+            setDB('estoque', estoque);
+
+            const total = produtos.reduce(function(s, p) { return s + p.preco * p.qtd; }, 0);
+
+            const venda = {
+                id: Date.now(),
+                cliente: nome,
+                telefone: fone,
+                produtos: produtos,
+                total: total,
+                pagamento: document.getElementById('tipoPagamento').value,
+                statusPagamento: document.getElementById('statusPagamento').value,
+                status: document.getElementById('statusPagamento').value === 'pago' ? 'pago' : 'pendente',
+                data: new Date().toISOString()
+            };
+
+            const vendas = getDB('vendas');
+            vendas.unshift(venda);
+            setDB('vendas', vendas);
+
+            const clientes = getDB('clientes');
+            const idx = clientes.findIndex(function(c) { return c.telefone === fone; });
+            if (idx >= 0) {
+                clientes[idx].totalGasto += total;
+                clientes[idx].pedidos++;
+                clientes[idx].ultimoPedido = new Date().toISOString();
+            } else {
+                clientes.push({
+                    id: Date.now(),
+                    nome: nome,
+                    telefone: fone,
+                    totalGasto: total,
+                    pedidos: 1,
+                    ultimoPedido: new Date().toISOString()
+                });
+            }
+            setDB('clientes', clientes);
+
+            fecharModal();
+            toast('Venda registrada! Total: ' + formatMoney(total), 'success');
+            loadDashboard();
+            updateHeader();
+        }
+
+        // ==================== PEDIDOS ====================
+        function loadPedidos() {
+            const vendas = getDB('vendas');
+
+            let html = '<div class="table-container">';
+            html += '<div class="table-header"><h3>Todos os Pedidos</h3></div>';
+            html += '<table>';
+            html += '<tr><th>ID</th><th>Cliente</th><th>Produtos</th><th>Total</th><th>Pag</th><th>Status</th><th>Acoes</th></tr>';
+
+            if (vendas.length === 0) {
+                html += '<tr><td colspan="7" style="text-align:center;padding:30px;">Nenhum pedido</td></tr>';
+            } else {
+                vendas.forEach(function(v) {
+                    html += '<tr>';
+                    html += '<td>#' + String(v.id).slice(-6) + '</td>';
+                    html += '<td><b>' + v.cliente + '</b><br><small>' + v.telefone + '</small></td>';
+                    html += '<td>' + v.produtos.map(function(p) { return p.qtd + 'x ' + p.nome; }).join('<br>') + '</td>';
+                    html += '<td><b>' + formatMoney(v.total) + '</b></td>';
+                    html += '<td><span class="badge badge-info">' + v.pagamento + '</span></td>';
+                    html += '<td><span class="badge ' + (v.status === 'pago' ? 'badge-success' : 'badge-warning') + '">' + v.status + '</span></td>';
+                    html += '<td>';
+                    if (v.status !== 'pago') {
+                        html += '<button class="btn btn-success btn-sm" onclick="marcarPago(' + v.id + ')">Pago</button> ';
+                    }
+                    html += '<button class="btn btn-danger btn-sm" onclick="excluirVenda(' + v.id + ')">X</button>';
+                    html += '</td>';
+                    html += '</tr>';
+                });
+            }
+
+            html += '</table></div>';
+            document.getElementById('contentArea').innerHTML = html;
+        }
+
+        function marcarPago(id) {
+            const vendas = getDB('vendas');
+            const venda = vendas.find(function(v) { return v.id === id; });
+            if (venda) {
+                venda.statusPagamento = 'pago';
+                venda.status = 'pago';
+                setDB('vendas', vendas);
+                toast('Pedido pago!', 'success');
+                loadPedidos();
+                updateHeader();
+            }
+        }
+
+        function excluirVenda(id) {
+            if (confirm('Excluir? Os produtos voltarao ao estoque.')) {
+                const vendas = getDB('vendas');
+                const venda = vendas.find(function(v) { return v.id === id; });
+                if (venda) {
+                    const estoque = getDB('estoque');
+                    venda.produtos.forEach(function(p) {
+                        const item = estoque.find(function(e) { return e.id === p.id; });
+                        if (item) {
+                            item.disponivel += p.qtd;
+                            item.vendido -= p.qtd;
+                        }
+                    });
+                    setDB('estoque', estoque);
+                }
+                setDB('vendas', vendas.filter(function(v) { return v.id !== id; }));
+                toast('Pedido excluido!', 'error');
+                loadPedidos();
+                updateHeader();
+            }
+        }
+
+        // ==================== ESTOQUE (FUNCIONAL 100%) ====================
+        function loadEstoque() {
+            const estoque = getDB('estoque');
+
+            let html = '<div class="cards-grid">';
+            const total = estoque.reduce(function(s, e) { return s + e.disponivel; }, 0);
+            const criticos = estoque.filter(function(e) { return e.disponivel <= 3; }).length;
+
+            html += '<div class="card"><div class="card-label">Total Estoque</div><div class="card-value' + (total < 10 ? ' danger' : '') + '">' + total + '</div></div>';
+            html += '<div class="card"><div class="card-label">Itens Criticos</div><div class="card-value' + (criticos > 0 ? ' danger' : '') + '">' + criticos + '</div></div>';
+            html += '</div>';
+
+            html += '<div class="table-container">';
+            html += '<div class="table-header"><h3>EDITAR ESTOQUE</h3><small style="color:var(--text-secondary);">Digite a quantidade e clique no botao</small></div>';
+            html += '<table>';
+
+            estoque.forEach(function(e) {
+                html += '<tr>';
+                html += '<td><b>' + e.nome + '</b></td>';
+                html += '<td><span class="estoque-numero" id="disp' + e.id + '">' + e.disponivel + '</span> unid.</td>';
+                html += '<td>Vendido: ' + e.vendido + '</td>';
+                html += '<td>';
+                html += '<div class="input-group">';
+                html += '<input type="number" id="qtd' + e.id + '" value="0" min="0" placeholder="Qtd">';
+                html += '<button class="btn btn-success btn-sm" onclick="addEstoque(' + e.id + ')">+ Add</button>';
+                html += '<button class="btn btn-danger btn-sm" onclick="remEstoque(' + e.id + ')">- Rem</button>';
+                html += '<button class="btn btn-primary btn-sm" onclick="defEstoque(' + e.id + ')">Definir</button>';
+                html += '</div>';
+                html += '</td>';
+                html += '<td><span class="badge ' + (e.disponivel <= 3 ? 'badge-danger' : e.disponivel <= 5 ? 'badge-warning' : 'badge-success') + '">' + (e.disponivel <= 3 ? 'CRITICO' : e.disponivel <= 5 ? 'BAIXO' : 'OK') + '</span></td>';
+                html += '</tr>';
+            });
+
+            html += '</table></div>';
+
+            document.getElementById('contentArea').innerHTML = html;
+        }
+
+        function addEst
