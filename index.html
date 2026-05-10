@@ -1,992 +1,258 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GV.Sweet | Gestão Premium</title>
+    <title>Vitor Gabriel | Criação de Sites</title>
     <style>
-        :root {
-            --bg: #0a0f1a;
-            --bg-card: #111827;
-            --bg-hover: #1a2332;
-            --text: #e0e8f0;
-            --text-secondary: #8899aa;
-            --border: #1e2d3d;
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --primary-light: #60a5fa;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #6366f1;
-            --sidebar-width: 240px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        .light-mode {
-            --bg: #f0f4f8;
-            --bg-card: #ffffff;
-            --bg-hover: #e8edf3;
-            --text: #1a202c;
-            --text-secondary: #64748b;
-            --border: #cbd5e1;
-            --primary-dark: #2563eb;
-            --success: #059669;
-            --danger: #dc2626;
-            --warning: #d97706;
-            --info: #4f46e5;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            min-height: 100vh;
-            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e5e5e5;
+            line-height: 1.5;
+            padding: 2rem 1rem;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--bg-card);
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            transition: all 0.3s ease;
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
-        .sidebar-header {
-            padding: 25px 20px;
-            border-bottom: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .sidebar-logo {
-            font-size: 11px;
-            color: var(--text-secondary);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .sidebar-brand {
-            font-size: 22px;
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            padding: 15px 12px;
-            overflow-y: auto;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 15px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 8px;
-            margin-bottom: 3px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-        }
-
-        .nav-item:hover { background: var(--bg-hover); color: var(--text); }
-        .nav-item.active { background: var(--primary-dark); color: #fff; }
-        .nav-icon { font-size: 16px; width: 20px; text-align: center; }
-
-        /* MAIN */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            transition: all 0.3s ease;
-            min-width: 0;
-        }
-
+        /* Header */
         .header {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 18px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            gap: 15px;
-            flex-wrap: wrap;
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
-        .header-title {
-            font-size: 18px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+        .header h1 span {
+            color: #a855f7;
         }
 
-        .header-date {
-            font-size: 12px;
-            color: var(--text-secondary);
-            letter-spacing: 0.5px;
+        .header p {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            margin-bottom: 1rem;
         }
 
-        .header-revenue {
-            background: var(--primary-dark);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
+        .tag {
+            display: inline-block;
+            background: #1f1f1f;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #a855f7;
         }
 
-        /* BOTÕES */
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+        /* Sobre */
+        .sobre {
+            background: #111;
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid #222;
         }
 
-        .btn-primary { background: var(--primary-dark); color: #fff; }
-        .btn-primary:hover { background: var(--primary); }
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-success:hover { opacity: 0.85; }
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-danger:hover { opacity: 0.85; }
-        .btn-warning { background: var(--warning); color: #fff; }
-        .btn-warning:hover { opacity: 0.85; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-        .btn-sm { padding: 6px 12px; font-size: 11px; }
-        .btn-icon {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.2s ease;
+        .sobre h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #c084fc;
         }
-        .btn-icon:hover { border-color: var(--primary); color: var(--primary); }
 
-        /* CONTENT */
-        .content-area { padding: 30px; }
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .sobre p {
+            color: #b0b0b0;
+            font-size: 1rem;
+        }
+
+        /* Projetos */
+        .projetos h2 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #c084fc;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
 
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.2s ease;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        .card:hover { border-color: var(--primary); transform: translateY(-2px); }
-        .card-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-        .card-value { font-size: 26px; font-weight: 400; color: var(--primary-light); letter-spacing: 0.5px; }
-        .card-value.danger { color: var(--danger); animation: pulse 2s infinite; }
-        .card-value.warning { color: var(--warning); }
-        .card-sub { font-size: 11px; color: var(--text-secondary); margin-top: 5px; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #a855f7;
         }
 
-        /* TABELAS */
-        .table-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
-        .table-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .table-header h3 { font-weight: 500; font-size: 16px; letter-spacing: 0.5px; }
-
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 14px 20px; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); font-weight: 500; }
-        td { padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 13px; }
-        tr:last-child td { border-bottom: none; }
-        tr:hover td { background: var(--bg-hover); }
-
-        .badge { padding: 5px 10px; border-radius: 4px; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; font-weight: 500; }
-        .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-        .badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-        .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-        .badge-info { background: rgba(99, 102, 241, 0.15); color: var(--info); }
-        .badge-primary { background: rgba(59, 130, 246, 0.15); color: var(--primary-light); }
-
-        /* FORMULÁRIOS */
-        .form-group { margin-bottom: 18px; }
-        .form-group label { display: block; margin-bottom: 6px; font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px 14px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 13px;
-            transition: all 0.2s ease;
-            font-family: inherit;
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
         }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
 
-        /* INPUT COM BOTÃO */
-        .input-group {
-            display: flex;
-            gap: 5px;
-            align-items: center;
+        .card p {
+            color: #9ca3af;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
-        .input-group input {
-            width: 80px;
-            padding: 8px 10px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text);
-            font-size: 13px;
-            text-align: center;
-            font-family: inherit;
-        }
-        .input-group input:focus { outline: none; border-color: var(--primary); }
 
-        .estoque-display {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary-light);
-            min-width: 40px;
+        .card .demo-link {
+            display: inline-block;
+            background: #1f1f1f;
+            color: #c084fc;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .card .demo-link:hover {
+            background: #2a2a2a;
+        }
+
+        .badge-projeto {
+            display: inline-block;
+            background: #1a1a2e;
+            color: #a855f7;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Contato */
+        .contato {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 24px;
+            padding: 2rem;
             text-align: center;
         }
 
-        /* MODAL */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-overlay.show { display: flex; }
-
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            width: 90%;
-            max-width: 650px;
-            max-height: 85vh;
-            overflow-y: auto;
+        .contato h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
         }
 
-        .modal-header {
-            padding: 20px 25px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-header h3 { font-weight: 500; font-size: 16px; letter-spacing: 0.5px; }
-        .modal-close { background: none; border: none; color: var(--text-secondary); font-size: 20px; cursor: pointer; }
-        .modal-close:hover { color: var(--danger); }
-        .modal-body { padding: 25px; }
-        .modal-footer { padding: 15px 25px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
-
-        .summary-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-top: 20px; }
-        .summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; }
-        .summary-row.total { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 15px; font-size: 16px; font-weight: 600; color: var(--primary-light); }
-
-        /* GRÁFICO */
-        .chart-container { padding: 20px 0; }
-        .bar-chart { display: flex; align-items: flex-end; gap: 12px; height: 180px; }
-        .bar-item { flex: 1; text-align: center; }
-        .bar { background: linear-gradient(180deg, var(--primary-light) 0%, var(--primary-dark) 100%); border-radius: 3px 3px 0 0; transition: all 0.3s; position: relative; }
-        .bar:hover { opacity: 0.8; }
-        .bar-value { position: absolute; top: -18px; width: 100%; text-align: center; font-size: 10px; color: var(--text-secondary); }
-        .bar-label { margin-top: 8px; font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
-
-        /* TOAST */
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 300; display: flex; flex-direction: column; gap: 8px; }
-        .toast { padding: 14px 20px; border-radius: 8px; font-size: 13px; letter-spacing: 0.5px; animation: slideLeft 0.3s ease; cursor: pointer; min-width: 280px; border: 1px solid; font-weight: 500; }
-        .toast-success { background: rgba(16, 185, 129, 0.15); border-color: var(--success); color: var(--success); }
-        .toast-error { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
-        .toast-warning { background: rgba(245, 158, 11, 0.15); border-color: var(--warning); color: var(--warning); }
-
-        @keyframes slideLeft {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .contato p {
+            color: #9ca3af;
+            margin-bottom: 1.5rem;
         }
 
-        /* DESTAQUE PRODUTO VENDA */
-        .produto-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 10px;
-            display: grid;
-            grid-template-columns: 1fr 80px 80px 40px;
-            gap: 10px;
-            align-items: end;
-            transition: all 0.2s;
+        .btn-whatsapp {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-bottom: 1rem;
         }
-        .produto-card:hover { border-color: var(--primary); }
-        .estoque-baixo-texto { color: var(--danger); font-size: 10px; font-weight: 600; }
 
-        @media (max-width: 768px) {
-            .sidebar { width: 60px; }
-            .sidebar-brand, .sidebar-logo, .nav-item span:not(.nav-icon) { display: none; }
-            .nav-item { justify-content: center; padding: 12px; }
-            .main-content { margin-left: 60px; }
-            .cards-grid { grid-template-columns: 1fr 1fr; }
-            .form-row, .form-row-3 { grid-template-columns: 1fr; }
-            .header { padding: 12px 15px; }
-            .content-area { padding: 15px; }
-            .produto-card { grid-template-columns: 1fr; }
+        .btn-whatsapp:hover {
+            background: #128C7E;
+        }
+
+        .preco {
+            color: #a855f7;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #555;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="toast-container" id="toastContainer"></div>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">Confeitaria</div>
-            <div class="sidebar-brand">GV.Sweet</div>
+    <div class="container">
+        <!-- CABECALHO -->
+        <div class="header">
+            <h1>Vitor <span>Gabriel</span></h1>
+            <p>Crio sites simples e funcionais para todo tipo de negócio</p>
+            <div class="tag">Entrega rapida | Preco justo | Responsivo</div>
         </div>
-        <nav class="sidebar-nav" id="sidebarNav"></nav>
-    </aside>
 
-    <main class="main-content" id="mainContent">
-        <header class="header">
-            <h1 class="header-title" id="pageTitle">Dashboard</h1>
-            <div class="header-actions">
-                <span class="header-date" id="headerDate"></span>
-                <button class="btn-icon" onclick="toggleTheme()" title="Alternar tema">🌓</button>
-                <button class="btn btn-primary" onclick="abrirVenda()">+ Nova Venda</button>
-                <span class="header-revenue" id="headerRevenue">R$ 0,00</span>
+        <!-- SOBRE -->
+        <div class="sobre">
+            <h2>Sobre</h2>
+            <p>Eu faco paginas HTML sob medida. Sistema de controle, cardapio digital, pagina de vendas. Tudo funcionando no celular e no PC. Voce me diz o que precisa, eu entrego pronto.</p>
+        </div>
+
+        <!-- PROJETOS -->
+        <div class="projetos">
+            <h2>O que eu ja fiz</h2>
+            <div class="grid">
+
+                <!-- PROJETO 1 - BROWNIE -->
+                <div class="card">
+                    <div class="badge-projeto">Sistema real</div>
+                    <h3>Controle de brownie</h3>
+                    <p>Sistema que eu uso para vender meus brownies. Controla vendas, estoque e metas.</p>
+                    <a href="#" class="demo-link">Ver exemplo (link em breve)</a>
+                </div>
+
+                <!-- PROJETO 2 - CARDAPIO DIGITAL -->
+                <div class="card">
+                    <div class="badge-projeto">Exemplo</div>
+                    <h3>Cardapio digital</h3>
+                    <p>Cliente escolhe o item, ve preco e manda pedido no WhatsApp. Sem app, so link.</p>
+                    <a href="#" class="demo-link">Ver demonstracao</a>
+                </div>
+
+                <!-- PROJETO 3 - PAGINA DE VENDAS -->
+                <div class="card">
+                    <div class="badge-projeto">Exemplo</div>
+                    <h3>Pagina de vendas</h3>
+                    <p>Ideal para lancar produto ou servico. Com botao de compra/whatsapp.</p>
+                    <a href="#" class="demo-link">Ver demonstracao</a>
+                </div>
+
             </div>
-        </header>
-        <div class="content-area" id="contentArea"></div>
-    </main>
+        </div>
 
-    <div class="modal-overlay" id="modalOverlay" onclick="fecharModal()">
-        <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
+        <!-- CONTATO -->
+        <div class="contato">
+            <h2>Quer um site assim?</h2>
+            <p>Voce me diz o que precisa (loja, cardapio, sistema, pagina simples).</p>
+            <a href="#" class="btn-whatsapp">Falar no WhatsApp</a>
+            <p>A partir de <span class="preco">R$80</span> | Entrego o link em ate 1 dia</p>
+        </div>
+
+        <div class="footer">
+            <p>Vitor Gabriel - Sites que resolvem problemas reais</p>
+        </div>
     </div>
-
-    <script>
-        // ==================== BANCO DE DADOS ====================
-        const DB = {
-            get(key) {
-                const data = localStorage.getItem('gv_' + key);
-                return data ? JSON.parse(data) : null;
-            },
-            set(key, value) {
-                localStorage.setItem('gv_' + key, JSON.stringify(value));
-            },
-            init() {
-                if (!this.get('vendas')) this.set('vendas', []);
-                if (!this.get('clientes')) this.set('clientes', []);
-                if (!this.get('estoque')) {
-                    this.set('estoque', [
-                        { id: 1, nome: 'Tradicional', disponivel: 20, vendido: 0 },
-                        { id: 2, nome: 'Ninho', disponivel: 20, vendido: 0 },
-                        { id: 3, nome: 'Nutella', disponivel: 20, vendido: 0 },
-                        { id: 4, nome: 'Ninho c/ KitKat', disponivel: 20, vendido: 0 },
-                        { id: 5, nome: 'Ninho c/ Nutella', disponivel: 20, vendido: 0 }
-                    ]);
-                }
-                if (!this.get('config')) this.set('config', {
-                    produtos: [
-                        { id: 1, nome: 'Tradicional', preco: 8.00, custo: 4.00 },
-                        { id: 2, nome: 'Ninho', preco: 10.00, custo: 5.20 },
-                        { id: 3, nome: 'Nutella', preco: 13.00, custo: 6.50 },
-                        { id: 4, nome: 'Ninho c/ KitKat', preco: 11.00, custo: 6.00 },
-                        { id: 5, nome: 'Ninho c/ Nutella', preco: 15.00, custo: 8.00 }
-                    ]
-                });
-                if (!this.get('theme')) this.set('theme', 'dark');
-            }
-        };
-
-        DB.init();
-        if (DB.get('theme') === 'light') document.body.classList.add('light-mode');
-
-        // ==================== MENU ====================
-        const menuItems = [
-            { id: 'dashboard', icon: '📊', label: 'Dashboard' },
-            { id: 'pedidos', icon: '📋', label: 'Pedidos' },
-            { id: 'estoque', icon: '📦', label: 'Estoque' },
-            { id: 'clientes', icon: '👥', label: 'Clientes' },
-            { id: 'relatorios', icon: '📈', label: 'Relatórios' },
-            { id: 'config', icon: '⚙️', label: 'Configurações' }
-        ];
-
-        function renderMenu() {
-            document.getElementById('sidebarNav').innerHTML = menuItems.map(item =>
-                `<div class="nav-item${item.id === 'dashboard' ? ' active' : ''}" onclick="navegar('${item.id}')">
-                    <span class="nav-icon">${item.icon}</span><span>${item.label}</span>
-                </div>`
-            ).join('');
-        }
-
-        function navegar(pagina) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.target.closest('.nav-item').classList.add('active');
-            const titulos = { dashboard: 'Dashboard', pedidos: 'Pedidos', estoque: 'Estoque', clientes: 'Clientes', relatorios: 'Relatórios', config: 'Configurações' };
-            document.getElementById('pageTitle').textContent = titulos[pagina];
-            const loaders = { dashboard: loadDashboard, pedidos: loadPedidos, estoque: loadEstoque, clientes: loadClientes, relatorios: loadRelatorios, config: loadConfig };
-            if (loaders[pagina]) loaders[pagina]();
-        }
-
-        // ==================== UTILITÁRIOS ====================
-        function toast(msg, type = 'success') {
-            const container = document.getElementById('toastContainer');
-            const div = document.createElement('div');
-            div.className = `toast toast-${type}`;
-            div.textContent = msg;
-            div.onclick = () => div.remove();
-            container.appendChild(div);
-            setTimeout(() => div.remove(), 3500);
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            DB.set('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-        }
-
-        function formatMoney(val) { return 'R$ ' + val.toFixed(2).replace('.', ','); }
-
-        function updateHeader() {
-            const now = new Date();
-            const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-            const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-            document.getElementById('headerDate').textContent = `${dias[now.getDay()]}, ${now.getDate()} ${meses[now.getMonth()]} ${now.getFullYear()}`;
-            const hoje = new Date().toDateString();
-            let total = 0;
-            DB.get('vendas').forEach(v => {
-                if (new Date(v.data).toDateString() === hoje && v.status === 'pago') total += v.total;
-            });
-            document.getElementById('headerRevenue').textContent = formatMoney(total);
-        }
-
-        // ==================== MODAL ====================
-        function abrirModal(html) { document.getElementById('modalContent').innerHTML = html; document.getElementById('modalOverlay').classList.add('show'); }
-        function fecharModal() { document.getElementById('modalOverlay').classList.remove('show'); }
-
-        // ==================== DASHBOARD ====================
-        function loadDashboard() {
-            const vendas = DB.get('vendas');
-            const estoque = DB.get('estoque');
-            const hoje = new Date().toDateString();
-            let faturamento = 0, lucro = 0, qtdTotal = 0;
-            const vendasHoje = vendas.filter(v => {
-                if (new Date(v.data).toDateString() === hoje && v.status === 'pago') {
-                    faturamento += v.total;
-                    v.produtos.forEach(p => { qtdTotal += p.qtd; lucro += (p.preco - p.custo) * p.qtd; });
-                    return true;
-                }
-                return false;
-            });
-            const pendentes = vendas.filter(v => v.statusPagamento === 'pendente').reduce((s, v) => s + v.total, 0);
-            const clientes = DB.get('clientes');
-            const totalEstoque = estoque.reduce((s, e) => s + e.disponivel, 0);
-            const critico = estoque.filter(e => e.disponivel <= 3).length;
-
-            document.getElementById('contentArea').innerHTML = `
-                <div class="cards-grid">
-                    <div class="card"><div class="card-label">💰 Faturamento Hoje</div><div class="card-value">${formatMoney(faturamento)}</div><div class="card-sub">${vendasHoje.length} vendas realizadas</div></div>
-                    <div class="card"><div class="card-label">🧁 Brownies Vendidos</div><div class="card-value">${qtdTotal}</div><div class="card-sub">unidades hoje</div></div>
-                    <div class="card"><div class="card-label">📈 Lucro Estimado</div><div class="card-value">${formatMoney(lucro)}</div><div class="card-sub">hoje</div></div>
-                    <div class="card"><div class="card-label">⏳ Pag. Pendentes</div><div class="card-value warning">${formatMoney(pendentes)}</div><div class="card-sub">a receber</div></div>
-                    <div class="card"><div class="card-label">📦 Estoque Total</div><div class="card-value ${totalEstoque < 10 ? 'danger' : ''}">${totalEstoque} unid.</div><div class="card-sub">${critico > 0 ? '⚠️ ' + critico + ' itens críticos' : '✅ Estoque ok'}</div></div>
-                    <div class="card"><div class="card-label">👥 Clientes</div><div class="card-value">${clientes.length}</div><div class="card-sub">cadastrados</div></div>
-                </div>
-
-                <div class="table-container" style="margin-bottom:20px;">
-                    <div class="table-header"><h3>📦 Visão Rápida do Estoque</h3></div>
-                    <table>
-                        <thead><tr><th>Produto</th><th>Disponível</th><th>Vendido</th><th>Total</th><th>Status</th></tr></thead>
-                        <tbody>
-                            ${estoque.map(e => `
-                                <tr>
-                                    <td><strong>${e.nome}</strong></td>
-                                    <td><span style="font-size:16px;font-weight:600;color:${e.disponivel <= 3 ? 'var(--danger)' : 'var(--primary-light)'};">${e.disponivel}</span></td>
-                                    <td>${e.vendido}</td>
-                                    <td>${e.disponivel + e.vendido}</td>
-                                    <td><span class="badge ${e.disponivel <= 3 ? 'badge-danger' : e.disponivel <= 5 ? 'badge-warning' : 'badge-success'}">${e.disponivel <= 3 ? 'Crítico' : e.disponivel <= 5 ? 'Baixo' : 'OK'}</span></td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="table-container">
-                    <div class="table-header"><h3>📊 Vendas da Semana</h3></div>
-                    <div class="chart-container">${graficoSemana(vendas)}</div>
-                </div>
-            `;
-            updateHeader();
-        }
-
-        function graficoSemana(vendas) {
-            const dias = [];
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date(); d.setDate(d.getDate() - i);
-                const ds = d.toDateString();
-                let total = 0;
-                vendas.forEach(v => { if (new Date(v.data).toDateString() === ds && v.status === 'pago') total += v.total; });
-                dias.push({ label: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][d.getDay()], value: total });
-            }
-            const max = Math.max(...dias.map(d => d.value), 1);
-            return `<div class="bar-chart">${dias.map(d => `<div class="bar-item"><div class="bar" style="height:${(d.value/max)*160}px">${d.value > 0 ? `<div class="bar-value">${formatMoney(d.value)}</div>` : ''}</div><div class="bar-label">${d.label}</div></div>`).join('')}</div>`;
-        }
-
-        // ==================== NOVA VENDA ====================
-        function abrirVenda() {
-            const produtos = DB.get('config').produtos;
-            const estoque = DB.get('estoque');
-
-            const linhas = produtos.map(p => {
-                const est = estoque.find(e => e.id === p.id);
-                const disp = est ? est.disponivel : 0;
-                return `
-                    <div class="produto-card produto-linha">
-                        <div>
-                            <div style="font-weight:600;margin-bottom:3px;">${p.nome}</div>
-                            <div style="font-size:11px;color:var(--text-secondary);">${formatMoney(p.preco)} cada | Custo: ${formatMoney(p.custo)}</div>
-                            <div class="${disp <= 3 ? 'estoque-baixo-texto' : ''}" style="font-size:10px;color:${disp <= 3 ? 'var(--danger)' : 'var(--text-secondary)'};margin-top:2px;">${disp <= 3 ? '⚠️ ' : ''}Disponível: ${disp} unid.</div>
-                        </div>
-                        <div class="form-group" style="margin:0;">
-                            <input type="number" class="prod-qtd" value="0" min="0" max="${disp}" data-max="${disp}" data-preco="${p.preco}" data-custo="${p.custo}" data-id="${p.id}" data-nome="${p.nome}" onchange="atualizarTotaisVenda()" style="text-align:center;">
-                        </div>
-                        <div style="text-align:right;font-weight:600;color:var(--primary-light);" class="prod-subtotal">R$ 0,00</div>
-                        <div></div>
-                    </div>`;
-            }).join('');
-
-            abrirModal(`
-                <div class="modal-header"><h3>🛒 Nova Venda</h3><button class="modal-close" onclick="fecharModal()">✕</button></div>
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group"><label>Nome do Cliente *</label><input type="text" id="clienteNome" placeholder="Nome completo"></div>
-                        <div class="form-group"><label>Telefone *</label><input type="tel" id="clienteFone" placeholder="(00) 00000-0000"></div>
-                    </div>
-
-                    <h4 style="margin:20px 0 15px;font-weight:500;color:var(--text-secondary);">Selecione os Produtos</h4>
-                    <div id="produtosLista">${linhas}</div>
-
-                    <div class="form-row" style="margin-top:20px;">
-                        <div class="form-group"><label>Pagamento</label><select id="tipoPagamento"><option value="pix">Pix</option><option value="dinheiro">Dinheiro</option><option value="cartao">Cartão</option></select></div>
-                        <div class="form-group"><label>Status</label><select id="statusPagamento"><option value="pago">Pago</option><option value="pendente">Pendente</option></select></div>
-                    </div>
-
-                    <div class="summary-box">
-                        <div class="summary-row"><span>Quantidade de Itens</span><span id="qtdItens" style="font-weight:600;">0</span></div>
-                        <div class="summary-row"><span>Subtotal</span><span id="subtotal" style="font-weight:600;">R$ 0,00</span></div>
-                        <div class="summary-row"><span>Lucro Estimado</span><span id="lucroEst" style="color:var(--success);font-weight:600;">R$ 0,00</span></div>
-                        <div class="summary-row total"><span>Total da Venda</span><span id="totalVenda">R$ 0,00</span></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
-                    <button class="btn btn-primary" onclick="salvarVenda()">✅ Registrar Venda</button>
-                </div>
-            `);
-        }
-
-        function atualizarTotaisVenda() {
-            let subtotal = 0, custoTotal = 0, qtdItens = 0;
-            document.querySelectorAll('.prod-qtd').forEach(input => {
-                const qtd = parseInt(input.value) || 0;
-                const preco = parseFloat(input.dataset.preco);
-                const custo = parseFloat(input.dataset.custo);
-                const max = parseInt(input.dataset.max);
-
-                if (qtd > max) {
-                    input.value = max;
-                    toast('Quantidade máxima: ' + max, 'warning');
-                }
-
-                const qtdFinal = parseInt(input.value) || 0;
-                const totalProduto = preco * qtdFinal;
-                subtotal += totalProduto;
-                custoTotal += custo * qtdFinal;
-                qtdItens += qtdFinal;
-
-                const card = input.closest('.produto-card');
-                if (card) {
-                    card.querySelector('.prod-subtotal').textContent = formatMoney(totalProduto);
-                }
-            });
-
-            document.getElementById('qtdItens').textContent = qtdItens;
-            document.getElementById('subtotal').textContent = formatMoney(subtotal);
-            document.getElementById('lucroEst').textContent = formatMoney(subtotal - custoTotal);
-            document.getElementById('totalVenda').textContent = formatMoney(subtotal);
-        }
-
-        function salvarVenda() {
-            const nome = document.getElementById('clienteNome').value.trim();
-            const fone = document.getElementById('clienteFone').value.trim();
-            if (!nome || !fone) { toast('Preencha nome e telefone!', 'warning'); return; }
-
-            const produtos = [];
-            const estoque = DB.get('estoque');
-            let temProduto = false;
-
-            document.querySelectorAll('.prod-qtd').forEach(input => {
-                const qtd = parseInt(input.value) || 0;
-                if (qtd > 0) {
-                    temProduto = true;
-                    const id = parseInt(input.dataset.id);
-                    const nome = input.dataset.nome;
-                    const preco = parseFloat(input.dataset.preco);
-                    const custo = parseFloat(input.dataset.custo);
-
-                    produtos.push({ id, nome, preco, custo, qtd });
-
-                    const item = estoque.find(e => e.id === id);
-                    if (item) {
-                        item.disponivel -= qtd;
-                        item.vendido += qtd;
-                    }
-                }
-            });
-
-            if (!temProduto) { toast('Selecione pelo menos 1 produto!', 'warning'); return; }
-
-            DB.set('estoque', estoque);
-
-            const total = produtos.reduce((s, p) => s + p.preco * p.qtd, 0);
-            const venda = {
-                id: Date.now(),
-                cliente: nome,
-                telefone: fone,
-                produtos,
-                total,
-                pagamento: document.getElementById('tipoPagamento').value,
-                statusPagamento: document.getElementById('statusPagamento').value,
-                status: document.getElementById('statusPagamento').value === 'pago' ? 'pago' : 'pendente',
-                data: new Date().toISOString()
-            };
-
-            const vendas = DB.get('vendas'); vendas.unshift(venda); DB.set('vendas', vendas);
-
-            const clientes = DB.get('clientes');
-            const idx = clientes.findIndex(c => c.telefone === fone);
-            if (idx >= 0) { clientes[idx].totalGasto += total; clientes[idx].pedidos++; clientes[idx].ultimoPedido = new Date().toISOString(); }
-            else { clientes.push({ id: Date.now(), nome, telefone: fone, totalGasto: total, pedidos: 1, ultimoPedido: new Date().toISOString() }); }
-            DB.set('clientes', clientes);
-
-            fecharModal();
-            toast(`✅ Venda registrada! Total: ${formatMoney(total)} | ${produtos.reduce((s,p) => s + p.qtd, 0)} brownies`, 'success');
-            loadDashboard();
-            updateHeader();
-        }
-
-        // ==================== PEDIDOS ====================
-        function loadPedidos() {
-            const vendas = DB.get('vendas');
-            document.getElementById('contentArea').innerHTML = `
-                <div class="table-container">
-                    <div class="table-header"><h3>📋 Todos os Pedidos</h3><small style="color:var(--text-secondary);">${vendas.length} pedidos</small></div>
-                    <div style="overflow-x:auto;">
-                        <table><thead><tr><th>ID</th><th>Cliente</th><th>Produtos</th><th>Total</th><th>Pagamento</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
-                            <tbody>${vendas.length === 0 ? '<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-secondary);">Nenhum pedido registrado</td></tr>' :
-                            vendas.map(v => `<tr>
-                                <td><span class="badge badge-primary">#${String(v.id).slice(-6)}</span></td>
-                                <td><strong>${v.cliente}</strong><br><small style="color:var(--text-secondary);">${v.telefone}</small></td>
-                                <td>${v.produtos.map(p => `${p.qtd}x ${p.nome}`).join('<br>')}</td>
-                                <td><strong>${formatMoney(v.total)}</strong></td>
-                                <td><span class="badge ${v.pagamento === 'pix' ? 'badge-info' : v.pagamento === 'dinheiro' ? 'badge-success' : 'badge-warning'}">${v.pagamento}</span></td>
-                                <td><span class="badge ${v.status === 'pago' ? 'badge-success' : 'badge-warning'}">${v.status}</span></td>
-                                <td>${new Date(v.data).toLocaleDateString('pt-BR')}</td>
-                                <td style="white-space:nowrap;">
-                                    ${v.status !== 'pago' ? `<button class="btn btn-success btn-sm" onclick="marcarPago(${v.id})">✓ Pago</button> ` : ''}
-                                    <button class="btn btn-danger btn-sm" onclick="excluirVenda(${v.id})">✕</button>
-                                </td>
-                            </tr>`).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>`;
-        }
-
-        function marcarPago(id) {
-            const vendas = DB.get('vendas');
-            const venda = vendas.find(v => v.id === id);
-            if (venda) { venda.statusPagamento = 'pago'; venda.status = 'pago'; DB.set('vendas', vendas); toast('✅ Pedido marcado como pago!', 'success'); loadPedidos(); updateHeader(); }
-        }
-
-        function excluirVenda(id) {
-            if (confirm('⚠️ Excluir este pedido? Os produtos voltarão ao estoque.')) {
-                const vendas = DB.get('vendas');
-                const venda = vendas.find(v => v.id === id);
-                if (venda) {
-                    const estoque = DB.get('estoque');
-                    venda.produtos.forEach(p => {
-                        const item = estoque.find(e => e.id === p.id);
-                        if (item) { item.disponivel += p.qtd; item.vendido -= p.qtd; }
-                    });
-                    DB.set('estoque', estoque);
-                }
-                DB.set('vendas', vendas.filter(v => v.id !== id));
-                toast('🗑️ Pedido excluído! Estoque restaurado.', 'error');
-                loadPedidos();
-                updateHeader();
-            }
-        }
-
-        // ==================== ESTOQUE (CONTROLE TOTAL) ====================
-        function loadEstoque() {
-            const estoque = DB.get('estoque');
-            const total = estoque.reduce((s, e) => s + e.disponivel, 0);
-            const criticos = estoque.filter(e => e.disponivel <= 3).length;
-
-            document.getElementById('contentArea').innerHTML = `
-                <div class="cards-grid">
-                    <div class="card"><div class="card-label">📦 Total em Estoque</div><div class="card-value ${total < 10 ? 'danger' : ''}">${total}</div><div class="card-sub">unidades disponíveis</div></div>
-                    <div class="card"><div class="card-label">⚠️ Itens Críticos</div><div class="card-value ${criticos > 0 ? 'danger' : ''}">${criticos}</div><div class="card-sub">com 3 ou menos</div></div>
-                    <div class="card"><div class="card-label">📊 Total Vendido</div><div class="card-value">${estoque.reduce((s, e) => s + e.vendido, 0)}</div><div class="card-sub">desde o início</div></div>
-                </div>
-
-                <div class="table-container">
-                    <div class="table-header"><h3>📦 Gerenciar Estoque</h3></div>
-                    <table>
-                        <thead><tr><th>Produto</th><th>Disponível</th><th>Vendido</th><th>Ações</th><th>Status</th></tr></thead>
-                        <tbody>
-                            ${estoque.map(e => `
-                                <tr>
-                                    <td><strong>${e.nome}</strong></td>
-                                    <td>
-                                        <div class="input-group">
-                                            <span class="estoque-display" id="disp${e.id}">${e.disponivel}</span>
-                                            <small style="color:var(--text-secondary);">unid.</small>
-                                        </div>
-                                    </td>
-                                    <td>${e.vendido} unid.</td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="number" id="qtdAdd${e.id}" value="0" min="0" style="width:60px;">
-                                            <button class="btn btn-success btn-sm" onclick="ajustarEstoque(${e.id}, 'add')">+</button>
-                                            <button class="btn btn-danger btn-sm" onclick="ajustarEstoque(${e.id}, 'rem')">-</button>
-                                            <button class="btn btn-primary btn-sm" onclick="definirEstoque(${e.id})">Definir</button>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge ${e.disponivel <= 3 ? 'badge-danger' : e.disponivel <= 5 ? 'badge-warning' : 'badge-success'}">${e.disponivel <= 3 ? '⚠ Crítico' : e.disponivel <= 5 ? 'Baixo' : 'OK'}</span></td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="cards-grid" style="margin-top:20px;">
-                    ${estoque.map(e => `
-                        <div class="card">
-                            <div class="card-label">${e.nome}</div>
-                            <div class="card-value ${e.disponivel <= 3 ? 'danger' : ''}">${e.disponivel}</div>
-                            <div class="card-sub">de ${e.disponivel + e.vendido} | ${e.vendido} vendidos</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        function ajustarEstoque(id, tipo) {
-            const qtd = parseInt(document.getElementById('qtdAdd' + id).value) || 0;
-            if (qtd <= 0) { toast('Digite uma quantidade!', 'warning'); return; }
-
-            const estoque = DB.get('estoque');
-            const item = estoque.find(e => e.id === id);
-            if (!item) return;
-
-            if (tipo === 'add') {
-                item.disponivel += qtd;
-            } else {
-                if (qtd > item.disponivel) { toast('Não pode remover mais do que tem!', 'error'); return; }
-                item.disponivel -= qtd;
-            }
-
-            DB.set('estoque', estoque);
-            toast(`✅ Estoque de ${item.nome}: ${tipo === 'add' ? '+' : '-'}${qtd} (Total: ${item.disponivel})`, 'success');
-            loadEstoque();
-        }
-
-        function definirEstoque(id) {
-            const qtd = parseInt(document.getElementById('qtdAdd' + id).value) || 0;
-            const estoque = DB.get('estoque');
-            const item = estoque.find(e => e.id === id);
-            if (!item) return;
-
-            item.disponivel = qtd;
-            DB.set('estoque', estoque);
-            toast(`✅ Estoque de ${item.nome} definido para ${qtd}`, 'success');
-            loadEstoque();
-        }
-
-        // ==================== CLIENTES ====================
-        function loadClientes() {
-            const clientes = DB.get('clientes').sort((a, b) => b.totalGasto - a.totalGasto);
-            document.getElementById('contentArea').innerHTML = `
-                <div class="cards-grid">
-                    <div class="card"><div class="card-label">👥 Total Clientes</div><div class="card-value">${clientes.length}</div></div>
-                    <div class="card"><div class="card-label">⭐ VIP (5+ pedidos)</div><div class="card-value">${clientes.filter(c => c.pedidos >= 5).length}</div></div>
-                    <div class="card"><div class="card-label">💎 Melhor Cliente</div><div class="card-value" style="font-size:18px;">${clientes.length > 0 ? clientes[0].nome : '-'}</div></div>
-                </div>
-                <div class="table-container">
-                    <div class="table-header"><h3>📇 Todos os Clientes</h3></div>
-                    <table><thead><tr><th>Nome</th><th>Telefone</th><th>Total Gasto</th><th>Pedidos</th><th>Último Pedido</th><th>Status</th></tr></thead>
-                        <tbody>${clientes.length === 0 ? '<tr><td colspan="6" style="text-align:center;padding:40px;">Nenhum cliente</td></tr>' :
-                        clientes.map(c => `<tr>
-                            <td><strong>${c.nome}</strong></td><td>${c.telefone}</td><td><strong>${formatMoney(c.totalGasto)}</strong></td><td>${c.pedidos}</td>
-                            <td>${new Date(c.ultimoPedido).toLocaleDateString('pt-BR')}</td>
-                            <td><span class="badge ${c.pedidos >= 5 ? 'badge-warning' : 'badge-info'}">${c.pedidos >= 5 ? '⭐ VIP' : 'Regular'}</span></td>
-                        </tr>`).join('')}
-                        </tbody>
-                    </table>
-                </div>`;
-        }
-
-        // ==================== RELATÓRIOS ====================
-        function loadRelatorios() {
-            const vendas = DB.get('vendas');
-            const estoque = DB.get('estoque');
-            const produtos = {};
-            vendas.forEach(v => v.produtos.forEach(p => { produtos[p.nome] = (produtos[p.nome] || 0) + p.qtd; }));
-            const ranking = Object.entries(produtos).sort((a, b) => b[1] - a[1]);
-            const receita = vendas.filter(v => v.status === 'pago').reduce((s, v) => s + v.total, 0);
-            const totalVendido = vendas.reduce((s, v) => s + v.produtos.reduce((ps, p) => ps + p.qtd, 0), 0);
-
-            document.getElementById('contentArea').innerHTML = `
-                <div class="cards-grid">
-                    <div class="card"><div class="card-label">📊 Total de Vendas</div><div class="card-value">${vendas.length}</div></div>
-                    <div class="card"><div class="card-label">💰 Faturamento Total</div><div class="card-value">${formatMoney(receita)}</div></div>
-                    <div class="card"><div class="card-label">🧁 Total Vendido</div><div class="card-value">${totalVendido}</div><div class="card-sub">brownies</div></div>
-                    <div class="card"><div class="card-label">📦 Estoque Atual</div><div class="card-value">${estoque.reduce((s, e) => s + e.disponivel, 0)}</div></div>
-                </div>
-                <div class="table-container">
-                    <div class="table-header"><h3>🏆 Produtos Mais Vendidos</h3></div>
-                    <table><thead><tr><th>#</th><th>Produto</th><th>Quantidade</th><th>%</th></tr></thead>
-                        <tbody>${ranking.length === 0 ? '<tr><td colspan="4" style="text-align:center;">Sem dados</td></tr>' :
-                        ranking.map(([nome, qtd], i) => `<tr><td>${i + 1}º</td><td><strong>${nome}</strong></td><td>${qtd} unid.</td><td>${totalVendido > 0 ? ((qtd/totalVendido)*100).toFixed(1) : 0}%</td></tr>`).join('')}
-                        </tbody>
-                    </table>
-                </div>`;
-        }
-
-        // ==================== CONFIGURAÇÕES ====================
-        function loadConfig() {
-            const produtos = DB.get('config').produtos;
-            document.getElementById('contentArea').innerHTML = `
-                <div class="table-container" style="margin-bottom:20px;">
-                    <div class="table-header"><h3>💲 Produtos e Preços</h3></div>
-                    <table><thead><tr><th>Produto</th><th>Seu Custo</th><th>Preço Venda</th><th>Seu Lucro</th><th>Margem</th></tr></thead>
-                        <tbody>${produtos.map(p => `<tr>
-                            <td><strong>${p.nome}</strong></td><td>${formatMoney(p.custo)}</td><td>${formatMoney(p.preco)}</td>
-                            <td style="color:var(--success);"><strong>${formatMoney(p.preco - p.custo)}</strong></td>
-                            <td><span class="badge badge-success">${((p.preco - p.custo) / p.preco * 100).toFixed(0)}%</span></td>
-                        </tr>`).join('')}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="table-container">
-                    <div class="table-header"><h3>💾 Backup de Dados</h3></div>
-                    <div style="padding:20px;display:flex;gap:10px;flex-wrap:wrap;">
-                        <button class="btn btn-primary" onclick="exportarDados()">📤 Exportar Backup</button>
-                        <button class="btn btn-outline" onclick="importarDados()">📥 Importar Backup</button>
-                        <button class="btn btn-danger" onclick="limparDados()">🗑 Limpar Tudo</button>
-                    </div>
-                </div>`;
-        }
-
-        function exportarDados() {
-            const dados = { vendas: DB.get('vendas'), clientes: DB.get('clientes'), estoque: DB.get('estoque'), config: DB.get('config') };
-            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `gv-sweet-backup-${new Date().toISOString().slice(0, 10)}.json`;
-            a.click();
-            toast('✅ Backup exportado!', 'success');
-        }
-
-        function importarDados() {
-            const input = document.createElement('input');
-            input.type = 'file'; input.accept = '.json';
-            input.onchange = e => {
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    try {
-                        const dados = JSON.parse(ev.target.result);
-                        if (dados.vendas) DB.set('vendas', dados.vendas);
-                        if (dados.clientes) DB.set('clientes', dados.clientes);
-                        if (dados.estoque) DB.set('estoque', dados.estoque);
-                        if (dados.config) DB.set('config', dados.config);
-                        toast('✅ Dados importados!', 'success');
-                        loadDashboard(); updateHeader();
-                    } catch (err) { toast('❌ Arquivo inválido!', 'error'); }
-                };
-                reader.readAsText(e.target.files[0]);
-            };
-            input.click();
-        }
-
-        function limparDados() {
-            if (confirm('⚠️ ATENÇÃO: Isso apagará TODOS os dados!\n\nTem certeza absoluta?')) {
-                if (confirm('⚠️ ÚLTIMA CONFIRMAÇÃO!\n\nEsta ação é irreversível!')) {
-                    ['vendas', 'clientes', 'estoque'].forEach(k => DB.set(k, []));
-                    DB.init();
-                    toast('🗑️ Dados limpos!', 'warning');
-                    loadDashboard();
-                    updateHeader();
-                }
-            }
-        }
-
-        // ==================== INICIAR ====================
-        function init() {
-            renderMenu();
-            loadDashboard();
-            updateHeader();
-            setInterval(updateHeader, 60000);
-        }
-
-        window.onload = init;
-    </script>
 </body>
 </html>
