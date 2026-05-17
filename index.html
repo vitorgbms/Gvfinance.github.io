@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>GV • Gestão Brownies Premium</title>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
   </script>
   <style>
@@ -15,161 +15,171 @@
     }
 
     body {
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, 'Times New Roman', serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background: #08080f;
       color: #e9e9f0;
       display: flex;
       min-height: 100vh;
+      min-height: 100dvh;
       overflow-x: hidden;
-      letter-spacing: 0.02em;
+      position: relative;
     }
 
+    /* SIDEBAR */
     .sidebar {
       width: 260px;
-      background: rgba(10, 10, 24, 0.92);
+      min-width: 260px;
+      background: rgba(10, 10, 24, 0.95);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
       border-right: 1px solid rgba(124, 58, 237, 0.2);
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 2rem;
       box-shadow: 12px 0 40px rgba(0, 0, 0, 0.8);
-      z-index: 20;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      z-index: 50;
+      transition: transform 0.3s ease;
     }
 
     .logo {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
       background: linear-gradient(135deg, #d8b4fe, #a78bfa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
     }
 
     .nav-menu {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.3rem;
     }
 
     .nav-item {
-      padding: 0.85rem 1.1rem;
+      padding: 0.75rem 1rem;
       border-radius: 12px;
       font-weight: 500;
       color: #9ca3af;
       transition: all 0.25s;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       border: 1px solid transparent;
       user-select: none;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      font-size: 0.9rem;
     }
 
     .nav-item.active {
-      background: rgba(124, 58, 237, 0.15);
+      background: rgba(124, 58, 237, 0.18);
       border-color: rgba(168, 85, 247, 0.45);
       color: #f5f3ff;
       box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2);
     }
 
-    .nav-item:hover:not(.active) {
-      background: rgba(124, 58, 237, 0.07);
+    .nav-item:active {
+      transform: scale(0.97);
     }
 
+    /* MAIN */
     .main {
       flex: 1;
-      padding: 1.8rem 2rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1.8rem;
+      gap: 1.5rem;
       overflow-y: auto;
       background: radial-gradient(circle at 20% 30%, #140e24, #08080f 85%);
-      position: relative;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      -webkit-overflow-scrolling: touch;
     }
 
     .view {
       display: none;
       flex-direction: column;
-      gap: 1.8rem;
+      gap: 1.5rem;
     }
 
     .view.active-view {
       display: flex;
     }
 
+    /* MOBILE MENU BUTTON */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 60;
+      background: rgba(18, 18, 36, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      color: #ede9fe;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 45;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* FAB */
     .fab-container {
       position: fixed;
-      bottom: 2.5rem;
-      right: 2.5rem;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.8rem;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 40;
     }
 
     .fab-main {
-      width: 60px;
-      height: 60px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       background: linear-gradient(135deg, #7c3aed, #a855f7);
       border: none;
       color: white;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       cursor: pointer;
       box-shadow: 0 0 30px rgba(124, 58, 237, 0.5), 0 10px 25px rgba(0, 0, 0, 0.5);
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .fab-main:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 45px rgba(139, 92, 246, 0.7), 0 15px 30px rgba(0, 0, 0, 0.6);
+    .fab-main:active {
+      transform: scale(0.93);
     }
 
-    .fab-tooltip {
-      position: absolute;
-      right: 70px;
-      background: rgba(18, 18, 36, 0.9);
-      backdrop-filter: blur(12px);
-      border: 1px solid #a855f7;
-      color: #ede9fe;
-      padding: 0.5rem 1.2rem;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 0.85rem;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
-    }
-
-    .fab-container:hover .fab-tooltip {
-      opacity: 1;
-    }
-
+    /* MODAL */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(6px);
       z-index: 200;
       display: none;
       align-items: center;
       justify-content: center;
+      padding: 1rem;
     }
 
     .modal-overlay.active {
@@ -177,97 +187,88 @@
     }
 
     .modal {
-      background: rgba(20, 20, 42, 0.95);
+      background: rgba(20, 20, 42, 0.98);
       backdrop-filter: blur(24px);
       border: 1px solid rgba(168, 85, 247, 0.4);
-      border-radius: 28px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 550px;
+      border-radius: 24px;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 500px;
       box-shadow: 0 30px 60px rgba(124, 58, 237, 0.3);
-      animation: modalIn 0.3s ease;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      animation: modalIn 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     @keyframes modalIn {
       from {
         opacity: 0;
-        transform: translateY(30px) scale(0.96);
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
       }
     }
 
     .modal h3 {
       color: #ede9fe;
-      margin-bottom: 1.5rem;
-      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      font-size: 1.3rem;
     }
 
     .modal-form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .modal-form input,
     .modal-form select {
       background: #12122a;
       border: 1px solid #4c1d95;
-      border-radius: 14px;
-      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
       color: white;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       outline: none;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
-    }
-
-    .modal-form input:focus,
-    .modal-form select:focus {
-      border-color: #a855f7;
-      box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
+      font-family: 'Inter', sans-serif;
     }
 
     .modal-actions {
       display: flex;
-      gap: 0.8rem;
+      gap: 0.6rem;
       justify-content: flex-end;
-      margin-top: 0.5rem;
+      margin-top: 0.3rem;
     }
 
+    /* STATS */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.8rem;
     }
 
     .stat-card {
-      background: rgba(18, 18, 36, 0.75);
+      background: rgba(18, 18, 36, 0.8);
       backdrop-filter: blur(18px);
       border: 1px solid rgba(124, 58, 237, 0.25);
-      border-radius: 22px;
-      padding: 1.3rem;
-      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.6);
-      transition: transform 0.25s;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-3px);
+      border-radius: 20px;
+      padding: 1rem;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
     }
 
     .stat-label {
-      font-size: 0.78rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: #a78bfa;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
     }
 
     .stat-value {
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: 700;
       background: linear-gradient(to right, #ede9fe, #c4b5fd);
       -webkit-background-clip: text;
@@ -276,204 +277,277 @@
     }
 
     .stat-sub {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       color: #9ca3af;
-      margin-top: 0.3rem;
-      font-style: italic;
+      margin-top: 0.2rem;
     }
 
-    .chart-box {
+    /* TABLES */
+    .chart-box,
+    .panel {
       background: rgba(16, 16, 32, 0.7);
       backdrop-filter: blur(16px);
-      border-radius: 22px;
-      padding: 1.3rem;
+      border-radius: 20px;
+      padding: 1rem;
       border: 1px solid rgba(124, 58, 237, 0.25);
     }
 
-    .panel {
-      background: rgba(16, 16, 32, 0.65);
-      backdrop-filter: blur(18px);
-      border-radius: 22px;
-      padding: 1.5rem;
-      border: 1px solid rgba(124, 58, 237, 0.25);
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: -0.5rem;
+      padding: 0.5rem;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       color: #d1d5db;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      min-width: 600px;
     }
 
     th {
       text-align: left;
-      padding: 0.8rem;
+      padding: 0.6rem;
       color: #c4b5fd;
       font-weight: 600;
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
     }
 
     td {
-      padding: 0.8rem;
-      border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+      padding: 0.6rem;
+      border-bottom: 1px solid rgba(124, 58, 237, 0.1);
     }
 
     .btn {
-      background: rgba(124, 58, 237, 0.25);
+      background: rgba(124, 58, 237, 0.3);
       border: 1px solid #8b5cf6;
       color: #f1f5f9;
-      padding: 0.5rem 1.1rem;
-      border-radius: 30px;
+      padding: 0.45rem 0.9rem;
+      border-radius: 24px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
-      font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
     }
 
     .btn-sm {
-      padding: 0.5rem 0.9rem;
-      font-size: 1rem;
-      border-radius: 14px;
-      font-weight: 700;
-      min-width: 40px;
-      justify-content: center;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.85rem;
+      border-radius: 10px;
+      font-weight: 600;
+      min-width: 36px;
+      text-align: center;
     }
 
     .btn-primary {
       background: #7c3aed;
-      box-shadow: 0 0 18px rgba(124, 58, 237, 0.4);
+      box-shadow: 0 0 14px rgba(124, 58, 237, 0.4);
       border-color: #a855f7;
     }
 
-    .btn:hover {
-      background: #8b5cf6;
-      border-color: #c4b5fd;
-      box-shadow: 0 0 16px rgba(139, 92, 246, 0.35);
-    }
-
     .badge {
-      padding: 0.3rem 0.8rem;
-      border-radius: 16px;
-      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 14px;
+      font-size: 0.65rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
     .estoque-control {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.3rem;
       background: rgba(18, 18, 36, 0.5);
-      border-radius: 14px;
-      padding: 0.3rem;
+      border-radius: 12px;
+      padding: 0.2rem;
       border: 1px solid rgba(124, 58, 237, 0.2);
     }
 
     .estoque-input {
-      width: 55px;
+      width: 45px;
       background: transparent;
       border: none;
       color: white;
       text-align: center;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      font-family: 'Inter', sans-serif;
       outline: none;
-    }
-
-    .estoque-input:focus {
-      background: rgba(124, 58, 237, 0.2);
-      border-radius: 8px;
     }
 
     .empty-state {
       text-align: center;
       color: #6b7280;
-      padding: 2rem;
-      font-style: italic;
+      padding: 1.5rem;
+      font-size: 0.85rem;
     }
 
-    @media (max-width: 850px) {
+    canvas {
+      max-height: 250px;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
       .sidebar {
-        width: 70px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+        width: 260px;
+        min-width: 260px;
       }
-      .logo span,
-      .nav-item span {
-        display: none;
+
+      .sidebar.open {
+        transform: translateX(0);
       }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .main {
+        padding: 1rem;
+        padding-top: 3.5rem;
+        gap: 1rem;
+      }
+
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+      }
+
+      .stat-card {
+        padding: 0.8rem;
+        border-radius: 16px;
+      }
+
+      .stat-value {
+        font-size: 1.3rem;
+      }
+
+      .chart-box,
+      .panel {
+        padding: 0.8rem;
+        border-radius: 16px;
+      }
+
+      table {
+        font-size: 0.75rem;
+      }
+
+      .btn {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.75rem;
+      }
+
+      .fab-main {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+      }
+
+      .modal {
+        padding: 1.2rem;
+        border-radius: 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+      }
+
+      .stat-value {
+        font-size: 1.1rem;
+      }
+
+      .stat-label {
+        font-size: 0.6rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <!-- BOTÃO MENU MOBILE -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
     <div class="logo"><span>🍫</span> <span>GV</span></div>
     <div class="nav-menu">
-      <div class="nav-item active" data-view="dashboard"><i>📊</i> <span>Dashboard</span></div>
-      <div class="nav-item" data-view="vendas"><i>🛒</i> <span>Pedidos</span></div>
-      <div class="nav-item" data-view="estoque"><i>📦</i> <span>Estoque</span></div>
-      <div class="nav-item" data-view="financeiro"><i>💰</i> <span>Financeiro</span></div>
+      <div class="nav-item active" data-view="dashboard"><span>📊</span> <span>Dashboard</span></div>
+      <div class="nav-item" data-view="vendas"><span>🛒</span> <span>Pedidos</span></div>
+      <div class="nav-item" data-view="estoque"><span>📦</span> <span>Estoque</span></div>
+      <div class="nav-item" data-view="financeiro"><span>💰</span> <span>Financeiro</span></div>
     </div>
   </div>
 
+  <!-- MAIN -->
   <div class="main">
-    <!-- DASHBOARD -->
     <div id="view-dashboard" class="view active-view">
       <div class="stats-grid" id="statsGrid"></div>
       <div class="chart-box">
-        <h3 style="color:#c4b5fd; margin-bottom:0.8rem;">📈 Vendas por sabor</h3>
+        <h3 style="color:#c4b5fd; margin-bottom:0.6rem; font-size:0.9rem;">📈 Vendas por sabor</h3>
         <canvas id="chartVendas"></canvas>
       </div>
     </div>
 
-    <!-- PEDIDOS -->
     <div id="view-vendas" class="view">
       <div class="panel">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem;">
-          <h2 style="color:#ede9fe;">🛒 Pedidos</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
+          <h2 style="color:#ede9fe; font-size:1.1rem;">🛒 Pedidos</h2>
           <button class="btn btn-primary" id="abrirModalBtn">+ Novo Pedido</button>
         </div>
-        <table id="pedidosTable">
-          <thead><tr><th>Cliente</th><th>Telefone</th><th>Sabor</th><th>Valor</th><th>Status</th><th>Data</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-wrapper">
+          <table id="pedidosTable">
+            <thead><tr><th>Cliente</th><th>Tel</th><th>Sabor</th><th>Valor</th><th>Status</th><th>Data</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- ESTOQUE -->
     <div id="view-estoque" class="view">
       <div class="panel">
-        <h2 style="color:#ede9fe; margin-bottom:1.2rem;">📦 Controle de Estoque</h2>
-        <table id="productTable">
-          <thead><tr><th>Produto</th><th>Preço Venda</th><th>Estoque</th><th>Status</th><th>Ajuste Rápido</th></tr></thead>
-          <tbody></tbody>
-        </table>
+        <h2 style="color:#ede9fe; margin-bottom:0.8rem; font-size:1.1rem;">📦 Estoque</h2>
+        <div class="table-wrapper">
+          <table id="productTable">
+            <thead><tr><th>Produto</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ajuste</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- FINANCEIRO -->
     <div id="view-financeiro" class="view">
       <div class="stats-grid" id="financeCards"></div>
       <div class="panel">
-        <h3 style="color:#ede9fe; margin-bottom:0.8rem;">📋 Extrato Completo</h3>
-        <table id="financeTable">
-          <thead><tr><th>Cliente</th><th>Sabor</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead>
-          <tbody></tbody>
-        </table>
+        <h3 style="color:#ede9fe; margin-bottom:0.6rem; font-size:1rem;">📋 Extrato</h3>
+        <div class="table-wrapper">
+          <table id="financeTable">
+            <thead><tr><th>Cliente</th><th>Sabor</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- BOTÃO FLUTUANTE -->
-    <div class="fab-container" id="fabContainer">
-      <span class="fab-tooltip">Novo pedido rápido</span>
+    <div class="fab-container">
       <button class="fab-main" id="fabBtn" title="Novo Pedido">➕</button>
     </div>
   </div>
@@ -481,7 +555,7 @@
   <!-- MODAL -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
-      <h3>🍫 Registrar Pedido</h3>
+      <h3>🍫 Novo Pedido</h3>
       <div class="modal-form">
         <input type="text" id="modalClienteNome" placeholder="Nome do cliente" required>
         <input type="tel" id="modalClienteTelefone" placeholder="Telefone / WhatsApp">
@@ -500,7 +574,7 @@
 
   <script>
     (function() {
-      const DB_NAME = 'GV_BrownieDB_Caslon';
+      const DB_NAME = 'GV_BrownieDB_Mobile';
       const DB_VERSION = 1;
       let db;
 
@@ -517,49 +591,44 @@
           request.onupgradeneeded = (event) => {
             const database = event.target.result;
             if (!database.objectStoreNames.contains('products')) {
-              const productStore = database.createObjectStore('products', { keyPath: 'id' });
-              defaultProducts.forEach(p => productStore.put(p));
+              const ps = database.createObjectStore('products', { keyPath: 'id' });
+              defaultProducts.forEach(p => ps.put(p));
             }
             if (!database.objectStoreNames.contains('pedidos')) {
-              const pedidoStore = database.createObjectStore('pedidos', { keyPath: 'id', autoIncrement: true });
-              pedidoStore.createIndex('status', 'status', { unique: false });
+              const pd = database.createObjectStore('pedidos', { keyPath: 'id', autoIncrement: true });
+              pd.createIndex('status', 'status', { unique: false });
             }
           };
-          request.onsuccess = (event) => {
-            db = event.target.result;
-            resolve(db);
-          };
-          request.onerror = (event) => reject(event.target.error);
-        });
-      }
-
-      function getAllFromStore(storeName) {
-        return new Promise((resolve, reject) => {
-          const transaction = db.transaction(storeName, 'readonly');
-          const store = transaction.objectStore(storeName);
-          const request = store.getAll();
-          request.onsuccess = () => resolve(request.result);
+          request.onsuccess = (e) => { db = e.target.result;
+            resolve(db); };
           request.onerror = () => reject(request.error);
         });
       }
 
-      function putInStore(storeName, item) {
-        return new Promise((resolve, reject) => {
-          const transaction = db.transaction(storeName, 'readwrite');
-          const store = transaction.objectStore(storeName);
-          const request = store.put(item);
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
+      function getAll(store) {
+        return new Promise((res, rej) => {
+          const tx = db.transaction(store, 'readonly');
+          const r = tx.objectStore(store).getAll();
+          r.onsuccess = () => res(r.result);
+          r.onerror = () => rej(r.error);
         });
       }
 
-      function deleteFromStore(storeName, id) {
-        return new Promise((resolve, reject) => {
-          const transaction = db.transaction(storeName, 'readwrite');
-          const store = transaction.objectStore(storeName);
-          const request = store.delete(id);
-          request.onsuccess = () => resolve();
-          request.onerror = () => reject(request.error);
+      function putItem(store, item) {
+        return new Promise((res, rej) => {
+          const tx = db.transaction(store, 'readwrite');
+          const r = tx.objectStore(store).put(item);
+          r.onsuccess = () => res(r.result);
+          r.onerror = () => rej(r.error);
+        });
+      }
+
+      function deleteItem(store, id) {
+        return new Promise((res, rej) => {
+          const tx = db.transaction(store, 'readwrite');
+          const r = tx.objectStore(store).delete(id);
+          r.onsuccess = () => res();
+          r.onerror = () => rej(r.error);
         });
       }
 
@@ -567,30 +636,18 @@
       let pedidos = [];
 
       async function loadData() {
-        products = await getAllFromStore('products');
-        if (products.length === 0) {
-          for (const p of defaultProducts) await putInStore('products', p);
+        products = await getAll('products');
+        if (!products.length) {
+          for (const p of defaultProducts) await putItem('products', p);
           products = [...defaultProducts];
         }
-        pedidos = await getAllFromStore('pedidos');
+        pedidos = await getAll('pedidos');
       }
 
-      async function saveProduct(product) { await putInStore('products', product); }
-
-      async function savePedido(pedido) {
-        const result = await putInStore('pedidos', pedido);
-        return result;
-      }
-
-      async function deletePedidoDB(id) { await deleteFromStore('pedidos', id); }
-
-      function getRecebido() { return pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + p.total, 0); }
-
-      function getPendente() { return pedidos.filter(p => p.status === 'pendente').reduce((a, p) => a + p.total, 0); }
-
-      function getLucro() {
-        return pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + (p.total - (p.custoUnitario || 0)), 0);
-      }
+      const getRecebido = () => pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + p.total, 0);
+      const getPendente = () => pedidos.filter(p => p.status === 'pendente').reduce((a, p) => a + p.total, 0);
+      const getLucro = () => pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + (p.total - (p.custoUnitario ||
+        0)), 0);
 
       function updateUI() {
         renderDashboard();
@@ -602,147 +659,96 @@
       }
 
       function renderDashboard() {
-        const grid = document.getElementById('statsGrid');
-        if (!grid) return;
-        const recebido = getRecebido().toFixed(2);
-        const pendente = getPendente().toFixed(2);
-        const lucro = getLucro().toFixed(2);
-        const totalPedidos = pedidos.length;
-        const totalEstoque = products.reduce((a, p) => a + p.estoque, 0);
-        grid.innerHTML = `
-          <div class="stat-card">
-            <div class="stat-label">💰 Total Recebido</div>
-            <div class="stat-value">R$ ${recebido}</div>
-            <div class="stat-sub">Pagamentos confirmados</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">⏳ Total Pendente</div>
-            <div class="stat-value">R$ ${pendente}</div>
-            <div class="stat-sub">Aguardando pagamento</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">📈 Lucro Líquido</div>
-            <div class="stat-value">R$ ${lucro}</div>
-            <div class="stat-sub">Sobre vendas pagas</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">🛒 Pedidos</div>
-            <div class="stat-value">${totalPedidos}</div>
-            <div class="stat-sub">Total registrado</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">📦 Em Estoque</div>
-            <div class="stat-value">${totalEstoque}</div>
-            <div class="stat-sub">Unidades disponíveis</div>
-          </div>
+        const g = document.getElementById('statsGrid');
+        if (!g) return;
+        g.innerHTML = `
+          <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">R$ ${getRecebido().toFixed(2)}</div></div>
+          <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">R$ ${getPendente().toFixed(2)}</div></div>
+          <div class="stat-card"><div class="stat-label">📈 Lucro</div><div class="stat-value">R$ ${getLucro().toFixed(2)}</div></div>
+          <div class="stat-card"><div class="stat-label">🛒 Pedidos</div><div class="stat-value">${pedidos.length}</div></div>
+          <div class="stat-card"><div class="stat-label">📦 Estoque</div><div class="stat-value">${products.reduce((a,p)=>a+p.estoque,0)}</div></div>
         `;
       }
 
       function updateModalSabores() {
-        const select = document.getElementById('modalSaborSelect');
-        if (select) {
-          select.innerHTML = products.map(p => `<option value="${p.id}">${p.nome} — R$ ${p.precoVenda.toFixed(2)} (${p.estoque} un.)</option>`).join('');
-        }
+        const s = document.getElementById('modalSaborSelect');
+        if (s) s.innerHTML = products.map(p =>
+          `<option value="${p.id}">${p.nome} — R$ ${p.precoVenda.toFixed(2)} (${p.estoque} un.)</option>`).join('');
       }
 
       function renderPedidos() {
-        const tbody = document.querySelector('#pedidosTable tbody');
-        if (!tbody) return;
-        if (!pedidos.length) {
-          tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Nenhum pedido registrado</td></tr>';
-          return;
-        }
-        tbody.innerHTML = pedidos.slice().reverse().map(p => `
-          <tr>
-            <td><strong>${p.cliente}</strong></td>
-            <td>${p.telefone || '—'}</td>
-            <td>${p.productName}</td>
-            <td>R$ ${p.total.toFixed(2)}</td>
-            <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'};">${p.status}</span></td>
-            <td>${new Date(p.date).toLocaleString()}</td>
-            <td><button class="btn btn-sm" data-delete-pedido="${p.id}">🗑️</button></td>
-          </tr>
-        `).join('');
+        const tb = document.querySelector('#pedidosTable tbody');
+        if (!tb) return;
+        if (!pedidos.length) { tb.innerHTML =
+            '<tr><td colspan="7" class="empty-state">Nenhum pedido</td></tr>'; return; }
+        tb.innerHTML = pedidos.slice().reverse().map(p => `
+          <tr><td>${p.cliente}</td><td>${p.telefone||'—'}</td><td>${p.productName}</td><td>R$ ${p.total.toFixed(2)}</td>
+          <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'}">${p.status}</span></td>
+          <td>${new Date(p.date).toLocaleDateString()}</td>
+          <td><button class="btn btn-sm" data-delete-pedido="${p.id}">🗑️</button></td></tr>`).join('');
       }
 
       function renderEstoque() {
-        const tbody = document.querySelector('#productTable tbody');
-        if (!tbody) return;
-        tbody.innerHTML = products.map(p => {
-          const status = p.estoque <= 5 ? 'Crítico' : p.estoque <= 12 ? 'Baixo' : 'Saudável';
+        const tb = document.querySelector('#productTable tbody');
+        if (!tb) return;
+        tb.innerHTML = products.map(p => {
+          const st = p.estoque <= 5 ? 'Crítico' : p.estoque <= 12 ? 'Baixo' : 'Saudável';
           const cor = p.estoque <= 5 ? '#ef4444' : p.estoque <= 12 ? '#f59e0b' : '#10b981';
-          return `<tr>
-            <td><strong>${p.nome}</strong></td>
-            <td>R$ ${p.precoVenda.toFixed(2)}</td>
-            <td><strong>${p.estoque}</strong></td>
-            <td><span class="badge" style="background:${cor}20;color:${cor};">${status}</span></td>
-            <td>
-              <div class="estoque-control">
-                <button class="btn btn-sm" data-estoque="menos" data-id="${p.id}">−</button>
-                <input type="number" class="estoque-input" value="${p.estoque}" data-id="${p.id}" min="0" style="width:55px;">
-                <button class="btn btn-sm" data-estoque="mais" data-id="${p.id}">+</button>
-              </div>
-            </td>
-          </tr>`;
+          return `<tr><td><strong>${p.nome}</strong></td><td>R$ ${p.precoVenda.toFixed(2)}</td><td>${p.estoque}</td>
+          <td><span class="badge" style="background:${cor}20;color:${cor}">${st}</span></td>
+          <td><div class="estoque-control">
+            <button class="btn btn-sm" data-estoque="menos" data-id="${p.id}">−</button>
+            <input type="number" class="estoque-input" value="${p.estoque}" data-id="${p.id}" min="0">
+            <button class="btn btn-sm" data-estoque="mais" data-id="${p.id}">+</button>
+          </div></td></tr>`;
         }).join('');
       }
 
       function renderFinanceiro() {
         const cards = document.getElementById('financeCards');
-        if (cards) {
-          const recebido = getRecebido().toFixed(2);
-          const pendente = getPendente().toFixed(2);
-          cards.innerHTML = `
-            <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">R$ ${recebido}</div></div>
-            <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">R$ ${pendente}</div></div>
-          `;
-        }
-        const tbody = document.querySelector('#financeTable tbody');
-        if (!tbody) return;
-        if (!pedidos.length) {
-          tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhuma transação</td></tr>';
-          return;
-        }
-        tbody.innerHTML = pedidos.slice().reverse().map(p => `
-          <tr>
-            <td>${p.cliente}</td><td>${p.productName}</td><td>R$ ${p.total.toFixed(2)}</td>
-            <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'};">${p.status}</span></td>
-            <td>${new Date(p.date).toLocaleString()}</td>
-          </tr>
-        `).join('');
+        if (cards) cards.innerHTML = `
+          <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">R$ ${getRecebido().toFixed(2)}</div></div>
+          <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">R$ ${getPendente().toFixed(2)}</div></div>`;
+        const tb = document.querySelector('#financeTable tbody');
+        if (!tb) return;
+        if (!pedidos.length) { tb.innerHTML =
+            '<tr><td colspan="5" class="empty-state">Nenhuma transação</td></tr>'; return; }
+        tb.innerHTML = pedidos.slice().reverse().map(p => `
+          <tr><td>${p.cliente}</td><td>${p.productName}</td><td>R$ ${p.total.toFixed(2)}</td>
+          <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'}">${p.status}</span></td>
+          <td>${new Date(p.date).toLocaleDateString()}</td></tr>`).join('');
       }
 
-      async function ajustarEstoque(id, novoValor) {
-        const produto = products.find(p => p.id === id);
-        if (!produto) return;
-        if (novoValor < 0) { alert('Estoque não pode ser negativo!'); return; }
-        produto.estoque = novoValor;
-        await saveProduct(produto);
+      async function ajustarEstoque(id, val) {
+        const p = products.find(x => x.id === id);
+        if (!p || val < 0) return;
+        p.estoque = val;
+        await putItem('products', p);
         updateUI();
       }
 
-      async function confirmarVendaModal() {
+      async function confirmarVenda() {
         const nome = document.getElementById('modalClienteNome')?.value.trim();
-        const telefone = document.getElementById('modalClienteTelefone')?.value.trim();
+        const tel = document.getElementById('modalClienteTelefone')?.value.trim();
         const saborId = parseInt(document.getElementById('modalSaborSelect')?.value);
         const status = document.getElementById('modalStatusPagamento')?.value;
         if (!nome || !saborId) { alert('Preencha nome e sabor!'); return; }
-        const produto = products.find(p => p.id === saborId);
-        if (!produto || produto.estoque <= 0) { alert('Estoque insuficiente!'); return; }
-        produto.estoque--;
-        await saveProduct(produto);
-        const novoPedido = {
+        const prod = products.find(p => p.id === saborId);
+        if (!prod || prod.estoque <= 0) { alert('Estoque insuficiente!'); return; }
+        prod.estoque--;
+        await putItem('products', prod);
+        const np = {
           cliente: nome,
-          telefone: telefone,
-          productName: produto.nome,
-          total: produto.precoVenda,
-          custoUnitario: produto.custo,
-          status: status,
+          telefone: tel,
+          productName: prod.nome,
+          total: prod.precoVenda,
+          custoUnitario: prod.custo,
+          status,
           date: new Date().toISOString()
         };
-        const savedId = await savePedido(novoPedido);
-        novoPedido.id = savedId;
-        pedidos.push(novoPedido);
+        const id = await putItem('pedidos', np);
+        np.id = id;
+        pedidos.push(np);
         updateUI();
         fecharModal();
       }
@@ -759,21 +765,30 @@
         document.getElementById('modalClienteNome').focus();
       }
 
-      async function deletePedidoHandler(id) {
-        if (!confirm('Excluir pedido permanentemente?')) return;
-        await deletePedidoDB(id);
+      async function deletePedido(id) {
+        if (!confirm('Excluir pedido?')) return;
+        await deleteItem('pedidos', id);
         pedidos = pedidos.filter(p => p.id !== id);
         updateUI();
       }
 
-      function navegarPara(viewName) {
+      function navegar(view) {
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        const targetNav = document.querySelector(`.nav-item[data-view="${viewName}"]`);
-        if (targetNav) targetNav.classList.add('active');
+        document.querySelector(`.nav-item[data-view="${view}"]`)?.classList.add('active');
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-        const targetView = document.getElementById(`view-${viewName}`);
-        if (targetView) targetView.classList.add('active-view');
+        document.getElementById(`view-${view}`)?.classList.add('active-view');
+        closeSidebar();
         updateUI();
+      }
+
+      function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('overlay').classList.remove('active');
+      }
+
+      function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('active');
       }
 
       let chartV;
@@ -781,82 +796,57 @@
         const ctx = document.getElementById('chartVendas')?.getContext('2d');
         if (!ctx) return;
         if (chartV) chartV.destroy();
-        const labels = products.map(p => p.nome);
-        const data = products.map(p => pedidos.filter(pe => pe.productName === p.nome).length);
         chartV = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: labels,
-            datasets: [{
-              label: 'Unidades vendidas',
-              data: data,
-              backgroundColor: ['#7c3aed', '#8b5cf6', '#a78bfa', '#c4b5fd'],
-              borderRadius: 10,
-              borderWidth: 0
-            }]
+            labels: products.map(p => p.nome),
+            datasets: [{ label: 'Unidades', data: products.map(p => pedidos.filter(pe => pe.productName ===
+                p.nome).length), backgroundColor: ['#7c3aed', '#8b5cf6', '#a78bfa', '#c4b5fd'],
+              borderRadius: 8 }]
           },
-          options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-              legend: { labels: { color: '#cbd5e1', font: { weight: '500' } } }
-            },
-            scales: {
-              y: { beginAtZero: true, grid: { color: 'rgba(124,58,237,0.1)' }, ticks: { color: '#9ca3af' } },
-              x: { ticks: { color: '#9ca3af' } }
-            }
-          }
+          options: { responsive: true, plugins: { legend: { labels: { color: '#ccc' } } }, scales: { y: { ticks: { color: '#9ca3af' } },
+              x: { ticks: { color: '#9ca3af' } } } }
         });
       }
 
       // Eventos
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function() { navegarPara(this.dataset.view); });
-      });
-
+      document.getElementById('menuToggle')?.addEventListener('click', toggleSidebar);
+      document.getElementById('overlay')?.addEventListener('click', closeSidebar);
+      document.querySelectorAll('.nav-item').forEach(el => el.addEventListener('click', function() { navegar(this
+          .dataset.view); }));
       document.getElementById('fabBtn')?.addEventListener('click', abrirModal);
       document.getElementById('abrirModalBtn')?.addEventListener('click', abrirModal);
-      document.getElementById('confirmarModalVendaBtn')?.addEventListener('click', confirmarVendaModal);
+      document.getElementById('confirmarModalVendaBtn')?.addEventListener('click', confirmarVenda);
       document.getElementById('cancelarModalBtn')?.addEventListener('click', fecharModal);
-      document.getElementById('modalOverlay')?.addEventListener('click', function(e) { if (e.target === this) fecharModal(); });
+      document.getElementById('modalOverlay')?.addEventListener('click', function(e) { if (e.target === this)
+          fecharModal(); });
 
       document.addEventListener('click', async (e) => {
         const btn = e.target.closest('button');
         if (!btn) return;
-        if (btn.dataset.deletePedido) await deletePedidoHandler(parseInt(btn.dataset.deletePedido));
+        if (btn.dataset.deletePedido) await deletePedido(parseInt(btn.dataset.deletePedido));
         if (btn.dataset.estoque === 'mais') {
-          const id = parseInt(btn.dataset.id);
-          const produto = products.find(p => p.id === id);
-          if (produto) await ajustarEstoque(id, produto.estoque + 1);
+          const p = products.find(x => x.id === parseInt(btn.dataset.id));
+          if (p) await ajustarEstoque(p.id, p.estoque + 1);
         }
         if (btn.dataset.estoque === 'menos') {
-          const id = parseInt(btn.dataset.id);
-          const produto = products.find(p => p.id === id);
-          if (produto) await ajustarEstoque(id, produto.estoque - 1);
+          const p = products.find(x => x.id === parseInt(btn.dataset.id));
+          if (p) await ajustarEstoque(p.id, p.estoque - 1);
         }
       });
 
       document.addEventListener('change', async (e) => {
         if (e.target.classList.contains('estoque-input')) {
           const id = parseInt(e.target.dataset.id);
-          const novoValor = parseInt(e.target.value);
-          if (!isNaN(novoValor)) {
-            await ajustarEstoque(id, novoValor);
-          }
+          const val = parseInt(e.target.value);
+          if (!isNaN(val)) await ajustarEstoque(id, val);
         }
       });
 
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') fecharModal();
-      });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
 
-      openDB().then(async () => {
-        await loadData();
-        updateUI();
-      }).catch(err => {
-        console.error('Erro ao abrir IndexedDB:', err);
-        alert('Erro ao carregar banco de dados.');
-      });
+      openDB().then(async () => { await loadData();
+        updateUI(); }).catch(err => console.error('DB Error:', err));
     })();
   </script>
 </body>
