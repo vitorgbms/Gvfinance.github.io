@@ -1,1027 +1,863 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GV.Sweet | Gestão</title>
-    <style>
-        :root {
-            --bg: #0a0f1a;
-            --bg-card: #111827;
-            --bg-hover: #1a2332;
-            --text: #e0e8f0;
-            --text-secondary: #8899aa;
-            --border: #1e2d3d;
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --primary-light: #60a5fa;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #6366f1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>GV • Gestão Brownies Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, 'Times New Roman', serif;
+      background: #08080f;
+      color: #e9e9f0;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+      letter-spacing: 0.02em;
+    }
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            min-height: 100vh;
-        }
+    .sidebar {
+      width: 260px;
+      background: rgba(10, 10, 24, 0.92);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border-right: 1px solid rgba(124, 58, 237, 0.2);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      box-shadow: 12px 0 40px rgba(0, 0, 0, 0.8);
+      z-index: 20;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .sidebar {
-            width: 60px;
-            background: var(--bg-card);
-            height: 100vh;
-            position: fixed;
-            left: 0; top: 0;
-            border-right: 1px solid var(--border);
-            z-index: 100;
-            padding: 10px 5px;
-        }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #d8b4fe, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .sidebar-brand {
-            text-align: center;
-            font-size: 18px;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 10px;
-            color: var(--primary-light);
-            font-weight: bold;
-        }
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
 
-        .nav-item {
-            display: flex;
-            justify-content: center;
-            padding: 12px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 18px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
+    .nav-item {
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      font-weight: 500;
+      color: #9ca3af;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      user-select: none;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .nav-item.active { background: var(--primary-dark); color: #fff; }
+    .nav-item.active {
+      background: rgba(124, 58, 237, 0.15);
+      border-color: rgba(168, 85, 247, 0.45);
+      color: #f5f3ff;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2);
+    }
 
-        .main-content { margin-left: 60px; flex: 1; }
+    .nav-item:hover:not(.active) {
+      background: rgba(124, 58, 237, 0.07);
+    }
 
-        .header {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
+    .main {
+      flex: 1;
+      padding: 1.8rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      overflow-y: auto;
+      background: radial-gradient(circle at 20% 30%, #140e24, #08080f 85%);
+      position: relative;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .header-title { font-size: 16px; font-weight: 500; }
-        .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .view {
+      display: none;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
 
-        .header-revenue {
-            background: var(--primary-dark);
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-        }
+    .view.active-view {
+      display: flex;
+    }
 
-        .btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
+    .fab-container {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.8rem;
+    }
 
-        .btn-primary { background: var(--primary-dark); color: #fff; }
-        .btn-primary:hover { background: var(--primary); }
-        .btn-success { background: var(--success); color: #fff; }
-        .btn-success:hover { opacity: 0.85; }
-        .btn-danger { background: var(--danger); color: #fff; }
-        .btn-danger:hover { opacity: 0.85; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
-        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-        .btn-sm { padding: 5px 10px; font-size: 11px; }
+    .fab-main {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.5), 0 10px 25px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .content-area { padding: 15px; }
+    .fab-main:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 45px rgba(139, 92, 246, 0.7), 0 15px 30px rgba(0, 0, 0, 0.6);
+    }
 
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+    .fab-tooltip {
+      position: absolute;
+      right: 70px;
+      background: rgba(18, 18, 36, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid #a855f7;
+      color: #ede9fe;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 15px;
-        }
+    .fab-container:hover .fab-tooltip {
+      opacity: 1;
+    }
 
-        .card:hover { border-color: var(--primary); }
-        .card-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 8px; }
-        .card-value { font-size: 22px; font-weight: 400; color: var(--primary-light); }
-        .card-value.danger { color: var(--danger); }
-        .card-sub { font-size: 10px; color: var(--text-secondary); margin-top: 3px; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .table-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
+    .modal-overlay.active {
+      display: flex;
+    }
 
-        .table-header {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-        }
+    .modal {
+      background: rgba(20, 20, 42, 0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      border-radius: 28px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 550px;
+      box-shadow: 0 30px 60px rgba(124, 58, 237, 0.3);
+      animation: modalIn 0.3s ease;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .table-header h3 { font-weight: 500; font-size: 14px; }
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
 
-        table { width: 100%; border-collapse: collapse; }
-        th {
-            text-align: left;
-            padding: 10px 15px;
-            font-size: 10px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border);
-        }
-        td { padding: 10px 15px; border-bottom: 1px solid var(--border); font-size: 12px; }
-        tr:last-child td { border-bottom: none; }
-        tr:hover td { background: var(--bg-hover); }
+    .modal h3 {
+      color: #ede9fe;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
 
-        .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 500;
-        }
-        .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-        .badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-        .badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-        .badge-info { background: rgba(99, 102, 241, 0.15); color: var(--info); }
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-        .form-group { margin-bottom: 12px; }
-        .form-group label {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 10px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            font-size: 13px;
-            font-family: inherit;
-        }
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .modal-form input,
+    .modal-form select {
+      background: #12122a;
+      border: 1px solid #4c1d95;
+      border-radius: 14px;
+      padding: 0.8rem 1rem;
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
 
-        .input-group {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-        }
-        .input-group input {
-            width: 55px;
-            padding: 8px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            color: var(--text);
-            font-size: 14px;
-            text-align: center;
-            font-family: inherit;
-        }
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
+    .modal-form input:focus,
+    .modal-form select:focus {
+      border-color: #a855f7;
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.3);
+    }
 
-        .estoque-numero {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary-light);
-            min-width: 30px;
-            text-align: center;
-        }
+    .modal-actions {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+    }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-overlay.show { display: flex; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+    }
 
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            width: 95%;
-            max-width: 550px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
+    .stat-card {
+      background: rgba(18, 18, 36, 0.75);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      border-radius: 22px;
+      padding: 1.3rem;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.6);
+      transition: transform 0.25s;
+    }
 
-        .modal-header {
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-header h3 { font-weight: 500; font-size: 15px; }
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .modal-close:hover { color: var(--danger); }
-        .modal-body { padding: 20px; }
-        .modal-footer {
-            padding: 12px 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-        }
+    .stat-card:hover {
+      transform: translateY(-3px);
+    }
 
-        .summary-box {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-        .summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; }
-        .summary-row.total {
-            border-top: 1px solid var(--border);
-            margin-top: 6px;
-            padding-top: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--primary-light);
-        }
+    .stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a78bfa;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
 
-        .toast-container {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            z-index: 300;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .toast {
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 12px;
-            animation: slideLeft 0.3s;
-            cursor: pointer;
-            border: 1px solid;
-            font-weight: 500;
-            max-width: 280px;
-        }
-        .toast-success { background: rgba(16, 185, 129, 0.15); border-color: var(--success); color: var(--success); }
-        .toast-error { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
-        .toast-warning { background: rgba(245, 158, 11, 0.15); border-color: var(--warning); color: var(--warning); }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #ede9fe, #c4b5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        @keyframes slideLeft {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+    .stat-sub {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
 
-        .produto-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 8px;
-        }
-        .produto-card h4 { margin-bottom: 8px; font-size: 13px; }
-        .produto-card input { width: 60px; }
+    .chart-box {
+      background: rgba(16, 16, 32, 0.7);
+      backdrop-filter: blur(16px);
+      border-radius: 22px;
+      padding: 1.3rem;
+      border: 1px solid rgba(124, 58, 237, 0.25);
+    }
 
-        .btn-reset {
-            background: var(--danger);
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            margin-top: 10px;
-            width: 100%;
-        }
-    </style>
+    .panel {
+      background: rgba(16, 16, 32, 0.65);
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      padding: 1.5rem;
+      border: 1px solid rgba(124, 58, 237, 0.25);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #d1d5db;
+      font-size: 0.9rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.8rem;
+      color: #c4b5fd;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    td {
+      padding: 0.8rem;
+      border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+    }
+
+    .btn {
+      background: rgba(124, 58, 237, 0.25);
+      border: 1px solid #8b5cf6;
+      color: #f1f5f9;
+      padding: 0.5rem 1.1rem;
+      border-radius: 30px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 0.9rem;
+      font-size: 1rem;
+      border-radius: 14px;
+      font-weight: 700;
+      min-width: 40px;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: #7c3aed;
+      box-shadow: 0 0 18px rgba(124, 58, 237, 0.4);
+      border-color: #a855f7;
+    }
+
+    .btn:hover {
+      background: #8b5cf6;
+      border-color: #c4b5fd;
+      box-shadow: 0 0 16px rgba(139, 92, 246, 0.35);
+    }
+
+    .badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 16px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .estoque-control {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(18, 18, 36, 0.5);
+      border-radius: 14px;
+      padding: 0.3rem;
+      border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    .estoque-input {
+      width: 55px;
+      background: transparent;
+      border: none;
+      color: white;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Libre Caslon Text', 'Adobe Caslon Pro', 'Caslon', Georgia, serif;
+      outline: none;
+    }
+
+    .estoque-input:focus {
+      background: rgba(124, 58, 237, 0.2);
+      border-radius: 8px;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #6b7280;
+      padding: 2rem;
+      font-style: italic;
+    }
+
+    @media (max-width: 850px) {
+      .sidebar {
+        width: 70px;
+      }
+      .logo span,
+      .nav-item span {
+        display: none;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="sidebar">
+    <div class="logo"><span>🍫</span> <span>GV</span></div>
+    <div class="nav-menu">
+      <div class="nav-item active" data-view="dashboard"><i>📊</i> <span>Dashboard</span></div>
+      <div class="nav-item" data-view="vendas"><i>🛒</i> <span>Pedidos</span></div>
+      <div class="nav-item" data-view="estoque"><i>📦</i> <span>Estoque</span></div>
+      <div class="nav-item" data-view="financeiro"><i>💰</i> <span>Financeiro</span></div>
+    </div>
+  </div>
 
-    <div class="toast-container" id="toastContainer"></div>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-brand">GV</div>
-        <nav id="sidebarNav"></nav>
-    </aside>
-
-    <main class="main-content">
-        <header class="header">
-            <h1 class="header-title" id="pageTitle">Dashboard</h1>
-            <div class="header-actions">
-                <span class="header-revenue" id="headerRevenue">R$ 0,00</span>
-                <button class="btn btn-primary" onclick="abrirVenda()">+ Venda</button>
-            </div>
-        </header>
-        <div class="content-area" id="contentArea"></div>
-    </main>
-
-    <div class="modal-overlay" id="modalOverlay" onclick="fecharModal()">
-        <div class="modal" id="modalContent" onclick="event.stopPropagation()"></div>
+  <div class="main">
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view active-view">
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="chart-box">
+        <h3 style="color:#c4b5fd; margin-bottom:0.8rem;">📈 Vendas por sabor</h3>
+        <canvas id="chartVendas"></canvas>
+      </div>
     </div>
 
-    <script>
-        // ==================== BANCO DE DADOS ====================
-        function getDB(key) {
-            const data = localStorage.getItem('gv_' + key);
-            return data ? JSON.parse(data) : null;
-        }
+    <!-- PEDIDOS -->
+    <div id="view-vendas" class="view">
+      <div class="panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem;">
+          <h2 style="color:#ede9fe;">🛒 Pedidos</h2>
+          <button class="btn btn-primary" id="abrirModalBtn">+ Novo Pedido</button>
+        </div>
+        <table id="pedidosTable">
+          <thead><tr><th>Cliente</th><th>Telefone</th><th>Sabor</th><th>Valor</th><th>Status</th><th>Data</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
-        function setDB(key, value) {
-            localStorage.setItem('gv_' + key, JSON.stringify(value));
-        }
+    <!-- ESTOQUE -->
+    <div id="view-estoque" class="view">
+      <div class="panel">
+        <h2 style="color:#ede9fe; margin-bottom:1.2rem;">📦 Controle de Estoque</h2>
+        <table id="productTable">
+          <thead><tr><th>Produto</th><th>Preço Venda</th><th>Estoque</th><th>Status</th><th>Ajuste Rápido</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
-        function initDB() {
-            if (!getDB('vendas')) setDB('vendas', []);
-            if (!getDB('clientes')) setDB('clientes', []);
+    <!-- FINANCEIRO -->
+    <div id="view-financeiro" class="view">
+      <div class="stats-grid" id="financeCards"></div>
+      <div class="panel">
+        <h3 style="color:#ede9fe; margin-bottom:0.8rem;">📋 Extrato Completo</h3>
+        <table id="financeTable">
+          <thead><tr><th>Cliente</th><th>Sabor</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
-            const estoquePadrao = [
-                { id: 1, nome: 'Tradicional', disponivel: 20, vendido: 0 },
-                { id: 2, nome: 'Ninho', disponivel: 20, vendido: 0 },
-                { id: 3, nome: 'Nutella', disponivel: 20, vendido: 0 },
-                { id: 4, nome: 'Ninho c/ KitKat', disponivel: 20, vendido: 0 },
-                { id: 5, nome: 'Ninho c/ Nutella', disponivel: 20, vendido: 0 }
-            ];
+    <!-- BOTÃO FLUTUANTE -->
+    <div class="fab-container" id="fabContainer">
+      <span class="fab-tooltip">Novo pedido rápido</span>
+      <button class="fab-main" id="fabBtn" title="Novo Pedido">➕</button>
+    </div>
+  </div>
 
-            if (!getDB('estoque')) {
-                setDB('estoque', estoquePadrao);
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h3>🍫 Registrar Pedido</h3>
+      <div class="modal-form">
+        <input type="text" id="modalClienteNome" placeholder="Nome do cliente" required>
+        <input type="tel" id="modalClienteTelefone" placeholder="Telefone / WhatsApp">
+        <select id="modalSaborSelect"><option value="">Selecione o sabor</option></select>
+        <select id="modalStatusPagamento">
+          <option value="pago">✅ Pago</option>
+          <option value="pendente">⏳ Pendente</option>
+        </select>
+        <div class="modal-actions">
+          <button class="btn" id="cancelarModalBtn">Cancelar</button>
+          <button class="btn btn-primary" id="confirmarModalVendaBtn">💸 Finalizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const DB_NAME = 'GV_BrownieDB_Caslon';
+      const DB_VERSION = 1;
+      let db;
+
+      const defaultProducts = [
+        { id: 1, nome: "Brownie Nutella", custo: 6.50, precoVenda: 13.00, estoque: 25 },
+        { id: 2, nome: "Brownie Ninho c/ KitKat", custo: 6.00, precoVenda: 12.00, estoque: 18 },
+        { id: 3, nome: "Brownie Ninho", custo: 5.20, precoVenda: 10.00, estoque: 30 },
+        { id: 4, nome: "Brownie Ninho c/ Nutella", custo: 8.00, precoVenda: 15.00, estoque: 12 }
+      ];
+
+      function openDB() {
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(DB_NAME, DB_VERSION);
+          request.onupgradeneeded = (event) => {
+            const database = event.target.result;
+            if (!database.objectStoreNames.contains('products')) {
+              const productStore = database.createObjectStore('products', { keyPath: 'id' });
+              defaultProducts.forEach(p => productStore.put(p));
             }
-
-            if (!getDB('config')) {
-                setDB('config', {
-                    produtos: [
-                        { id: 1, nome: 'Tradicional', preco: 8.00, custo: 4.00 },
-                        { id: 2, nome: 'Ninho', preco: 10.00, custo: 5.20 },
-                        { id: 3, nome: 'Nutella', preco: 13.00, custo: 6.50 },
-                        { id: 4, nome: 'Ninho c/ KitKat', preco: 11.00, custo: 6.00 },
-                        { id: 5, nome: 'Ninho c/ Nutella', preco: 15.00, custo: 8.00 }
-                    ]
-                });
+            if (!database.objectStoreNames.contains('pedidos')) {
+              const pedidoStore = database.createObjectStore('pedidos', { keyPath: 'id', autoIncrement: true });
+              pedidoStore.createIndex('status', 'status', { unique: false });
             }
+          };
+          request.onsuccess = (event) => {
+            db = event.target.result;
+            resolve(db);
+          };
+          request.onerror = (event) => reject(event.target.error);
+        });
+      }
+
+      function getAllFromStore(storeName) {
+        return new Promise((resolve, reject) => {
+          const transaction = db.transaction(storeName, 'readonly');
+          const store = transaction.objectStore(storeName);
+          const request = store.getAll();
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      function putInStore(storeName, item) {
+        return new Promise((resolve, reject) => {
+          const transaction = db.transaction(storeName, 'readwrite');
+          const store = transaction.objectStore(storeName);
+          const request = store.put(item);
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      function deleteFromStore(storeName, id) {
+        return new Promise((resolve, reject) => {
+          const transaction = db.transaction(storeName, 'readwrite');
+          const store = transaction.objectStore(storeName);
+          const request = store.delete(id);
+          request.onsuccess = () => resolve();
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      let products = [];
+      let pedidos = [];
+
+      async function loadData() {
+        products = await getAllFromStore('products');
+        if (products.length === 0) {
+          for (const p of defaultProducts) await putInStore('products', p);
+          products = [...defaultProducts];
         }
+        pedidos = await getAllFromStore('pedidos');
+      }
 
-        initDB();
+      async function saveProduct(product) { await putInStore('products', product); }
 
-        // ==================== MENU ====================
-        const menuItems = [
-            { id: 'dashboard', icon: '📊' },
-            { id: 'pedidos', icon: '📋' },
-            { id: 'estoque', icon: '📦' },
-            { id: 'clientes', icon: '👥' },
-            { id: 'relatorios', icon: '📈' },
-            { id: 'config', icon: '⚙️' }
-        ];
+      async function savePedido(pedido) {
+        const result = await putInStore('pedidos', pedido);
+        return result;
+      }
 
-        function renderMenu() {
-            document.getElementById('sidebarNav').innerHTML = menuItems.map(item =>
-                `<div class="nav-item${item.id === 'dashboard' ? ' active' : ''}" onclick="navegar('${item.id}')" title="${item.id}">${item.icon}</div>`
-            ).join('');
+      async function deletePedidoDB(id) { await deleteFromStore('pedidos', id); }
+
+      function getRecebido() { return pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + p.total, 0); }
+
+      function getPendente() { return pedidos.filter(p => p.status === 'pendente').reduce((a, p) => a + p.total, 0); }
+
+      function getLucro() {
+        return pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + (p.total - (p.custoUnitario || 0)), 0);
+      }
+
+      function updateUI() {
+        renderDashboard();
+        renderPedidos();
+        renderEstoque();
+        renderFinanceiro();
+        updateChart();
+        updateModalSabores();
+      }
+
+      function renderDashboard() {
+        const grid = document.getElementById('statsGrid');
+        if (!grid) return;
+        const recebido = getRecebido().toFixed(2);
+        const pendente = getPendente().toFixed(2);
+        const lucro = getLucro().toFixed(2);
+        const totalPedidos = pedidos.length;
+        const totalEstoque = products.reduce((a, p) => a + p.estoque, 0);
+        grid.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">💰 Total Recebido</div>
+            <div class="stat-value">R$ ${recebido}</div>
+            <div class="stat-sub">Pagamentos confirmados</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">⏳ Total Pendente</div>
+            <div class="stat-value">R$ ${pendente}</div>
+            <div class="stat-sub">Aguardando pagamento</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">📈 Lucro Líquido</div>
+            <div class="stat-value">R$ ${lucro}</div>
+            <div class="stat-sub">Sobre vendas pagas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">🛒 Pedidos</div>
+            <div class="stat-value">${totalPedidos}</div>
+            <div class="stat-sub">Total registrado</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">📦 Em Estoque</div>
+            <div class="stat-value">${totalEstoque}</div>
+            <div class="stat-sub">Unidades disponíveis</div>
+          </div>
+        `;
+      }
+
+      function updateModalSabores() {
+        const select = document.getElementById('modalSaborSelect');
+        if (select) {
+          select.innerHTML = products.map(p => `<option value="${p.id}">${p.nome} — R$ ${p.precoVenda.toFixed(2)} (${p.estoque} un.)</option>`).join('');
         }
+      }
 
-        function navegar(pagina) {
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.target.closest('.nav-item').classList.add('active');
-
-            const titulos = {
-                dashboard: 'Dashboard',
-                pedidos: 'Pedidos',
-                estoque: 'Estoque',
-                clientes: 'Clientes',
-                relatorios: 'Relatórios',
-                config: 'Configurações'
-            };
-            document.getElementById('pageTitle').textContent = titulos[pagina];
-
-            const loaders = {
-                dashboard: loadDashboard,
-                pedidos: loadPedidos,
-                estoque: loadEstoque,
-                clientes: loadClientes,
-                relatorios: loadRelatorios,
-                config: loadConfig
-            };
-            if (loaders[pagina]) loaders[pagina]();
+      function renderPedidos() {
+        const tbody = document.querySelector('#pedidosTable tbody');
+        if (!tbody) return;
+        if (!pedidos.length) {
+          tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Nenhum pedido registrado</td></tr>';
+          return;
         }
+        tbody.innerHTML = pedidos.slice().reverse().map(p => `
+          <tr>
+            <td><strong>${p.cliente}</strong></td>
+            <td>${p.telefone || '—'}</td>
+            <td>${p.productName}</td>
+            <td>R$ ${p.total.toFixed(2)}</td>
+            <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'};">${p.status}</span></td>
+            <td>${new Date(p.date).toLocaleString()}</td>
+            <td><button class="btn btn-sm" data-delete-pedido="${p.id}">🗑️</button></td>
+          </tr>
+        `).join('');
+      }
 
-        // ==================== UTILITÁRIOS ====================
-        function toast(msg, type) {
-            const container = document.getElementById('toastContainer');
-            const div = document.createElement('div');
-            div.className = 'toast toast-' + type;
-            div.textContent = msg;
-            div.onclick = function() { div.remove(); };
-            container.appendChild(div);
-            setTimeout(function() { div.remove(); }, 3000);
+      function renderEstoque() {
+        const tbody = document.querySelector('#productTable tbody');
+        if (!tbody) return;
+        tbody.innerHTML = products.map(p => {
+          const status = p.estoque <= 5 ? 'Crítico' : p.estoque <= 12 ? 'Baixo' : 'Saudável';
+          const cor = p.estoque <= 5 ? '#ef4444' : p.estoque <= 12 ? '#f59e0b' : '#10b981';
+          return `<tr>
+            <td><strong>${p.nome}</strong></td>
+            <td>R$ ${p.precoVenda.toFixed(2)}</td>
+            <td><strong>${p.estoque}</strong></td>
+            <td><span class="badge" style="background:${cor}20;color:${cor};">${status}</span></td>
+            <td>
+              <div class="estoque-control">
+                <button class="btn btn-sm" data-estoque="menos" data-id="${p.id}">−</button>
+                <input type="number" class="estoque-input" value="${p.estoque}" data-id="${p.id}" min="0" style="width:55px;">
+                <button class="btn btn-sm" data-estoque="mais" data-id="${p.id}">+</button>
+              </div>
+            </td>
+          </tr>`;
+        }).join('');
+      }
+
+      function renderFinanceiro() {
+        const cards = document.getElementById('financeCards');
+        if (cards) {
+          const recebido = getRecebido().toFixed(2);
+          const pendente = getPendente().toFixed(2);
+          cards.innerHTML = `
+            <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">R$ ${recebido}</div></div>
+            <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">R$ ${pendente}</div></div>
+          `;
         }
-
-        function formatMoney(val) {
-            return 'R$ ' + val.toFixed(2).replace('.', ',');
+        const tbody = document.querySelector('#financeTable tbody');
+        if (!tbody) return;
+        if (!pedidos.length) {
+          tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Nenhuma transação</td></tr>';
+          return;
         }
+        tbody.innerHTML = pedidos.slice().reverse().map(p => `
+          <tr>
+            <td>${p.cliente}</td><td>${p.productName}</td><td>R$ ${p.total.toFixed(2)}</td>
+            <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'};">${p.status}</span></td>
+            <td>${new Date(p.date).toLocaleString()}</td>
+          </tr>
+        `).join('');
+      }
 
-        function updateHeader() {
-            const hoje = new Date().toDateString();
-            let total = 0;
-            getDB('vendas').forEach(function(v) {
-                if (new Date(v.data).toDateString() === hoje && v.status === 'pago') {
-                    total += v.total;
-                }
-            });
-            document.getElementById('headerRevenue').textContent = formatMoney(total);
-        }
+      async function ajustarEstoque(id, novoValor) {
+        const produto = products.find(p => p.id === id);
+        if (!produto) return;
+        if (novoValor < 0) { alert('Estoque não pode ser negativo!'); return; }
+        produto.estoque = novoValor;
+        await saveProduct(produto);
+        updateUI();
+      }
 
-        function abrirModal(html) {
-            document.getElementById('modalContent').innerHTML = html;
-            document.getElementById('modalOverlay').classList.add('show');
-        }
+      async function confirmarVendaModal() {
+        const nome = document.getElementById('modalClienteNome')?.value.trim();
+        const telefone = document.getElementById('modalClienteTelefone')?.value.trim();
+        const saborId = parseInt(document.getElementById('modalSaborSelect')?.value);
+        const status = document.getElementById('modalStatusPagamento')?.value;
+        if (!nome || !saborId) { alert('Preencha nome e sabor!'); return; }
+        const produto = products.find(p => p.id === saborId);
+        if (!produto || produto.estoque <= 0) { alert('Estoque insuficiente!'); return; }
+        produto.estoque--;
+        await saveProduct(produto);
+        const novoPedido = {
+          cliente: nome,
+          telefone: telefone,
+          productName: produto.nome,
+          total: produto.precoVenda,
+          custoUnitario: produto.custo,
+          status: status,
+          date: new Date().toISOString()
+        };
+        const savedId = await savePedido(novoPedido);
+        novoPedido.id = savedId;
+        pedidos.push(novoPedido);
+        updateUI();
+        fecharModal();
+      }
 
-        function fecharModal() {
-            document.getElementById('modalOverlay').classList.remove('show');
-        }
+      function fecharModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+        document.getElementById('modalClienteNome').value = '';
+        document.getElementById('modalClienteTelefone').value = '';
+      }
 
-        // ==================== DASHBOARD ====================
-        function loadDashboard() {
-            const vendas = getDB('vendas');
-            const estoque = getDB('estoque');
-            const hoje = new Date().toDateString();
+      function abrirModal() {
+        updateModalSabores();
+        document.getElementById('modalOverlay').classList.add('active');
+        document.getElementById('modalClienteNome').focus();
+      }
 
-            let faturamento = 0, lucro = 0, qtdTotal = 0;
-            const vendasHoje = vendas.filter(function(v) {
-                if (new Date(v.data).toDateString() === hoje && v.status === 'pago') {
-                    faturamento += v.total;
-                    v.produtos.forEach(function(p) {
-                        qtdTotal += p.qtd;
-                        lucro += (p.preco - p.custo) * p.qtd;
-                    });
-                    return true;
-                }
-                return false;
-            });
+      async function deletePedidoHandler(id) {
+        if (!confirm('Excluir pedido permanentemente?')) return;
+        await deletePedidoDB(id);
+        pedidos = pedidos.filter(p => p.id !== id);
+        updateUI();
+      }
 
-            const pendentes = vendas.filter(function(v) {
-                return v.statusPagamento === 'pendente';
-            }).reduce(function(s, v) { return s + v.total; }, 0);
+      function navegarPara(viewName) {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        const targetNav = document.querySelector(`.nav-item[data-view="${viewName}"]`);
+        if (targetNav) targetNav.classList.add('active');
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
+        const targetView = document.getElementById(`view-${viewName}`);
+        if (targetView) targetView.classList.add('active-view');
+        updateUI();
+      }
 
-            const clientes = getDB('clientes');
-            const totalEstoque = estoque.reduce(function(s, e) { return s + e.disponivel; }, 0);
-            const criticos = estoque.filter(function(e) { return e.disponivel <= 3; }).length;
-
-            document.getElementById('contentArea').innerHTML =
-                '<div class="cards-grid">' +
-                '<div class="card"><div class="card-label">Faturamento Hoje</div><div class="card-value">' + formatMoney(faturamento) + '</div><div class="card-sub">' + vendasHoje.length + ' vendas</div></div>' +
-                '<div class="card"><div class="card-label">Brownies</div><div class="card-value">' + qtdTotal + '</div><div class="card-sub">hoje</div></div>' +
-                '<div class="card"><div class="card-label">Lucro</div><div class="card-value">' + formatMoney(lucro) + '</div><div class="card-sub">hoje</div></div>' +
-                '<div class="card"><div class="card-label">Pendentes</div><div class="card-value" style="color:var(--warning);">' + formatMoney(pendentes) + '</div></div>' +
-                '<div class="card"><div class="card-label">Estoque</div><div class="card-value' + (totalEstoque < 10 ? ' danger' : '') + '">' + totalEstoque + '</div><div class="card-sub">' + (criticos > 0 ? '⚠ ' + criticos + ' baixos' : '✅ OK') + '</div></div>' +
-                '<div class="card"><div class="card-label">Clientes</div><div class="card-value">' + clientes.length + '</div></div>' +
-                '</div>' +
-                '<div class="table-container">' +
-                '<div class="table-header"><h3>Estoque Rapido</h3></div>' +
-                '<table>' +
-                '<tr><th>Produto</th><th>Disponivel</th></tr>' +
-                estoque.map(function(e) {
-                    return '<tr><td>' + e.nome + '</td><td style="color:' + (e.disponivel <= 3 ? 'var(--danger)' : 'var(--primary-light)') + ';font-weight:bold;font-size:16px;">' + e.disponivel + '</td></tr>';
-                }).join('') +
-                '</table>' +
-                '</div>';
-
-            updateHeader();
-        }
-
-        // ==================== NOVA VENDA ====================
-        function abrirVenda() {
-            const produtos = getDB('config').produtos;
-            const estoque = getDB('estoque');
-
-            let html = '';
-            html += '<div class="modal-header"><h3>Nova Venda</h3><button class="modal-close" onclick="fecharModal()">X</button></div>';
-            html += '<div class="modal-body">';
-            html += '<div class="form-row">';
-            html += '<div class="form-group"><label>Cliente</label><input type="text" id="clienteNome"></div>';
-            html += '<div class="form-group"><label>Telefone</label><input type="tel" id="clienteFone"></div>';
-            html += '</div>';
-
-            html += '<h4 style="margin:15px 0;font-size:13px;">Produtos</h4>';
-
-            produtos.forEach(function(p) {
-                const est = estoque.find(function(e) { return e.id === p.id; });
-                const disp = est ? est.disponivel : 0;
-                html += '<div class="produto-card">';
-                html += '<h4>' + p.nome + ' - ' + formatMoney(p.preco) + ' <small style="color:' + (disp <= 3 ? 'var(--danger)' : 'var(--text-secondary)') + ';">(' + disp + ' disp.)</small></h4>';
-                html += '<div class="input-group">';
-                html += '<span>Qtd:</span>';
-                html += '<input type="number" class="prod-qtd" value="0" min="0" max="' + disp + '" data-preco="' + p.preco + '" data-custo="' + p.custo + '" data-id="' + p.id + '" data-nome="' + p.nome + '" data-disp="' + disp + '" onchange="atualizarTotais()">';
-                html += '<span class="prod-subtotal" style="margin-left:10px;font-weight:600;">R$ 0,00</span>';
-                html += '</div>';
-                html += '</div>';
-            });
-
-            html += '<div class="form-row" style="margin-top:15px;">';
-            html += '<div class="form-group"><label>Pagamento</label><select id="tipoPagamento"><option value="pix">Pix</option><option value="dinheiro">Dinheiro</option><option value="cartao">Cartao</option></select></div>';
-            html += '<div class="form-group"><label>Status</label><select id="statusPagamento"><option value="pago">Pago</option><option value="pendente">Pendente</option></select></div>';
-            html += '</div>';
-
-            html += '<div class="summary-box">';
-            html += '<div class="summary-row"><span>Qtd Itens:</span><span id="qtdItens" style="font-weight:600;">0</span></div>';
-            html += '<div class="summary-row"><span>Subtotal:</span><span id="subtotal" style="font-weight:600;">R$ 0,00</span></div>';
-            html += '<div class="summary-row"><span>Lucro:</span><span id="lucroEst" style="color:var(--success);font-weight:600;">R$ 0,00</span></div>';
-            html += '<div class="summary-row total"><span>Total:</span><span id="totalVenda">R$ 0,00</span></div>';
-            html += '</div>';
-
-            html += '</div>';
-            html += '<div class="modal-footer">';
-            html += '<button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>';
-            html += '<button class="btn btn-primary" onclick="salvarVenda()">Registrar Venda</button>';
-            html += '</div>';
-
-            abrirModal(html);
-        }
-
-        function atualizarTotais() {
-            let subtotal = 0, custoTotal = 0, qtdItens = 0;
-
-            document.querySelectorAll('.prod-qtd').forEach(function(input) {
-                let qtd = parseInt(input.value) || 0;
-                const preco = parseFloat(input.dataset.preco);
-                const custo = parseFloat(input.dataset.custo);
-                const disp = parseInt(input.dataset.disp);
-
-                if (qtd > disp) {
-                    qtd = disp;
-                    input.value = disp;
-                    toast('Maximo: ' + disp + ' unidades', 'warning');
-                }
-
-                const totalProduto = preco * qtd;
-                subtotal += totalProduto;
-                custoTotal += custo * qtd;
-                qtdItens += qtd;
-
-                const card = input.closest('.produto-card');
-                if (card) {
-                    card.querySelector('.prod-subtotal').textContent = formatMoney(totalProduto);
-                }
-            });
-
-            document.getElementById('qtdItens').textContent = qtdItens;
-            document.getElementById('subtotal').textContent = formatMoney(subtotal);
-            document.getElementById('lucroEst').textContent = formatMoney(subtotal - custoTotal);
-            document.getElementById('totalVenda').textContent = formatMoney(subtotal);
-        }
-
-        function salvarVenda() {
-            const nome = document.getElementById('clienteNome').value.trim();
-            const fone = document.getElementById('clienteFone').value.trim();
-
-            if (!nome || !fone) {
-                toast('Preencha nome e telefone!', 'warning');
-                return;
+      let chartV;
+      function updateChart() {
+        const ctx = document.getElementById('chartVendas')?.getContext('2d');
+        if (!ctx) return;
+        if (chartV) chartV.destroy();
+        const labels = products.map(p => p.nome);
+        const data = products.map(p => pedidos.filter(pe => pe.productName === p.nome).length);
+        chartV = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Unidades vendidas',
+              data: data,
+              backgroundColor: ['#7c3aed', '#8b5cf6', '#a78bfa', '#c4b5fd'],
+              borderRadius: 10,
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+              legend: { labels: { color: '#cbd5e1', font: { weight: '500' } } }
+            },
+            scales: {
+              y: { beginAtZero: true, grid: { color: 'rgba(124,58,237,0.1)' }, ticks: { color: '#9ca3af' } },
+              x: { ticks: { color: '#9ca3af' } }
             }
+          }
+        });
+      }
 
-            const produtos = [];
-            const estoque = getDB('estoque');
-            let temProduto = false;
+      // Eventos
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function() { navegarPara(this.dataset.view); });
+      });
 
-            document.querySelectorAll('.prod-qtd').forEach(function(input) {
-                const qtd = parseInt(input.value) || 0;
-                if (qtd > 0) {
-                    temProduto = true;
-                    const id = parseInt(input.dataset.id);
-                    produtos.push({
-                        id: id,
-                        nome: input.dataset.nome,
-                        preco: parseFloat(input.dataset.preco),
-                        custo: parseFloat(input.dataset.custo),
-                        qtd: qtd
-                    });
+      document.getElementById('fabBtn')?.addEventListener('click', abrirModal);
+      document.getElementById('abrirModalBtn')?.addEventListener('click', abrirModal);
+      document.getElementById('confirmarModalVendaBtn')?.addEventListener('click', confirmarVendaModal);
+      document.getElementById('cancelarModalBtn')?.addEventListener('click', fecharModal);
+      document.getElementById('modalOverlay')?.addEventListener('click', function(e) { if (e.target === this) fecharModal(); });
 
-                    const item = estoque.find(function(e) { return e.id === id; });
-                    if (item) {
-                        item.disponivel -= qtd;
-                        item.vendido += qtd;
-                    }
-                }
-            });
-
-            if (!temProduto) {
-                toast('Selecione pelo menos 1 produto!', 'warning');
-                return;
-            }
-
-            setDB('estoque', estoque);
-
-            const total = produtos.reduce(function(s, p) { return s + p.preco * p.qtd; }, 0);
-
-            const venda = {
-                id: Date.now(),
-                cliente: nome,
-                telefone: fone,
-                produtos: produtos,
-                total: total,
-                pagamento: document.getElementById('tipoPagamento').value,
-                statusPagamento: document.getElementById('statusPagamento').value,
-                status: document.getElementById('statusPagamento').value === 'pago' ? 'pago' : 'pendente',
-                data: new Date().toISOString()
-            };
-
-            const vendas = getDB('vendas');
-            vendas.unshift(venda);
-            setDB('vendas', vendas);
-
-            const clientes = getDB('clientes');
-            const idx = clientes.findIndex(function(c) { return c.telefone === fone; });
-            if (idx >= 0) {
-                clientes[idx].totalGasto += total;
-                clientes[idx].pedidos++;
-                clientes[idx].ultimoPedido = new Date().toISOString();
-            } else {
-                clientes.push({
-                    id: Date.now(),
-                    nome: nome,
-                    telefone: fone,
-                    totalGasto: total,
-                    pedidos: 1,
-                    ultimoPedido: new Date().toISOString()
-                });
-            }
-            setDB('clientes', clientes);
-
-            fecharModal();
-            toast('Venda registrada! Total: ' + formatMoney(total), 'success');
-            loadDashboard();
-            updateHeader();
+      document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        if (btn.dataset.deletePedido) await deletePedidoHandler(parseInt(btn.dataset.deletePedido));
+        if (btn.dataset.estoque === 'mais') {
+          const id = parseInt(btn.dataset.id);
+          const produto = products.find(p => p.id === id);
+          if (produto) await ajustarEstoque(id, produto.estoque + 1);
         }
-
-        // ==================== PEDIDOS ====================
-        function loadPedidos() {
-            const vendas = getDB('vendas');
-
-            let html = '<div class="table-container">';
-            html += '<div class="table-header"><h3>Todos os Pedidos</h3></div>';
-            html += '<table>';
-            html += '<tr><th>ID</th><th>Cliente</th><th>Produtos</th><th>Total</th><th>Pag</th><th>Status</th><th>Acoes</th></tr>';
-
-            if (vendas.length === 0) {
-                html += '<tr><td colspan="7" style="text-align:center;padding:30px;">Nenhum pedido</td></tr>';
-            } else {
-                vendas.forEach(function(v) {
-                    html += '<tr>';
-                    html += '<td>#' + String(v.id).slice(-6) + '</td>';
-                    html += '<td><b>' + v.cliente + '</b><br><small>' + v.telefone + '</small></td>';
-                    html += '<td>' + v.produtos.map(function(p) { return p.qtd + 'x ' + p.nome; }).join('<br>') + '</td>';
-                    html += '<td><b>' + formatMoney(v.total) + '</b></td>';
-                    html += '<td><span class="badge badge-info">' + v.pagamento + '</span></td>';
-                    html += '<td><span class="badge ' + (v.status === 'pago' ? 'badge-success' : 'badge-warning') + '">' + v.status + '</span></td>';
-                    html += '<td>';
-                    if (v.status !== 'pago') {
-                        html += '<button class="btn btn-success btn-sm" onclick="marcarPago(' + v.id + ')">Pago</button> ';
-                    }
-                    html += '<button class="btn btn-danger btn-sm" onclick="excluirVenda(' + v.id + ')">X</button>';
-                    html += '</td>';
-                    html += '</tr>';
-                });
-            }
-
-            html += '</table></div>';
-            document.getElementById('contentArea').innerHTML = html;
+        if (btn.dataset.estoque === 'menos') {
+          const id = parseInt(btn.dataset.id);
+          const produto = products.find(p => p.id === id);
+          if (produto) await ajustarEstoque(id, produto.estoque - 1);
         }
+      });
 
-        function marcarPago(id) {
-            const vendas = getDB('vendas');
-            const venda = vendas.find(function(v) { return v.id === id; });
-            if (venda) {
-                venda.statusPagamento = 'pago';
-                venda.status = 'pago';
-                setDB('vendas', vendas);
-                toast('Pedido pago!', 'success');
-                loadPedidos();
-                updateHeader();
-            }
+      document.addEventListener('change', async (e) => {
+        if (e.target.classList.contains('estoque-input')) {
+          const id = parseInt(e.target.dataset.id);
+          const novoValor = parseInt(e.target.value);
+          if (!isNaN(novoValor)) {
+            await ajustarEstoque(id, novoValor);
+          }
         }
+      });
 
-        function excluirVenda(id) {
-            if (confirm('Excluir? Os produtos voltarao ao estoque.')) {
-                const vendas = getDB('vendas');
-                const venda = vendas.find(function(v) { return v.id === id; });
-                if (venda) {
-                    const estoque = getDB('estoque');
-                    venda.produtos.forEach(function(p) {
-                        const item = estoque.find(function(e) { return e.id === p.id; });
-                        if (item) {
-                            item.disponivel += p.qtd;
-                            item.vendido -= p.qtd;
-                        }
-                    });
-                    setDB('estoque', estoque);
-                }
-                setDB('vendas', vendas.filter(function(v) { return v.id !== id; }));
-                toast('Pedido excluido!', 'error');
-                loadPedidos();
-                updateHeader();
-            }
-        }
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') fecharModal();
+      });
 
-        // ==================== ESTOQUE ====================
-        function loadEstoque() {
-            const estoque = getDB('estoque');
-
-            let html = '<div class="cards-grid">';
-            const total = estoque.reduce(function(s, e) { return s + e.disponivel; }, 0);
-            const criticos = estoque.filter(function(e) { return e.disponivel <= 3; }).length;
-
-            html += '<div class="card"><div class="card-label">Total Estoque</div><div class="card-value' + (total < 10 ? ' danger' : '') + '">' + total + '</div></div>';
-            html += '<div class="card"><div class="card-label">Itens Criticos</div><div class="card-value' + (criticos > 0 ? ' danger' : '') + '">' + criticos + '</div></div>';
-            html += '</div>';
-
-            html += '<div class="table-container">';
-            html += '<div class="table-header"><h3>EDITAR ESTOQUE</h3><small style="color:var(--text-secondary);">Digite e clique no botao</small></div>';
-            html += '<table>';
-
-            estoque.forEach(function(e) {
-                html += '<tr>';
-                html += '<td><b>' + e.nome + '</b></td>';
-                html += '<td><span class="estoque-numero" id="disp' + e.id + '">' + e.disponivel + '</span> unid.</td>';
-                html += '<td>Vendido: ' + e.vendido + '</td>';
-                html += '<td>';
-                html += '<div class="input-group">';
-                html += '<input type="number" id="qtd' + e.id + '" value="0" min="0" placeholder="Qtd">';
-                html += '<button class="btn btn-success btn-sm" onclick="addEstoque(' + e.id + ')">+ Add</button>';
-                html += '<button class="btn btn-danger btn-sm" onclick="remEstoque(' + e.id + ')">- Rem</button>';
-                html += '<button class="btn btn-primary btn-sm" onclick="defEstoque(' + e.id + ')">Definir</button>';
-                html += '</div>';
-                html += '</td>';
-                html += '<td><span class="badge ' + (e.disponivel <= 3 ? 'badge-danger' : e.disponivel <= 5 ? 'badge-warning' : 'badge-success') + '">' + (e.disponivel <= 3 ? 'CRITICO' : e.disponivel <= 5 ? 'BAIXO' : 'OK') + '</span></td>';
-                html += '</tr>';
-            });
-
-            html += '</table></div>';
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        function addEstoque(id) {
-            const input = document.getElementById('qtd' + id);
-            if (!input) return;
-
-            const qtd = parseInt(input.value) || 0;
-            if (qtd <= 0) {
-                toast('Digite uma quantidade!', 'warning');
-                return;
-            }
-
-            const estoque = getDB('estoque');
-            const item = estoque.find(function(e) { return e.id === id; });
-            if (item) {
-                item.disponivel += qtd;
-                setDB('estoque', estoque);
-                toast('+' + qtd + ' ' + item.nome + ' | Total: ' + item.disponivel, 'success');
-                loadEstoque();
-            }
-        }
-
-        function remEstoque(id) {
-            const input = document.getElementById('qtd' + id);
-            if (!input) return;
-
-            const qtd = parseInt(input.value) || 0;
-            if (qtd <= 0) {
-                toast('Digite uma quantidade!', 'warning');
-                return;
-            }
-
-            const estoque = getDB('estoque');
-            const item = estoque.find(function(e) { return e.id === id; });
-            if (item) {
-                if (qtd > item.disponivel) {
-                    toast('Maximo: ' + item.disponivel, 'error');
-                    return;
-                }
-                item.disponivel -= qtd;
-                setDB('estoque', estoque);
-                toast('-' + qtd + ' ' + item.nome + ' | Total: ' + item.disponivel, 'success');
-                loadEstoque();
-            }
-        }
-
-        function defEstoque(id) {
-            const input = document.getElementById('qtd' + id);
-            if (!input) return;
-
-            const qtd = parseInt(input.value) || 0;
-            const estoque = getDB('estoque');
-            const item = estoque.find(function(e) { return e.id === id; });
-            if (item) {
-                item.disponivel = qtd;
-                setDB('estoque', estoque);
-                toast(item.nome + ' = ' + qtd, 'success');
-                loadEstoque();
-            }
-        }
-
-        // ==================== CLIENTES ====================
-        function loadClientes() {
-            const clientes = getDB('clientes').sort(function(a, b) { return b.totalGasto - a.totalGasto; });
-
-            let html = '<div class="cards-grid">';
-            html += '<div class="card"><div class="card-label">Total Clientes</div><div class="card-value">' + clientes.length + '</div></div>';
-            html += '<div class="card"><div class="card-label">VIP (5+)</div><div class="card-value">' + clientes.filter(function(c) { return c.pedidos >= 5; }).length + '</div></div>';
-            html += '</div>';
-
-            html += '<div class="table-container">';
-            html += '<div class="table-header"><h3>Clientes</h3></div>';
-            html += '<table><tr><th>Nome</th><th>Telefone</th><th>Gasto</th><th>Pedidos</th><th>Status</th></tr>';
-
-            if (clientes.length === 0) {
-                html += '<tr><td colspan="5" style="text-align:center;">Nenhum cliente</td></tr>';
-            } else {
-                clientes.forEach(function(c) {
-                    html += '<tr>';
-                    html += '<td><b>' + c.nome + '</b></td>';
-                    html += '<td>' + c.telefone + '</td>';
-                    html += '<td>' + formatMoney(c.totalGasto) + '</td>';
-                    html += '<td>' + c.pedidos + '</td>';
-                    html += '<td><span class="badge ' + (c.pedidos >= 5 ? 'badge-warning' : 'badge-info') + '">' + (c.pedidos >= 5 ? '⭐ VIP' : 'Regular') + '</span></td>';
-                    html += '</tr>';
-                });
-            }
-
-            html += '</table></div>';
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ==================== RELATÓRIOS ====================
-        function loadRelatorios() {
-            const vendas = getDB('vendas');
-            const estoque = getDB('estoque');
-            const produtos = {};
-
-            vendas.forEach(function(v) {
-                v.produtos.forEach(function(p) {
-                    produtos[p.nome] = (produtos[p.nome] || 0) + p.qtd;
-                });
-            });
-
-            const ranking = Object.entries(produtos).sort(function(a, b) { return b[1] - a[1]; });
-            const receita = vendas.filter(function(v) { return v.status === 'pago'; }).reduce(function(s, v) { return s + v.total; }, 0);
-
-            let html = '<div class="cards-grid">';
-            html += '<div class="card"><div class="card-label">Total Vendas</div><div class="card-value">' + vendas.length + '</div></div>';
-            html += '<div class="card"><div class="card-label">Faturamento</div><div class="card-value">' + formatMoney(receita) + '</div></div>';
-            html += '<div class="card"><div class="card-label">Estoque</div><div class="card-value">' + estoque.reduce(function(s, e) { return s + e.disponivel; }, 0) + '</div></div>';
-            html += '</div>';
-
-            html += '<div class="table-container">';
-            html += '<div class="table-header"><h3>Mais Vendidos</h3></div>';
-            html += '<table><tr><th>#</th><th>Produto</th><th>Qtd</th></tr>';
-
-            if (ranking.length === 0) {
-                html += '<tr><td colspan="3" style="text-align:center;">Sem dados</td></tr>';
-            } else {
-                ranking.forEach(function(item, i) {
-                    html += '<tr><td>' + (i + 1) + 'o</td><td><b>' + item[0] + '</b></td><td>' + item[1] + ' unid.</td></tr>';
-                });
-            }
-
-            html += '</table></div>';
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        // ==================== CONFIGURAÇÕES ====================
-        function loadConfig() {
-            const produtos = getDB('config').produtos;
-
-            let html = '<div class="table-container" style="margin-bottom:15px;">';
-            html += '<div class="table-header"><h3>Precos</h3></div>';
-            html += '<table><tr><th>Produto</th><th>Custo</th><th>Venda</th><th>Lucro</th></tr>';
-
-            produtos.forEach(function(p) {
-                html += '<tr>';
-                html += '<td><b>' + p.nome + '</b></td>';
-                html += '<td>' + formatMoney(p.custo) + '</td>';
-                html += '<td>' + formatMoney(p.preco) + '</td>';
-                html += '<td style="color:var(--success);"><b>' + formatMoney(p.preco - p.custo) + '</b></td>';
-                html += '</tr>';
-            });
-
-            html += '</table></div>';
-
-            html += '<div class="table-container">';
-            html += '<div class="table-header"><h3>Backup</h3></div>';
-            html += '<div style="padding:15px;">';
-            html += '<button class="btn btn-primary" onclick="exportar()" style="margin-right:8px;">Exportar</button>';
-            html += '<button class="btn btn-outline" onclick="importar()" style="margin-right:8px;">Importar</button>';
-            html += '<br><br>';
-            html += '<button class="btn-reset" onclick="resetar()">RESETAR SISTEMA (Estoque volta com 20)</button>';
-            html += '</div></div>';
-
-            document.getElementById('contentArea').innerHTML = html;
-        }
-
-        function exportar() {
-            const dados = {
-                vendas: getDB('vendas'),
-                clientes: getDB('clientes'),
-                estoque: getDB('estoque'),
-                config: getDB('config')
-            };
-            const blob = new Blob([JSON.stringify(dados)], { type: 'application/json' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'gv-sweet-backup.json';
-            a.click();
-            toast('Backup exportado!', 'success');
-        }
-
-        function importar() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = function(e) {
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    try {
-                        const dados = JSON.parse(ev.target.result);
-                        if (dados.vendas) setDB('vendas', dados.vendas);
-                        if (dados.clientes) setDB('clientes', dados.clientes);
-                        if (dados.estoque) setDB('estoque', dados.estoque);
-                        if (dados.config) setDB('config', dados.config);
-                        toast('Dados importados!', 'success');
-                        loadDashboard();
-                        updateHeader();
-                    } catch (err) {
-                        toast('Arquivo invalido!', 'error');
-                    }
-                };
-                reader.readAsText(e.target.files[0]);
-            };
-            input.click();
-        }
-
-        function resetar() {
-            if (confirm('TEM CERTEZA? Todos os dados serao apagados!\nO estoque voltara com 20 unidades de cada.')) {
-                localStorage.clear();
-                initDB();
-                toast('Sistema resetado! Estoque = 20 cada', 'success');
-                loadDashboard();
-                updateHeader();
-            }
-        }
-
-        // ==================== INICIAR ====================
-        function init() {
-            renderMenu();
-            loadDashboard();
-            updateHeader();
-            setInterval(updateHeader, 60000);
-        }
-
-        window.onload = init;
-    </script>
+      openDB().then(async () => {
+        await loadData();
+        updateUI();
+      }).catch(err => {
+        console.error('Erro ao abrir IndexedDB:', err);
+        alert('Erro ao carregar banco de dados.');
+      });
+    })();
+  </script>
 </body>
 </html>
-    
