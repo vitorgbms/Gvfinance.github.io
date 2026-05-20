@@ -6,7 +6,6 @@
     <title>GV • Gestão Brownies Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,8 +15,8 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: #08080f;
-            color: #e9e9f0;
+            background: #0a0a12;
+            color: #f0eaff;
             display: flex;
             min-height: 100vh;
             min-height: 100dvh;
@@ -28,10 +27,10 @@
         .sidebar {
             width: 260px;
             min-width: 260px;
-            background: rgba(10, 10, 24, 0.95);
+            background: rgba(15, 10, 30, 0.96);
             backdrop-filter: blur(28px);
             -webkit-backdrop-filter: blur(28px);
-            border-right: 1px solid rgba(124, 58, 237, 0.2);
+            border-right: 1px solid rgba(139, 92, 246, 0.4);
             padding: 1.5rem 1rem;
             display: flex;
             flex-direction: column;
@@ -47,10 +46,11 @@
             gap: 0.5rem;
             font-size: 1.8rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #d8b4fe, #a78bfa);
+            background: linear-gradient(135deg, #c084fc, #a855f7, #7c3aed);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
         }
 
         .nav-menu {
@@ -63,7 +63,7 @@
             padding: 0.75rem 1rem;
             border-radius: 12px;
             font-weight: 500;
-            color: #9ca3af;
+            color: #c4b5fd;
             transition: all 0.25s;
             display: flex;
             align-items: center;
@@ -75,10 +75,10 @@
         }
 
         .nav-item.active {
-            background: rgba(124, 58, 237, 0.18);
-            border-color: rgba(168, 85, 247, 0.45);
+            background: rgba(124, 58, 237, 0.3);
+            border-color: rgba(168, 85, 247, 0.8);
             color: #f5f3ff;
-            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
         }
 
         .nav-item:active {
@@ -92,7 +92,7 @@
             flex-direction: column;
             gap: 1.5rem;
             overflow-y: auto;
-            background: radial-gradient(circle at 20% 30%, #140e24, #08080f 85%);
+            background: radial-gradient(circle at 20% 30%, #1a0e2e, #0a0a12 90%);
             -webkit-overflow-scrolling: touch;
         }
 
@@ -112,10 +112,10 @@
             top: 1rem;
             left: 1rem;
             z-index: 60;
-            background: rgba(18, 18, 36, 0.9);
+            background: rgba(30, 20, 50, 0.95);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            color: #ede9fe;
+            border: 1px solid rgba(168, 85, 247, 0.6);
+            color: #e9d5ff;
             width: 44px;
             height: 44px;
             border-radius: 12px;
@@ -129,7 +129,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             z-index: 45;
         }
 
@@ -153,7 +153,7 @@
             color: white;
             font-size: 1.6rem;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.5), 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.7);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -168,8 +168,8 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(6px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 200;
             display: none;
             align-items: center;
@@ -182,14 +182,14 @@
         }
 
         .modal {
-            background: rgba(20, 20, 42, 0.98);
+            background: rgba(20, 12, 38, 0.98);
             backdrop-filter: blur(24px);
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            border-radius: 24px;
+            border: 1px solid rgba(139, 92, 246, 0.6);
+            border-radius: 28px;
             padding: 1.5rem;
             width: 100%;
             max-width: 600px;
-            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.5);
             animation: modalIn 0.25s ease;
             max-height: 90vh;
             overflow-y: auto;
@@ -207,7 +207,7 @@
         }
 
         .modal h3 {
-            color: #ede9fe;
+            color: #e9d5ff;
             margin-bottom: 1.2rem;
             font-size: 1.3rem;
         }
@@ -220,11 +220,11 @@
 
         .modal-form input,
         .modal-form select {
-            background: #12122a;
-            border: 1px solid #4c1d95;
-            border-radius: 12px;
+            background: #15102a;
+            border: 1px solid #6d28d9;
+            border-radius: 14px;
             padding: 0.75rem 0.9rem;
-            color: white;
+            color: #f0eaff;
             font-size: 0.9rem;
             outline: none;
             font-family: 'Inter', sans-serif;
@@ -241,26 +241,29 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(18, 18, 36, 0.6);
-            border-radius: 12px;
+            background: rgba(25, 18, 45, 0.8);
+            border-radius: 14px;
             padding: 0.6rem;
-            border: 1px solid rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
             flex-wrap: wrap;
         }
 
         .carrinho-item select {
             flex: 2;
             min-width: 140px;
+            background: #1e1538;
         }
 
         .carrinho-item input {
             width: 55px;
             text-align: center;
+            background: #1e1538;
+            border: 1px solid #7e3af2;
         }
 
         .carrinho-item .item-total {
             font-weight: 600;
-            color: #a78bfa;
+            color: #c084fc;
             min-width: 70px;
             text-align: right;
             font-size: 0.85rem;
@@ -269,47 +272,10 @@
         .carrinho-total {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #10b981;
+            color: #a3e635;
             text-align: right;
             padding: 0.5rem 0;
-            border-top: 1px solid rgba(124, 58, 237, 0.3);
-        }
-
-        .pix-container {
-            background: rgba(18, 18, 36, 0.8);
-            border: 1px solid rgba(168, 85, 247, 0.5);
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .pix-qrcode {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .pix-code {
-            background: #12122a;
-            border: 1px solid #4c1d95;
-            border-radius: 12px;
-            padding: 0.7rem;
-            color: #a78bfa;
-            font-size: 0.6rem;
-            word-break: break-all;
-            margin-bottom: 0.8rem;
-            font-family: monospace;
-            text-align: left;
-            max-height: 80px;
-            overflow-y: auto;
-        }
-
-        .pix-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #10b981;
-            margin-bottom: 0.5rem;
+            border-top: 1px solid rgba(168, 85, 247, 0.5);
         }
 
         .stats-grid {
@@ -319,19 +285,19 @@
         }
 
         .stat-card {
-            background: rgba(18, 18, 36, 0.8);
+            background: rgba(20, 12, 42, 0.85);
             backdrop-filter: blur(18px);
-            border: 1px solid rgba(124, 58, 237, 0.25);
-            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            border-radius: 24px;
             padding: 1rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
         }
 
         .stat-label {
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            color: #a78bfa;
+            color: #c084fc;
             margin-bottom: 0.3rem;
             font-weight: 600;
         }
@@ -339,18 +305,19 @@
         .stat-value {
             font-size: 1.6rem;
             font-weight: 700;
-            background: linear-gradient(to right, #ede9fe, #c4b5fd);
+            background: linear-gradient(to right, #e9d5ff, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .panel {
-            background: rgba(16, 16, 32, 0.7);
+            background: rgba(16, 10, 32, 0.75);
             backdrop-filter: blur(16px);
-            border-radius: 20px;
+            border-radius: 28px;
             padding: 1rem;
-            border: 1px solid rgba(124, 58, 237, 0.25);
+            border: 1px solid rgba(124, 58, 237, 0.45);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .table-wrapper {
@@ -361,7 +328,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            color: #d1d5db;
+            color: #e2ddf5;
             font-size: 0.8rem;
             min-width: 700px;
         }
@@ -369,23 +336,24 @@
         th {
             text-align: left;
             padding: 0.6rem;
-            color: #c4b5fd;
+            color: #d8b4fe;
             font-weight: 600;
             font-size: 0.65rem;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         td {
             padding: 0.6rem;
-            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.25);
         }
 
         .btn {
             background: rgba(124, 58, 237, 0.3);
-            border: 1px solid #8b5cf6;
+            border: 1px solid #a855f7;
             color: #f1f5f9;
             padding: 0.45rem 0.9rem;
-            border-radius: 24px;
+            border-radius: 28px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -402,7 +370,7 @@
         .btn-sm {
             padding: 0.35rem 0.7rem;
             font-size: 0.85rem;
-            border-radius: 10px;
+            border-radius: 14px;
             font-weight: 600;
             min-width: 36px;
             text-align: center;
@@ -410,13 +378,8 @@
 
         .btn-primary {
             background: #7c3aed;
-            box-shadow: 0 0 14px rgba(124, 58, 237, 0.4);
-            border-color: #a855f7;
-        }
-
-        .btn-copy {
-            background: #10b981;
-            border-color: #34d399;
+            box-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
+            border-color: #c084fc;
         }
 
         .btn-danger {
@@ -424,9 +387,15 @@
             border-color: #ef4444;
         }
 
+        .btn-success {
+            background: #10b981;
+            border-color: #34d399;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+        }
+
         .badge {
             padding: 0.2rem 0.6rem;
-            border-radius: 14px;
+            border-radius: 18px;
             font-size: 0.65rem;
             font-weight: 600;
             white-space: nowrap;
@@ -436,17 +405,17 @@
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            background: rgba(18, 18, 36, 0.5);
-            border-radius: 12px;
+            background: rgba(25, 18, 45, 0.6);
+            border-radius: 14px;
             padding: 0.2rem;
-            border: 1px solid rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.4);
         }
 
         .estoque-input {
             width: 45px;
             background: transparent;
             border: none;
-            color: white;
+            color: #f0eaff;
             text-align: center;
             font-size: 0.9rem;
             font-weight: 600;
@@ -456,7 +425,7 @@
 
         .empty-state {
             text-align: center;
-            color: #6b7280;
+            color: #8b7da8;
             padding: 1.5rem;
             font-size: 0.85rem;
         }
@@ -497,7 +466,7 @@
 
             .stat-card {
                 padding: 0.8rem;
-                border-radius: 16px;
+                border-radius: 20px;
             }
 
             .stat-value {
@@ -522,7 +491,7 @@
     <div class="overlay" id="overlay"></div>
 
     <div class="sidebar" id="sidebar">
-        <div class="logo"><span>🍫</span> <span>GV</span></div>
+        <div class="logo"><span>🍫</span> <span>GV Brownies</span></div>
         <div class="nav-menu">
             <div class="nav-item active" data-view="dashboard"><span>📊</span> <span>Dashboard</span></div>
             <div class="nav-item" data-view="vendas"><span>🛒</span> <span>Pedidos</span></div>
@@ -535,7 +504,7 @@
         <div id="view-dashboard" class="view active-view">
             <div class="stats-grid" id="statsGrid"></div>
             <div class="chart-box panel">
-                <h3 style="color:#c4b5fd; margin-bottom:0.6rem;">📈 Vendas por sabor</h3>
+                <h3 style="color:#d8b4fe; margin-bottom:0.6rem;">📈 Vendas por sabor</h3>
                 <canvas id="chartVendas"></canvas>
             </div>
         </div>
@@ -543,12 +512,12 @@
         <div id="view-vendas" class="view">
             <div class="panel">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
-                    <h2 style="color:#ede9fe; font-size:1.1rem;">🛒 Pedidos</h2>
+                    <h2 style="color:#e9d5ff; font-size:1.1rem;">🛒 Pedidos</h2>
                     <button class="btn btn-primary" id="abrirModalBtn">+ Novo Pedido</button>
                 </div>
                 <div class="table-wrapper">
                     <table id="pedidosTable">
-                        <thead><tr><th>Cliente</th><th>Tel</th><th>Itens</th><th>Qtd</th><th>Valor</th><th>Status</th><th>Data</th><th></th></tr></thead>
+                        <thead><tr><th>Cliente</th><th>Tel</th><th>Itens</th><th>Qtd</th><th>Valor</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
                         <tbody></tbody>
                     </table>
                 </div>
@@ -557,7 +526,7 @@
 
         <div id="view-estoque" class="view">
             <div class="panel">
-                <h2 style="color:#ede9fe; margin-bottom:0.8rem; font-size:1.1rem;">📦 Estoque</h2>
+                <h2 style="color:#e9d5ff; margin-bottom:0.8rem; font-size:1.1rem;">📦 Estoque</h2>
                 <div class="table-wrapper">
                     <table id="productTable">
                         <thead><tr><th>Produto</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ajuste</th></tr></thead>
@@ -570,7 +539,7 @@
         <div id="view-financeiro" class="view">
             <div class="stats-grid" id="financeCards"></div>
             <div class="panel">
-                <h3 style="color:#ede9fe; margin-bottom:0.6rem;">📋 Extrato</h3>
+                <h3 style="color:#e9d5ff; margin-bottom:0.6rem;">📋 Extrato Financeiro</h3>
                 <div class="table-wrapper">
                     <table id="financeTable">
                         <thead><tr><th>Cliente</th><th>Itens</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead>
@@ -596,7 +565,7 @@
                 <div class="carrinho-total">Total: <span id="carrinhoTotal">R$ 0,00</span></div>
                 <select id="modalStatusPagamento">
                     <option value="pago">✅ Pago</option>
-                    <option value="pendente">⏳ Pendente (gerar PIX)</option>
+                    <option value="pendente">⏳ Pendente</option>
                 </select>
                 <div class="modal-actions">
                     <button class="btn" id="cancelarModalBtn">Cancelar</button>
@@ -606,44 +575,30 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="pixModalOverlay">
-        <div class="modal">
-            <h3>📱 Pagamento PIX</h3>
-            <div class="pix-container">
-                <p style="color:#c4b5fd; margin-bottom:0.5rem;">Vitor Gabriel Moraes dos Santos</p>
-                <div class="pix-value" id="pixValue"></div>
-                <div class="pix-qrcode" id="pixQrcode"></div>
-                <div class="pix-code" id="pixCode"></div>
-                <button class="btn btn-copy" id="copyPixBtn">📋 Copiar Código PIX</button>
-            </div>
-            <div class="modal-actions" style="margin-top:1rem;">
-                <button class="btn btn-primary" id="fecharPixModalBtn">✅ OK</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         (function() {
-            const DB_NAME = 'GV_BrownieDB_Final';
+            const DB_NAME = 'GV_BrownieDB_Roxo_SemPIX';
             let db;
-            const PIX_KEY = '9ae03bf0-8f19-433e-87c2-2ea048338eb4';
-            const PIX_NAME = 'Vitor Gabriel Moraes dos Santos';
-            const PIX_CITY = 'SAO PAULO';
+            // Preços corrigidos: Ninho c/ KitKat: custo 6.00, venda 11.00
             const defaultProducts = [
                 { id: 1, nome: "Brownie Nutella", custo: 6.50, precoVenda: 13.00, estoque: 25 },
-                { id: 2, nome: "Brownie Ninho c/ KitKat", custo: 6.00, precoVenda: 12.00, estoque: 18 },
+                { id: 2, nome: "Brownie Ninho c/ KitKat", custo: 6.00, precoVenda: 11.00, estoque: 18 },
                 { id: 3, nome: "Brownie Ninho", custo: 5.20, precoVenda: 10.00, estoque: 30 },
                 { id: 4, nome: "Brownie Ninho c/ Nutella", custo: 8.00, precoVenda: 15.00, estoque: 12 }
             ];
 
             function openDB() {
                 return new Promise((resolve) => {
-                    const req = indexedDB.open(DB_NAME, 1);
+                    const req = indexedDB.open(DB_NAME, 3);
                     req.onupgradeneeded = (e) => {
                         const d = e.target.result;
                         if (!d.objectStoreNames.contains('products')) {
                             const s = d.createObjectStore('products', { keyPath: 'id' });
                             defaultProducts.forEach(p => s.put(p));
+                        } else {
+                            const tx = e.target.transaction;
+                            const store = tx.objectStore('products');
+                            defaultProducts.forEach(p => store.put(p));
                         }
                         if (!d.objectStoreNames.contains('pedidos')) {
                             d.createObjectStore('pedidos', { keyPath: 'id', autoIncrement: true });
@@ -671,6 +626,17 @@
                 if (!products.length) {
                     for (const p of defaultProducts) await putItem('products', p);
                     products = [...defaultProducts];
+                } else {
+                    let updated = false;
+                    for (let p of products) {
+                        if (p.nome === "Brownie Ninho c/ KitKat" && (p.precoVenda !== 11.00 || p.custo !== 6.00)) {
+                            p.precoVenda = 11.00;
+                            p.custo = 6.00;
+                            await putItem('products', p);
+                            updated = true;
+                        }
+                    }
+                    if (updated) products = await getAll('products');
                 }
                 pedidos = await getAll('pedidos');
             }
@@ -681,8 +647,7 @@
 
             const getRecebido = () => pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + p.total, 0);
             const getPendente = () => pedidos.filter(p => p.status === 'pendente').reduce((a, p) => a + p.total, 0);
-            const getLucro = () => pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + (p.total - (p.custoTotal ||
-                0)), 0);
+            const getLucro = () => pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + (p.total - (p.custoTotal || 0)), 0);
 
             let carrinhoItens = [{ produtoId: '', quantidade: 1 }];
 
@@ -712,75 +677,14 @@
                 return total;
             }
 
-            function gerarPixCopiaCola(valor) {
-                const valorStr = valor.toFixed(2);
-                const chave = PIX_KEY;
-                const merchantInfo = `0014br.gov.bcb.pix01${chave.length.toString().padStart(2,'0')}${chave}`;
-                const payload = `00020126${merchantInfo.length.toString().padStart(2,'0')}${merchantInfo}52040000530398654${valorStr.length.toString().padStart(2,'0')}${valorStr}5802BR59${PIX_NAME.length.toString().padStart(2,'0')}${PIX_NAME}60${PIX_CITY.length.toString().padStart(2,'0')}${PIX_CITY}62070503***6304`;
-                function crc16(s) { let c = 0xFFFF; for (let i = 0; i < s.length; i++) { c ^= s.charCodeAt(i) << 8; for (let j = 0; j < 8; j++) c = (c & 0x8000) ? ((c << 1) ^ 0x1021) : (c << 1); } return (c & 0xFFFF).toString(16).toUpperCase().padStart(4, '0'); }
-                return payload + crc16(payload);
-            }
-
-            function mostrarPixModal(valor) {
-                document.getElementById('pixValue').textContent = formatarReal(valor);
-                const code = gerarPixCopiaCola(valor);
-                document.getElementById('pixCode').textContent = code;
-                document.getElementById('pixQrcode').innerHTML = '';
-                new QRCode(document.getElementById('pixQrcode'), { text: code, width: 200, height: 200, colorDark: '#000', colorLight: '#fff' });
-                document.getElementById('pixModalOverlay').classList.add('active');
-            }
-
-            function updateUI() {
-                document.getElementById('statsGrid').innerHTML = `
-                    <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">${formatarReal(getRecebido())}</div></div>
-                    <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">${formatarReal(getPendente())}</div></div>
-                    <div class="stat-card"><div class="stat-label">📈 Lucro</div><div class="stat-value">${formatarReal(getLucro())}</div></div>
-                    <div class="stat-card"><div class="stat-label">🛒 Pedidos</div><div class="stat-value">${pedidos.length}</div></div>
-                    <div class="stat-card"><div class="stat-label">📦 Estoque</div><div class="stat-value">${products.reduce((a,p)=>a+p.estoque,0)}</div></div>`;
-                document.getElementById('financeCards').innerHTML = `
-                    <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">${formatarReal(getRecebido())}</div></div>
-                    <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">${formatarReal(getPendente())}</div></div>`;
-                renderPedidos();
-                renderEstoque();
-                renderFinanceiro();
-                updateChart();
-            }
-
-            function renderPedidos() {
-                document.querySelector('#pedidosTable tbody').innerHTML = pedidos.length ? pedidos.slice().reverse().map(p => `
-                    <tr>
-                        <td>${p.cliente}</td><td>${p.telefone||'—'}</td>
-                        <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
-                        <td>${p.itens.reduce((a,i)=>a+i.quantidade,0)}</td>
-                        <td>${formatarReal(p.total)}</td>
-                        <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'}">${p.status}</span></td>
-                        <td>${new Date(p.date).toLocaleDateString()}</td>
-                        <td>${p.status==='pendente'?`<button class="btn btn-sm" data-ver-pix="${p.total}">📱</button>`:''}
-                        <button class="btn btn-sm" data-delete="${p.id}">🗑️</button></td>
-                    </tr>`).join('') : '<tr><td colspan="8" class="empty-state">Nenhum pedido</td></tr>';
-            }
-
-            function renderEstoque() {
-                document.querySelector('#productTable tbody').innerHTML = products.map(p => {
-                    const s = p.estoque <= 5 ? 'Crítico' : p.estoque <= 12 ? 'Baixo' : 'Saudável';
-                    const c = p.estoque <= 5 ? '#ef4444' : p.estoque <= 12 ? '#f59e0b' : '#10b981';
-                    return `<tr>
-                        <td>${p.nome}</td><td>${formatarReal(p.precoVenda)}</td><td>${p.estoque}</td>
-                        <td><span class="badge" style="background:${c}20;color:${c}">${s}</span></td>
-                        <td><div class="estoque-control">
-                            <button class="btn btn-sm" data-estoque="menos" data-id="${p.id}">−</button>
-                            <input type="number" class="estoque-input" value="${p.estoque}" data-id="${p.id}">
-                            <button class="btn btn-sm" data-estoque="mais" data-id="${p.id}">+</button>
-                        </div></td></tr>`;
-                }).join('');
-            }
-
-            function renderFinanceiro() {
-                document.querySelector('#financeTable tbody').innerHTML = pedidos.length ? pedidos.slice().reverse().map(p => `
-                    <tr><td>${p.cliente}</td><td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
-                    <td>${formatarReal(p.total)}</td>
-                    <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#10b981':'#f59e0b'}">${p.status}</span></td>
-                    <td>${new Date(p.date).toLocaleDateString()}</td></tr>`).join('') : '<tr><td colspan="5" class="empty-state">Nenhuma transação</td></tr>';
+            async function marcarComoPago(pedidoId) {
+                const pedido = pedidos.find(p => p.id === pedidoId);
+                if (pedido && pedido.status === 'pendente') {
+                    pedido.status = 'pago';
+                    await putItem('pedidos', pedido);
+                    updateUI();
+                    alert(`✅ Pedido #${pedidoId} marcado como PAGO!`);
+                }
             }
 
             async function confirmarVenda() {
@@ -789,8 +693,7 @@
                 const status = document.getElementById('modalStatusPagamento').value;
                 if (!nome) return alert('Preencha o nome!');
                 const itens = [];
-                let total = 0,
-                    custoTotal = 0;
+                let total = 0, custoTotal = 0;
                 for (const el of document.querySelectorAll('.carrinho-item')) {
                     const saborId = parseInt(el.querySelector('.carrinho-sabor')?.value);
                     const qtd = parseInt(el.querySelector('.carrinho-qtd')?.value) || 1;
@@ -816,11 +719,75 @@
                 document.getElementById('modalClienteTelefone').value = '';
                 carrinhoItens = [{ produtoId: '', quantidade: 1 }];
                 updateUI();
-                if (status === 'pendente') setTimeout(() => mostrarPixModal(total), 300);
+                if (status === 'pendente') {
+                    alert(`⚠️ Pedido #${np.id} registrado como PENDENTE.\nValor: ${formatarReal(total)}\nO cliente deverá pagar posteriormente.`);
+                } else {
+                    alert(`✅ Pedido finalizado com sucesso! Valor: ${formatarReal(total)}`);
+                }
+            }
+
+            function updateUI() {
+                document.getElementById('statsGrid').innerHTML = `
+                    <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">${formatarReal(getRecebido())}</div></div>
+                    <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">${formatarReal(getPendente())}</div></div>
+                    <div class="stat-card"><div class="stat-label">📈 Lucro</div><div class="stat-value">${formatarReal(getLucro())}</div></div>
+                    <div class="stat-card"><div class="stat-label">🛒 Pedidos</div><div class="stat-value">${pedidos.length}</div></div>
+                    <div class="stat-card"><div class="stat-label">📦 Estoque</div><div class="stat-value">${products.reduce((a,p)=>a+p.estoque,0)}</div></div>`;
+                document.getElementById('financeCards').innerHTML = `
+                    <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">${formatarReal(getRecebido())}</div></div>
+                    <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">${formatarReal(getPendente())}</div></div>`;
+                renderPedidos();
+                renderEstoque();
+                renderFinanceiro();
+                updateChart();
+            }
+
+            function renderPedidos() {
+                document.querySelector('#pedidosTable tbody').innerHTML = pedidos.length ? pedidos.slice().reverse().map(p => `
+                    <tr>
+                        <td>${p.cliente}</td>
+                        <td>${p.telefone||'—'}</td>
+                        <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
+                        <td>${p.itens.reduce((a,i)=>a+i.quantidade,0)}</td>
+                        <td>${formatarReal(p.total)}</td>
+                        <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#a3e635':'#fbbf24'}">${p.status === 'pago' ? 'Pago' : 'Pendente'}</span></td>
+                        <td>${new Date(p.date).toLocaleDateString()}</td>
+                        <td style="display: flex; gap: 6px;">
+                            ${p.status === 'pendente' ? `<button class="btn btn-sm btn-success" data-marcar-pago="${p.id}">✅ Pago</button>` : ''}
+                            <button class="btn btn-sm btn-danger" data-delete="${p.id}">🗑️</button>
+                        </td>
+                    </tr>`).join('') : '<tr><td colspan="8" class="empty-state">Nenhum pedido</td></tr>';
+            }
+
+            function renderEstoque() {
+                document.querySelector('#productTable tbody').innerHTML = products.map(p => {
+                    const s = p.estoque <= 5 ? 'Crítico' : p.estoque <= 12 ? 'Baixo' : 'Saudável';
+                    const c = p.estoque <= 5 ? '#f87171' : p.estoque <= 12 ? '#fbbf24' : '#a3e635';
+                    return `<tr>
+                        <td>${p.nome}</td>
+                        <td>${formatarReal(p.precoVenda)}</td>
+                        <td>${p.estoque}</td>
+                        <td><span class="badge" style="background:${c}20;color:${c}">${s}</span></td>
+                        <td><div class="estoque-control">
+                            <button class="btn btn-sm" data-estoque="menos" data-id="${p.id}">−</button>
+                            <input type="number" class="estoque-input" value="${p.estoque}" data-id="${p.id}">
+                            <button class="btn btn-sm" data-estoque="mais" data-id="${p.id}">+</button>
+                        </div></td>
+                    </tr>`;
+                }).join('');
+            }
+
+            function renderFinanceiro() {
+                document.querySelector('#financeTable tbody').innerHTML = pedidos.length ? pedidos.slice().reverse().map(p => `<tr>
+                    <td>${p.cliente}</td>
+                    <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
+                    <td>${formatarReal(p.total)}</td>
+                    <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#a3e635':'#fbbf24'}">${p.status === 'pago' ? 'Pago' : 'Pendente'}</span></td>
+                    <td>${new Date(p.date).toLocaleDateString()}</td>
+                </tr>`).join('') : '<tr><td colspan="5" class="empty-state">Nenhuma transação</td></tr>';
             }
 
             let chartV;
-
             function updateChart() {
                 const ctx = document.getElementById('chartVendas')?.getContext('2d');
                 if (!ctx) return;
@@ -832,15 +799,14 @@
                 });
                 chartV = new Chart(ctx, {
                     type: 'bar',
-                    data: { labels: products.map(p => p.nome), datasets: [{ label: 'Unidades', data, backgroundColor: ['#7c3aed', '#8b5cf6', '#a78bfa', '#c4b5fd'], borderRadius: 8 }] },
-                    options: { responsive: true, plugins: { legend: { labels: { color: '#ccc' } } } }
+                    data: { labels: products.map(p => p.nome), datasets: [{ label: 'Unidades vendidas', data, backgroundColor: ['#8b5cf6', '#a855f7', '#c084fc', '#d8b4fe'], borderRadius: 10 }] },
+                    options: { responsive: true, plugins: { legend: { labels: { color: '#ddd6fe' } } } }
                 });
             }
 
-            document.getElementById('menuToggle').onclick = () => { document.getElementById('sidebar').classList.toggle('open');
-                document.getElementById('overlay').classList.toggle('active'); };
-            document.getElementById('overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open');
-                document.getElementById('overlay').classList.remove('active'); };
+            // Event listeners
+            document.getElementById('menuToggle').onclick = () => { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); };
+            document.getElementById('overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); };
             document.querySelectorAll('.nav-item').forEach(el => el.onclick = function() {
                 document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
                 this.classList.add('active');
@@ -850,47 +816,28 @@
                 document.getElementById('overlay').classList.remove('active');
                 updateUI();
             });
-            document.getElementById('fabBtn').onclick = () => { carrinhoItens = [{ produtoId: '', quantidade: 1 }];
-                atualizarCarrinhoUI();
-                document.getElementById('modalOverlay').classList.add('active'); };
-            document.getElementById('abrirModalBtn').onclick = () => { carrinhoItens = [{ produtoId: '', quantidade: 1 }];
-                atualizarCarrinhoUI();
-                document.getElementById('modalOverlay').classList.add('active'); };
-            document.getElementById('addItemBtn').onclick = () => { carrinhoItens.push({ produtoId: '', quantidade: 1 });
-                atualizarCarrinhoUI(); };
+            document.getElementById('fabBtn').onclick = () => { carrinhoItens = [{ produtoId: '', quantidade: 1 }]; atualizarCarrinhoUI(); document.getElementById('modalOverlay').classList.add('active'); };
+            document.getElementById('abrirModalBtn').onclick = () => { carrinhoItens = [{ produtoId: '', quantidade: 1 }]; atualizarCarrinhoUI(); document.getElementById('modalOverlay').classList.add('active'); };
+            document.getElementById('addItemBtn').onclick = () => { carrinhoItens.push({ produtoId: '', quantidade: 1 }); atualizarCarrinhoUI(); };
             document.getElementById('confirmarModalVendaBtn').onclick = confirmarVenda;
             document.getElementById('cancelarModalBtn').onclick = () => document.getElementById('modalOverlay').classList.remove('active');
-            document.getElementById('fecharPixModalBtn').onclick = () => document.getElementById('pixModalOverlay').classList.remove('active');
-            document.getElementById('copyPixBtn').onclick = () => { navigator.clipboard.writeText(document.getElementById('pixCode').textContent);
-                document.getElementById('copyPixBtn').textContent = '✅ Copiado!';
-                setTimeout(() => document.getElementById('copyPixBtn').textContent = '📋 Copiar Código PIX', 2000); };
 
             document.addEventListener('click', async (e) => {
                 const btn = e.target.closest('button');
                 if (!btn) return;
-                if (btn.dataset.delete) { if (confirm('Excluir?')) { await deleteItem('pedidos', parseInt(btn.dataset.delete));
-                        pedidos = pedidos.filter(p => p.id !== parseInt(btn.dataset.delete));
-                        updateUI(); } }
-                if (btn.dataset.verPix) mostrarPixModal(parseFloat(btn.dataset.verPix));
-                if (btn.dataset.estoque === 'mais') { const p = products.find(x => x.id === parseInt(btn.dataset.id));
-                    p.estoque++; await putItem('products', p);
-                    updateUI(); }
-                if (btn.dataset.estoque === 'menos') { const p = products.find(x => x.id === parseInt(btn.dataset.id)); if (p.estoque > 0) { p.estoque--; await putItem('products', p);
-                        updateUI(); } }
-                if (btn.classList.contains('remover-item')) { carrinhoItens.splice(parseInt(btn.dataset.index), 1);
-                    atualizarCarrinhoUI(); }
+                if (btn.dataset.delete) { if (confirm('Excluir pedido?')) { await deleteItem('pedidos', parseInt(btn.dataset.delete)); pedidos = pedidos.filter(p => p.id !== parseInt(btn.dataset.delete)); updateUI(); } }
+                if (btn.dataset.marcarPago) { await marcarComoPago(parseInt(btn.dataset.marcarPago)); }
+                if (btn.dataset.estoque === 'mais') { const p = products.find(x => x.id === parseInt(btn.dataset.id)); p.estoque++; await putItem('products', p); updateUI(); }
+                if (btn.dataset.estoque === 'menos') { const p = products.find(x => x.id === parseInt(btn.dataset.id)); if (p.estoque > 0) { p.estoque--; await putItem('products', p); updateUI(); } }
+                if (btn.classList.contains('remover-item')) { carrinhoItens.splice(parseInt(btn.dataset.index), 1); atualizarCarrinhoUI(); }
             });
 
             document.addEventListener('change', (e) => {
-                if (e.target.classList.contains('estoque-input')) { const id = parseInt(e.target.dataset.id); const v = parseInt(e.target.value); if (!isNaN(v) && v >= 0) { products.find(p => p.id === id).estoque = v;
-                        putItem('products', products.find(p => p.id === id));
-                        updateUI(); } }
-                if (e.target.classList.contains('carrinho-sabor') || e.target.classList.contains('carrinho-qtd')) { const idx = parseInt(e.target.dataset.index); if (e.target.classList.contains('carrinho-sabor')) carrinhoItens[idx].produtoId = e.target.value; if (e.target.classList.contains('carrinho-qtd')) carrinhoItens[idx].quantidade = parseInt(e.target.value) || 1;
-                    calcularTotalCarrinho(); }
+                if (e.target.classList.contains('estoque-input')) { const id = parseInt(e.target.dataset.id); const v = parseInt(e.target.value); if (!isNaN(v) && v >= 0) { products.find(p => p.id === id).estoque = v; putItem('products', products.find(p => p.id === id)); updateUI(); } }
+                if (e.target.classList.contains('carrinho-sabor') || e.target.classList.contains('carrinho-qtd')) { const idx = parseInt(e.target.dataset.index); if (e.target.classList.contains('carrinho-sabor')) carrinhoItens[idx].produtoId = e.target.value; if (e.target.classList.contains('carrinho-qtd')) carrinhoItens[idx].quantidade = parseInt(e.target.value) || 1; calcularTotalCarrinho(); }
             });
 
-            openDB().then(async () => { await loadData();
-                updateUI(); });
+            openDB().then(async () => { await loadData(); updateUI(); });
         })();
     </script>
 </body>
