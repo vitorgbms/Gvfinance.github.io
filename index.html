@@ -3,126 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>GV • Gestão Brownies Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>GV Brownies • Sistema Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: #0a0a12;
-            color: #f0eaff;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f0c1a 0%, #1a142f 50%, #0d0a1a 100%);
+            color: #f0ede8;
             display: flex;
             min-height: 100vh;
-            min-height: 100dvh;
             overflow-x: hidden;
             position: relative;
         }
 
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: radial-gradient(rgba(255,215,0,0.12) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: particlesMove 60s linear infinite;
+        }
+
+        @keyframes particlesMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
         .sidebar {
-            width: 260px;
-            min-width: 260px;
-            background: rgba(15, 10, 30, 0.96);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border-right: 1px solid rgba(139, 92, 246, 0.4);
-            padding: 1.5rem 1rem;
+            width: 300px;
+            min-width: 300px;
+            background: rgba(15, 12, 30, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-            box-shadow: 12px 0 40px rgba(0, 0, 0, 0.8);
+            gap: 2.5rem;
             z-index: 50;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 10px 0 40px rgba(0,0,0,0.5);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #c084fc, #a855f7, #7c3aed);
+            gap: 0.8rem;
+            font-size: 2.2rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #FFD700, #DAA520, #B8860B);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+            color: transparent;
+            text-shadow: 0 0 20px rgba(218,165,32,0.3);
         }
 
         .nav-menu {
             display: flex;
             flex-direction: column;
-            gap: 0.3rem;
+            gap: 0.5rem;
         }
 
         .nav-item {
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
+            padding: 1rem 1.3rem;
+            border-radius: 16px;
             font-weight: 500;
-            color: #c4b5fd;
-            transition: all 0.25s;
+            font-size: 1rem;
+            color: #d1cbd6;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             cursor: pointer;
             border: 1px solid transparent;
-            user-select: none;
-            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
         }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(212,175,55,0.2), transparent);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-item:hover::before { width: 100%; }
 
         .nav-item.active {
-            background: rgba(124, 58, 237, 0.3);
-            border-color: rgba(168, 85, 247, 0.8);
-            color: #f5f3ff;
-            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
-        }
-
-        .nav-item:active {
-            transform: scale(0.97);
+            background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(139,109,35,0.15));
+            border-color: rgba(212, 175, 55, 0.6);
+            color: #FFD700;
+            box-shadow: 0 4px 20px rgba(212,175,55,0.2);
         }
 
         .main {
             flex: 1;
-            padding: 1.5rem;
+            padding: 2rem 2rem;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.8rem;
             overflow-y: auto;
-            background: radial-gradient(circle at 20% 30%, #1a0e2e, #0a0a12 90%);
-            -webkit-overflow-scrolling: touch;
+            z-index: 10;
+            position: relative;
         }
 
         .view {
             display: none;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.8rem;
+            animation: fadeInUp 0.5s ease;
         }
 
-        .view.active-view {
-            display: flex;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        .view.active-view { display: flex; }
 
         .menu-toggle {
             display: none;
             position: fixed;
-            top: 1rem;
-            left: 1rem;
+            top: 1.2rem;
+            left: 1.2rem;
             z-index: 60;
-            background: rgba(30, 20, 50, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(168, 85, 247, 0.6);
-            color: #e9d5ff;
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            font-size: 1.3rem;
+            background: rgba(15,12,30,0.95);
+            border: 1px solid rgba(212,175,55,0.5);
+            color: #FFD700;
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            font-size: 1.6rem;
             cursor: pointer;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(10px);
         }
 
         .overlay {
@@ -133,306 +161,288 @@
             z-index: 45;
         }
 
-        .overlay.active {
-            display: block;
-        }
-
         .fab-container {
             position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
+            bottom: 2rem;
+            right: 2rem;
             z-index: 40;
         }
 
         .fab-main {
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            background: linear-gradient(135deg, #FFD700, #DAA520);
             border: none;
-            color: white;
-            font-size: 1.6rem;
+            color: #1a142f;
+            font-size: 2rem;
+            font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.7);
+            box-shadow: 0 8px 25px rgba(218,165,32,0.5);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            -webkit-tap-highlight-color: transparent;
+            animation: pulse 2s infinite;
         }
 
-        .fab-main:active {
-            transform: scale(0.93);
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(218,165,32,0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(218,165,32,0); }
+            100% { box-shadow: 0 0 0 0 rgba(218,165,32,0); }
         }
 
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 200;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: rgba(20, 12, 38, 0.98);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(139, 92, 246, 0.6);
-            border-radius: 28px;
-            padding: 1.5rem;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.5);
-            animation: modalIn 0.25s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal h3 {
-            color: #e9d5ff;
-            margin-bottom: 1.2rem;
-            font-size: 1.3rem;
-        }
-
-        .modal-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .modal-form input,
-        .modal-form select {
-            background: #15102a;
-            border: 1px solid #6d28d9;
-            border-radius: 14px;
-            padding: 0.75rem 0.9rem;
-            color: #f0eaff;
-            font-size: 0.9rem;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 0.6rem;
-            justify-content: flex-end;
-            margin-top: 0.3rem;
-        }
-
-        .carrinho-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(25, 18, 45, 0.8);
-            border-radius: 14px;
-            padding: 0.6rem;
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            flex-wrap: wrap;
-        }
-
-        .carrinho-item select {
-            flex: 2;
-            min-width: 140px;
-            background: #1e1538;
-        }
-
-        .carrinho-item input {
-            width: 55px;
-            text-align: center;
-            background: #1e1538;
-            border: 1px solid #7e3af2;
-        }
-
-        .carrinho-item .item-total {
-            font-weight: 600;
-            color: #c084fc;
-            min-width: 70px;
-            text-align: right;
-            font-size: 0.85rem;
-        }
-
-        .carrinho-total {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #a3e635;
-            text-align: right;
-            padding: 0.5rem 0;
-            border-top: 1px solid rgba(168, 85, 247, 0.5);
-        }
+        .fab-main:active { transform: scale(0.92); }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
         }
 
         .stat-card {
-            background: rgba(20, 12, 42, 0.85);
-            backdrop-filter: blur(18px);
-            border: 1px solid rgba(139, 92, 246, 0.5);
+            background: rgba(20, 18, 40, 0.8);
+            backdrop-filter: blur(10px);
             border-radius: 24px;
-            padding: 1rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            padding: 1.2rem;
+            border: 1px solid rgba(212,175,55,0.3);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212,175,55,0.6);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.1);
         }
 
         .stat-label {
             font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #c084fc;
-            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
+            color: #FFD700;
             font-weight: 600;
         }
 
         .stat-value {
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 700;
-            background: linear-gradient(to right, #e9d5ff, #a78bfa);
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #fff, #FFD700);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
+            color: transparent;
         }
 
         .panel {
-            background: rgba(16, 10, 32, 0.75);
-            backdrop-filter: blur(16px);
+            background: rgba(20, 18, 40, 0.75);
+            backdrop-filter: blur(12px);
             border-radius: 28px;
-            padding: 1rem;
-            border: 1px solid rgba(124, 58, 237, 0.45);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border: 1px solid rgba(212,175,55,0.25);
+            transition: all 0.3s ease;
         }
 
-        .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        .panel:hover { border-color: rgba(212,175,55,0.45); }
+
+        .panel h2, .panel h3 {
+            font-family: 'Playfair Display', serif;
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
+
+        .table-wrapper { overflow-x: auto; border-radius: 20px; }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            color: #e2ddf5;
-            font-size: 0.8rem;
-            min-width: 700px;
+            color: #e8e2f0;
+            font-size: 0.9rem;
+            min-width: 550px;
         }
 
         th {
             text-align: left;
-            padding: 0.6rem;
-            color: #d8b4fe;
+            padding: 1rem 0.6rem;
+            color: #FFD700;
             font-weight: 600;
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(212,175,55,0.3);
         }
 
         td {
-            padding: 0.6rem;
-            border-bottom: 1px solid rgba(139, 92, 246, 0.25);
+            padding: 0.9rem 0.6rem;
+            border-bottom: 1px solid rgba(212,175,55,0.15);
         }
 
         .btn {
-            background: rgba(124, 58, 237, 0.3);
-            border: 1px solid #a855f7;
-            color: #f1f5f9;
-            padding: 0.45rem 0.9rem;
-            border-radius: 28px;
+            background: rgba(212,175,55,0.15);
+            border: 1px solid rgba(212,175,55,0.4);
+            color: #FFD700;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
             font-size: 0.8rem;
-            white-space: nowrap;
             font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn:active {
-            transform: scale(0.95);
-        }
-
-        .btn-sm {
-            padding: 0.35rem 0.7rem;
-            font-size: 0.85rem;
-            border-radius: 14px;
-            font-weight: 600;
-            min-width: 36px;
-            text-align: center;
+        .btn:hover {
+            background: rgba(212,175,55,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212,175,55,0.2);
         }
 
         .btn-primary {
-            background: #7c3aed;
-            box-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
-            border-color: #c084fc;
+            background: linear-gradient(135deg, #FFD700, #DAA520);
+            border: none;
+            color: #1a142f;
+            font-weight: 700;
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.3);
-            border-color: #ef4444;
+            background: rgba(220, 53, 69, 0.2);
+            border-color: rgba(220, 53, 69, 0.5);
+            color: #ff8a7a;
         }
 
         .btn-success {
-            background: #10b981;
-            border-color: #34d399;
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+            background: rgba(40, 167, 69, 0.2);
+            border-color: rgba(40, 167, 69, 0.5);
+            color: #8bc34a;
         }
 
         .badge {
-            padding: 0.2rem 0.6rem;
-            border-radius: 18px;
-            font-size: 0.65rem;
+            padding: 0.25rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
             font-weight: 600;
-            white-space: nowrap;
+            background: rgba(212,175,55,0.2);
+            color: #FFD700;
         }
 
-        .estoque-control {
-            display: inline-flex;
+        .badge-danger {
+            background: rgba(220, 53, 69, 0.2);
+            color: #ff8a7a;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
             align-items: center;
-            gap: 0.3rem;
-            background: rgba(25, 18, 45, 0.6);
-            border-radius: 14px;
-            padding: 0.2rem;
-            border: 1px solid rgba(124, 58, 237, 0.4);
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: linear-gradient(135deg, #1a1635, #120f28);
+            border: 1px solid rgba(212,175,55,0.5);
+            border-radius: 32px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal h3 {
+            font-family: 'Playfair Display', serif;
+            color: #FFD700;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .modal-form input, .modal-form select {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(212,175,55,0.4);
+            border-radius: 48px;
+            padding: 0.9rem 1.2rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .modal-form input:focus, .modal-form select:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(212,175,55,0.3);
+        }
+
+        .carrinho-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 56px;
+            padding: 0.6rem 1rem;
+            margin-bottom: 0.7rem;
+            flex-wrap: wrap;
+        }
+
+        .carrinho-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-align: right;
+            padding: 0.8rem 0;
+            border-top: 1px solid rgba(212,175,55,0.3);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .cliente-select {
+            width: 100%;
+            padding: 0.9rem;
+            border-radius: 48px;
+            border: 1px solid rgba(212,175,55,0.4);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
 
         .estoque-input {
-            width: 45px;
-            background: transparent;
-            border: none;
-            color: #f0eaff;
+            width: 60px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(212,175,55,0.4);
+            border-radius: 30px;
             text-align: center;
-            font-size: 0.9rem;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            outline: none;
+            padding: 0.4rem;
+            color: #FFD700;
+            font-weight: 500;
         }
 
         .empty-state {
             text-align: center;
-            color: #8b7da8;
-            padding: 1.5rem;
-            font-size: 0.85rem;
+            padding: 2rem;
+            color: rgba(212,175,55,0.6);
+            font-style: italic;
         }
 
-        canvas {
-            max-height: 250px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.5); border-radius: 10px; }
 
         @media (max-width: 768px) {
             .sidebar {
@@ -441,403 +451,524 @@
                 top: 0;
                 bottom: 0;
                 transform: translateX(-100%);
-                width: 260px;
-                min-width: 260px;
+                width: 280px;
+                z-index: 100;
             }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .main {
-                padding: 1rem;
-                padding-top: 3.5rem;
-                gap: 1rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.6rem;
-            }
-
-            .stat-card {
-                padding: 0.8rem;
-                border-radius: 20px;
-            }
-
-            .stat-value {
-                font-size: 1.3rem;
-            }
-
-            .btn {
-                padding: 0.4rem 0.7rem;
-                font-size: 0.75rem;
-            }
-
-            .fab-main {
-                width: 50px;
-                height: 50px;
-                font-size: 1.4rem;
-            }
+            .sidebar.open { transform: translateX(0); }
+            .menu-toggle { display: flex; }
+            .main { padding: 1rem; padding-top: 4rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .stat-value { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+    <div class="particles"></div>
+    <button class="menu-toggle" id="menuToggle">✨</button>
     <div class="overlay" id="overlay"></div>
 
     <div class="sidebar" id="sidebar">
-        <div class="logo"><span>🍫</span> <span>GV Brownies</span></div>
+        <div class="logo"><span>🍫</span><span>GV Brownies</span></div>
         <div class="nav-menu">
-            <div class="nav-item active" data-view="dashboard"><span>📊</span> <span>Dashboard</span></div>
-            <div class="nav-item" data-view="vendas"><span>🛒</span> <span>Pedidos</span></div>
-            <div class="nav-item" data-view="estoque"><span>📦</span> <span>Estoque</span></div>
-            <div class="nav-item" data-view="financeiro"><span>💰</span> <span>Financeiro</span></div>
+            <div class="nav-item active" data-view="dashboard">🌟 Visão Geral</div>
+            <div class="nav-item" data-view="clientes">👥 Clientes</div>
+            <div class="nav-item" data-view="vendas">🧾 Pedidos</div>
+            <div class="nav-item" data-view="estoque">📦 Estoque</div>
+            <div class="nav-item" data-view="financeiro">💰 Financeiro</div>
         </div>
     </div>
 
     <div class="main">
         <div id="view-dashboard" class="view active-view">
             <div class="stats-grid" id="statsGrid"></div>
-            <div class="chart-box panel">
-                <h3 style="color:#d8b4fe; margin-bottom:0.6rem;">📈 Vendas por sabor</h3>
-                <canvas id="chartVendas"></canvas>
-            </div>
+            <div class="panel"><h3>📈 Vendas por sabor</h3><canvas id="chartVendas" style="max-height:260px; width:100%"></canvas></div>
+            <div class="panel"><h3>⚠️ Clientes com débito</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Total Devido</th><th></th></tr></thead><tbody id="debtorsTable"></tbody></table></div></div>
         </div>
 
-        <div id="view-vendas" class="view">
-            <div class="panel">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
-                    <h2 style="color:#e9d5ff; font-size:1.1rem;">🛒 Pedidos</h2>
-                    <button class="btn btn-primary" id="abrirModalBtn">+ Novo Pedido</button>
-                </div>
-                <div class="table-wrapper">
-                    <table id="pedidosTable">
-                        <thead><tr><th>Cliente</th><th>Tel</th><th>Itens</th><th>Qtd</th><th>Valor</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
+        <div id="view-clientes" class="view">
+            <div class="panel"><div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.8rem;"><h2>👥 Clientes</h2><button class="btn btn-primary" id="novoClienteBtn">+ Novo Cliente</button></div><div class="table-wrapper"><table id="clientesTable"><thead><tr><th>Nome</th><th>Telefone</th><th>Débito</th><th>Status</th><th>Ações</th></tr></thead><tbody></tbody></table></div></div>
+            <div class="panel"><h3>📋 Histórico do Cliente</h3><select id="clienteHistoricoSelect" class="cliente-select"><option value="">Selecione um cliente</option></select><div class="table-wrapper"><table><thead><tr><th>Data</th><th>Itens</th><th>Valor</th><th>Status</th></table></thead><tbody id="historicoBody"></tbody></table></div></div>
         </div>
 
-        <div id="view-estoque" class="view">
-            <div class="panel">
-                <h2 style="color:#e9d5ff; margin-bottom:0.8rem; font-size:1.1rem;">📦 Estoque</h2>
-                <div class="table-wrapper">
-                    <table id="productTable">
-                        <thead><tr><th>Produto</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ajuste</th></tr></thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <div id="view-vendas" class="view"><div class="panel"><div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.8rem;"><h2>🧾 Pedidos</h2><button class="btn btn-primary" id="abrirModalBtn">+ Novo Pedido</button></div><div class="table-wrapper"><table id="pedidosTable"><thead><tr><th>Cliente</th><th>Itens</th><th>Valor</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead><tbody></tbody></table></div></div></div>
 
-        <div id="view-financeiro" class="view">
-            <div class="stats-grid" id="financeCards"></div>
-            <div class="panel">
-                <h3 style="color:#e9d5ff; margin-bottom:0.6rem;">📋 Extrato Financeiro</h3>
-                <div class="table-wrapper">
-                    <table id="financeTable">
-                        <thead><tr><th>Cliente</th><th>Itens</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <div id="view-estoque" class="view"><div class="panel"><h2>📦 Controle de Estoque</h2><div class="table-wrapper"><table id="productTable"><thead><tr><th>Produto</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ajuste</th></tr></thead><tbody></tbody></table></div></div></div>
 
-        <div class="fab-container">
-            <button class="fab-main" id="fabBtn" title="Novo Pedido">➕</button>
-        </div>
+        <div id="view-financeiro" class="view"><div class="stats-grid" id="financeCards"></div><div class="panel"><h3>📋 Extrato Financeiro</h3><div class="table-wrapper"><table id="financeTable"><thead><tr><th>Cliente</th><th>Itens</th><th>Valor</th><th>Status</th><th>Data</th></tr></thead><tbody></tbody></table></div></div></div>
+
+        <div class="fab-container"><button class="fab-main" id="fabBtn">+</button></div>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <h3>🍫 Novo Pedido</h3>
-            <div class="modal-form">
-                <input type="text" id="modalClienteNome" placeholder="Nome do cliente" required>
-                <input type="tel" id="modalClienteTelefone" placeholder="Telefone / WhatsApp">
-                <div id="carrinhoContainer"></div>
-                <button class="btn btn-sm" id="addItemBtn" type="button">+ Adicionar sabor</button>
-                <div class="carrinho-total">Total: <span id="carrinhoTotal">R$ 0,00</span></div>
-                <select id="modalStatusPagamento">
-                    <option value="pago">✅ Pago</option>
-                    <option value="pendente">⏳ Pendente</option>
-                </select>
-                <div class="modal-actions">
-                    <button class="btn" id="cancelarModalBtn">Cancelar</button>
-                    <button class="btn btn-primary" id="confirmarModalVendaBtn">💸 Finalizar Pedido</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- MODAIS -->
+    <div class="modal-overlay" id="clienteModal"><div class="modal"><h3>📇 Novo Cliente</h3><div class="modal-form"><input type="text" id="clienteNome" placeholder="Nome completo *"><input type="tel" id="clienteTelefone" placeholder="Telefone / WhatsApp"><div style="display:flex; gap:0.8rem; justify-content:flex-end;"><button class="btn" id="cancelarClienteBtn">Cancelar</button><button class="btn btn-primary" id="salvarClienteBtn">Salvar</button></div></div></div></div>
+
+    <div class="modal-overlay" id="pedidoModal"><div class="modal"><h3>🍫 Novo Pedido</h3><div class="modal-form"><select id="pedidoClienteId" class="cliente-select"><option value="">Selecione o cliente</option></select><div id="carrinhoContainer"></div><button class="btn" id="addItemBtn" type="button" style="margin:0.5rem 0;">+ Adicionar sabor</button><div class="carrinho-total">Total: <span id="carrinhoTotal">R$ 0,00</span></div><select id="modalStatusPagamento"><option value="pago">✅ Pago</option><option value="pendente">⏳ Pendente</option></select><div style="display:flex; gap:0.8rem; justify-content:flex-end; margin-top:1rem;"><button class="btn" id="cancelarPedidoBtn">Cancelar</button><button class="btn btn-primary" id="confirmarPedidoBtn">Finalizar</button></div></div></div></div>
 
     <script>
         (function() {
-            const DB_NAME = 'GV_BrownieDB_Roxo_SemPIX';
+            const DB_NAME = 'GV_Luxury_Zero_Start';
             let db;
-            // Preços corrigidos: Ninho c/ KitKat: custo 6.00, venda 11.00
+            
+            // Produtos com ESTOQUE ZERADO inicialmente
             const defaultProducts = [
-                { id: 1, nome: "Brownie Nutella", custo: 6.50, precoVenda: 13.00, estoque: 25 },
-                { id: 2, nome: "Brownie Ninho c/ KitKat", custo: 6.00, precoVenda: 11.00, estoque: 18 },
-                { id: 3, nome: "Brownie Ninho", custo: 5.20, precoVenda: 10.00, estoque: 30 },
-                { id: 4, nome: "Brownie Ninho c/ Nutella", custo: 8.00, precoVenda: 15.00, estoque: 12 }
+                { id: 1, nome: "Brownie Nutella", custo: 6.50, precoVenda: 13.00, estoque: 0 },
+                { id: 2, nome: "Brownie Ninho c/ KitKat", custo: 6.00, precoVenda: 11.00, estoque: 0 },
+                { id: 3, nome: "Brownie Ninho", custo: 5.20, precoVenda: 10.00, estoque: 0 },
+                { id: 4, nome: "Brownie Ninho c/ Nutella", custo: 8.00, precoVenda: 15.00, estoque: 0 }
             ];
 
+            // TUDO ZERADO - sem clientes, sem pedidos
             function openDB() {
                 return new Promise((resolve) => {
-                    const req = indexedDB.open(DB_NAME, 3);
+                    const req = indexedDB.open(DB_NAME, 10);
                     req.onupgradeneeded = (e) => {
                         const d = e.target.result;
                         if (!d.objectStoreNames.contains('products')) {
-                            const s = d.createObjectStore('products', { keyPath: 'id' });
-                            defaultProducts.forEach(p => s.put(p));
+                            const store = d.createObjectStore('products', { keyPath: 'id' });
+                            defaultProducts.forEach(p => store.put(p));
                         } else {
                             const tx = e.target.transaction;
                             const store = tx.objectStore('products');
                             defaultProducts.forEach(p => store.put(p));
                         }
+                        if (!d.objectStoreNames.contains('clientes')) {
+                            d.createObjectStore('clientes', { keyPath: 'id', autoIncrement: true });
+                        }
                         if (!d.objectStoreNames.contains('pedidos')) {
                             d.createObjectStore('pedidos', { keyPath: 'id', autoIncrement: true });
                         }
                     };
-                    req.onsuccess = (e) => { db = e.target.result;
-                        resolve(); };
+                    req.onsuccess = (e) => { db = e.target.result; resolve(); };
                 });
             }
 
-            function getAll(s) { return new Promise((res) => db.transaction(s, 'readonly').objectStore(s).getAll()
-                    .onsuccess = (e) => res(e.target.result)); }
+            function getAll(store) { return new Promise((res) => db.transaction(store, 'readonly').objectStore(store).getAll().onsuccess = e => res(e.target.result)); }
+            function putItem(store, item) { return new Promise((res) => db.transaction(store, 'readwrite').objectStore(store).put(item).onsuccess = e => res(e.target.result)); }
+            function deleteItem(store, id) { return new Promise((res) => db.transaction(store, 'readwrite').objectStore(store).delete(id).onsuccess = res); }
 
-            function putItem(s, item) { return new Promise((res) => db.transaction(s, 'readwrite').objectStore(s).put(item)
-                    .onsuccess = (e) => res(e.target.result)); }
-
-            function deleteItem(s, id) { return new Promise((res) => db.transaction(s, 'readwrite').objectStore(s).delete(
-                    id).onsuccess = res); }
-
-            let products = [],
-                pedidos = [];
+            let products = [], clientes = [], pedidos = [];
 
             async function loadData() {
                 products = await getAll('products');
-                if (!products.length) {
-                    for (const p of defaultProducts) await putItem('products', p);
-                    products = [...defaultProducts];
+                if (!products.length) { 
+                    for (const p of defaultProducts) await putItem('products', p); 
+                    products = [...defaultProducts]; 
                 } else {
-                    let updated = false;
-                    for (let p of products) {
-                        if (p.nome === "Brownie Ninho c/ KitKat" && (p.precoVenda !== 11.00 || p.custo !== 6.00)) {
-                            p.precoVenda = 11.00;
-                            p.custo = 6.00;
+                    // Garantir que todos os produtos estejam com estoque 0
+                    for(let p of products){
+                        if(p.estoque !== 0){
+                            p.estoque = 0;
                             await putItem('products', p);
-                            updated = true;
                         }
                     }
-                    if (updated) products = await getAll('products');
+                    products = await getAll('products');
                 }
+                clientes = await getAll('clientes');
                 pedidos = await getAll('pedidos');
             }
 
-            function formatarReal(valor) {
-                return 'R$ ' + valor.toFixed(2).replace('.', ',').replace(/,00$/, '');
-            }
-
-            const getRecebido = () => pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + p.total, 0);
-            const getPendente = () => pedidos.filter(p => p.status === 'pendente').reduce((a, p) => a + p.total, 0);
-            const getLucro = () => pedidos.filter(p => p.status === 'pago').reduce((a, p) => a + (p.total - (p.custoTotal || 0)), 0);
+            const formatMoney = (v) => 'R$ ' + v.toFixed(2).replace('.', ',');
+            function getDebitoCliente(clienteId) { return pedidos.filter(p => p.clienteId === clienteId && p.status === 'pendente').reduce((s,p)=>s+p.total,0); }
+            function getRecebido() { return pedidos.filter(p=>p.status==='pago').reduce((a,p)=>a+p.total,0); }
+            function getPendenteTotal() { return pedidos.filter(p=>p.status==='pendente').reduce((a,p)=>a+p.total,0); }
+            function getLucro() { return pedidos.filter(p=>p.status==='pago').reduce((a,p)=>a+(p.total-(p.custoTotal||0)),0); }
 
             let carrinhoItens = [{ produtoId: '', quantidade: 1 }];
 
             function atualizarCarrinhoUI() {
-                document.getElementById('carrinhoContainer').innerHTML = carrinhoItens.map((item, i) => {
-                    const produto = products.find(p => p.id === parseInt(item.produtoId));
-                    const subtotal = produto ? (produto.precoVenda * item.quantidade) : 0;
+                const container = document.getElementById('carrinhoContainer');
+                container.innerHTML = carrinhoItens.map((item, idx) => {
+                    const prod = products.find(p => p.id === parseInt(item.produtoId));
+                    const subtotal = prod ? prod.precoVenda * item.quantidade : 0;
                     return `<div class="carrinho-item">
-                        <select class="carrinho-sabor" data-index="${i}"><option value="">Sabor</option>${products.map(p => `<option value="${p.id}" ${parseInt(item.produtoId)===p.id?'selected':''}>${p.nome} - ${formatarReal(p.precoVenda)} (${p.estoque} un.)</option>`).join('')}</select>
-                        <input type="number" class="carrinho-qtd" value="${item.quantidade}" min="1" data-index="${i}" style="width:55px;">
-                        <span class="item-total">${formatarReal(subtotal)}</span>
-                        ${carrinhoItens.length > 1 ? `<button class="btn btn-danger btn-sm remover-item" data-index="${i}">✕</button>` : ''}
+                        <select class="carrinho-sabor" data-index="${idx}" style="flex:2; min-width:180px;">
+                            <option value="">✨ Escolha um sabor ✨</option>
+                            ${products.map(p => `<option value="${p.id}" ${parseInt(item.produtoId)===p.id ? 'selected' : ''}>${p.nome} - ${formatMoney(p.precoVenda)} (${p.estoque} un.)</option>`).join('')}
+                        </select>
+                        <input type="number" class="carrinho-qtd" value="${item.quantidade}" min="1" data-index="${idx}" style="width:75px; padding:0.5rem;">
+                        <span style="min-width:85px; font-weight:600;">${formatMoney(subtotal)}</span>
+                        ${carrinhoItens.length>1 ? `<button class="btn btn-danger remover-item" data-index="${idx}" style="padding:0.3rem 0.8rem;">✕</button>` : ''}
                     </div>`;
                 }).join('');
-                calcularTotalCarrinho();
+                calcularTotal();
+            }
+            
+            function calcularTotal() { 
+                let t=0; 
+                document.querySelectorAll('.carrinho-item').forEach(el=>{ 
+                    const pid=parseInt(el.querySelector('.carrinho-sabor')?.value); 
+                    const q=parseInt(el.querySelector('.carrinho-qtd')?.value)||1; 
+                    const prod=products.find(x=>x.id===pid); 
+                    if(prod) t+=prod.precoVenda*q; 
+                }); 
+                document.getElementById('carrinhoTotal').innerText=formatMoney(t); 
+                return t; 
             }
 
-            function calcularTotalCarrinho() {
-                let total = 0;
-                document.querySelectorAll('.carrinho-item').forEach(el => {
-                    const s = el.querySelector('.carrinho-sabor')?.value;
-                    const q = parseInt(el.querySelector('.carrinho-qtd')?.value) || 1;
-                    const p = products.find(x => x.id === parseInt(s));
-                    if (p) total += p.precoVenda * q;
-                });
-                document.getElementById('carrinhoTotal').textContent = formatarReal(total);
-                return total;
-            }
-
-            async function marcarComoPago(pedidoId) {
-                const pedido = pedidos.find(p => p.id === pedidoId);
-                if (pedido && pedido.status === 'pendente') {
-                    pedido.status = 'pago';
-                    await putItem('pedidos', pedido);
-                    updateUI();
-                    alert(`✅ Pedido #${pedidoId} marcado como PAGO!`);
-                }
-            }
-
-            async function confirmarVenda() {
-                const nome = document.getElementById('modalClienteNome').value.trim();
-                const tel = document.getElementById('modalClienteTelefone').value.trim();
-                const status = document.getElementById('modalStatusPagamento').value;
-                if (!nome) return alert('Preencha o nome!');
-                const itens = [];
-                let total = 0, custoTotal = 0;
-                for (const el of document.querySelectorAll('.carrinho-item')) {
-                    const saborId = parseInt(el.querySelector('.carrinho-sabor')?.value);
-                    const qtd = parseInt(el.querySelector('.carrinho-qtd')?.value) || 1;
-                    if (!saborId) continue;
-                    const prod = products.find(p => p.id === saborId);
-                    if (!prod) continue;
-                    if (prod.estoque < qtd) return alert(`Estoque insuficiente para ${prod.nome}!`);
-                    itens.push({ produtoId: saborId, nome: prod.nome, quantidade: qtd, preco: prod.precoVenda, custo: prod.custo });
+            async function finalizarPedido() {
+                const clienteId = parseInt(document.getElementById('pedidoClienteId').value);
+                if (!clienteId) return alert('🌟 Selecione um cliente');
+                const itens = []; 
+                let total=0, custoTotal=0;
+                for(const el of document.querySelectorAll('.carrinho-item')){
+                    const prodId = parseInt(el.querySelector('.carrinho-sabor')?.value);
+                    const qtd = parseInt(el.querySelector('.carrinho-qtd')?.value)||1;
+                    if(!prodId) continue;
+                    const prod = products.find(p=>p.id===prodId);
+                    if(!prod) continue;
+                    if(prod.estoque < qtd) return alert(`⚠️ Estoque insuficiente: ${prod.nome} (disponível: ${prod.estoque})`);
+                    itens.push({ produtoId:prodId, nome:prod.nome, quantidade:qtd, preco:prod.precoVenda, custo:prod.custo });
                     total += prod.precoVenda * qtd;
                     custoTotal += prod.custo * qtd;
                 }
-                if (!itens.length) return alert('Adicione pelo menos um sabor!');
-                for (const item of itens) {
-                    const prod = products.find(p => p.id === item.produtoId);
-                    prod.estoque -= item.quantidade;
-                    await putItem('products', prod);
+                if(!itens.length) return alert('🍫 Adicione pelo menos um produto');
+                
+                for(const item of itens){ 
+                    const prod = products.find(p=>p.id===item.produtoId); 
+                    prod.estoque -= item.quantidade; 
+                    await putItem('products', prod); 
                 }
-                const np = { cliente: nome, telefone: tel, itens, total, custoTotal, status, date: new Date().toISOString() };
-                np.id = await putItem('pedidos', np);
-                pedidos.push(np);
-                document.getElementById('modalOverlay').classList.remove('active');
-                document.getElementById('modalClienteNome').value = '';
-                document.getElementById('modalClienteTelefone').value = '';
+                
+                const status = document.getElementById('modalStatusPagamento').value;
+                const novoPedido = { 
+                    clienteId, 
+                    itens, 
+                    total, 
+                    custoTotal, 
+                    status, 
+                    date: new Date().toISOString() 
+                };
+                const newId = await putItem('pedidos', novoPedido);
+                pedidos.push({ ...novoPedido, id: newId });
+                
+                document.getElementById('pedidoModal').classList.remove('active');
                 carrinhoItens = [{ produtoId: '', quantidade: 1 }];
                 updateUI();
-                if (status === 'pendente') {
-                    alert(`⚠️ Pedido #${np.id} registrado como PENDENTE.\nValor: ${formatarReal(total)}\nO cliente deverá pagar posteriormente.`);
-                } else {
-                    alert(`✅ Pedido finalizado com sucesso! Valor: ${formatarReal(total)}`);
+                alert(status === 'pago' ? `✨ Pedido finalizado! Total: ${formatMoney(total)} ✨` : `⏳ Pedido pendente. Cliente agora deve ${formatMoney(total)}`);
+            }
+
+            async function adicionarCliente() {
+                const nome = document.getElementById('clienteNome').value.trim();
+                if(!nome) return alert('Nome é obrigatório');
+                const telefone = document.getElementById('clienteTelefone').value.trim();
+                const novo = { nome, telefone };
+                const id = await putItem('clientes', novo);
+                clientes.push({ ...novo, id });
+                document.getElementById('clienteModal').classList.remove('active');
+                document.getElementById('clienteNome').value = '';
+                document.getElementById('clienteTelefone').value = '';
+                updateUI();
+                alert(`✨ Cliente ${nome} adicionado com sucesso! ✨`);
+            }
+
+            async function excluirCliente(clienteId) {
+                const temPedidos = pedidos.some(p => p.clienteId === clienteId);
+                if(temPedidos && !confirm('Este cliente possui pedidos. Excluir também todos os pedidos relacionados?')) return;
+                const pedidosParaExcluir = pedidos.filter(p => p.clienteId === clienteId);
+                for(const ped of pedidosParaExcluir){ 
+                    await deleteItem('pedidos', ped.id); 
+                    pedidos = pedidos.filter(p => p.id !== ped.id); 
+                }
+                await deleteItem('clientes', clienteId);
+                clientes = clientes.filter(c => c.id !== clienteId);
+                updateUI();
+                alert('Cliente removido com sucesso');
+            }
+
+            async function excluirPedido(pedidoId) {
+                if(!confirm('Remover este pedido?')) return;
+                await deleteItem('pedidos', pedidoId);
+                pedidos = pedidos.filter(p => p.id !== pedidoId);
+                updateUI();
+                alert('Pedido removido com sucesso');
+            }
+
+            async function quitarDebito(pedidoId) {
+                const pedido = pedidos.find(p => p.id === pedidoId && p.status === 'pendente');
+                if(pedido){
+                    pedido.status = 'pago';
+                    await putItem('pedidos', pedido);
+                    updateUI();
+                    alert(`✅ Débito de ${formatMoney(pedido.total)} quitado!`);
                 }
             }
 
             function updateUI() {
+                const recebido = getRecebido();
+                const lucro = getLucro();
                 document.getElementById('statsGrid').innerHTML = `
-                    <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">${formatarReal(getRecebido())}</div></div>
-                    <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">${formatarReal(getPendente())}</div></div>
-                    <div class="stat-card"><div class="stat-label">📈 Lucro</div><div class="stat-value">${formatarReal(getLucro())}</div></div>
-                    <div class="stat-card"><div class="stat-label">🛒 Pedidos</div><div class="stat-value">${pedidos.length}</div></div>
-                    <div class="stat-card"><div class="stat-label">📦 Estoque</div><div class="stat-value">${products.reduce((a,p)=>a+p.estoque,0)}</div></div>`;
+                    <div class="stat-card"><div class="stat-label">💰 Faturamento</div><div class="stat-value">${formatMoney(recebido)}</div></div>
+                    <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">${formatMoney(getPendenteTotal())}</div></div>
+                    <div class="stat-card"><div class="stat-label">📈 Lucro</div><div class="stat-value">${formatMoney(lucro)}</div></div>
+                    <div class="stat-card"><div class="stat-label">👥 Clientes</div><div class="stat-value">${clientes.length}</div></div>
+                `;
                 document.getElementById('financeCards').innerHTML = `
-                    <div class="stat-card"><div class="stat-label">💰 Recebido</div><div class="stat-value">${formatarReal(getRecebido())}</div></div>
-                    <div class="stat-card"><div class="stat-label">⏳ Pendente</div><div class="stat-value">${formatarReal(getPendente())}</div></div>`;
-                renderPedidos();
-                renderEstoque();
-                renderFinanceiro();
-                updateChart();
+                    <div class="stat-card"><div class="stat-label">Faturamento</div><div class="stat-value">${formatMoney(recebido)}</div></div>
+                    <div class="stat-card"><div class="stat-label">Pendente</div><div class="stat-value">${formatMoney(getPendenteTotal())}</div></div>
+                    <div class="stat-card"><div class="stat-label">Lucro</div><div class="stat-value">${formatMoney(lucro)}</div></div>
+                `;
+                renderClientes(); 
+                renderPedidos(); 
+                renderEstoque(); 
+                renderFinanceiro(); 
+                renderDebtors(); 
+                renderHistoricoCliente(); 
+                updateChart(); 
+                atualizarSelects();
             }
 
-            function renderPedidos() {
-                document.querySelector('#pedidosTable tbody').innerHTML = pedidos.length ? pedidos.slice().reverse().map(p => `
-                    <tr>
-                        <td>${p.cliente}</td>
-                        <td>${p.telefone||'—'}</td>
-                        <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
-                        <td>${p.itens.reduce((a,i)=>a+i.quantidade,0)}</td>
-                        <td>${formatarReal(p.total)}</td>
-                        <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#a3e635':'#fbbf24'}">${p.status === 'pago' ? 'Pago' : 'Pendente'}</span></td>
-                        <td>${new Date(p.date).toLocaleDateString()}</td>
-                        <td style="display: flex; gap: 6px;">
-                            ${p.status === 'pendente' ? `<button class="btn btn-sm btn-success" data-marcar-pago="${p.id}">✅ Pago</button>` : ''}
-                            <button class="btn btn-sm btn-danger" data-delete="${p.id}">🗑️</button>
-                        </td>
-                    </tr>`).join('') : '<tr><td colspan="8" class="empty-state">Nenhum pedido</td></tr>';
+            function atualizarSelects() {
+                const opts = `<option value="">Selecione um cliente</option>${clientes.map(c => `<option value="${c.id}">${c.nome} ${c.telefone ? `📞 ${c.telefone}` : ''}</option>`).join('')}`;
+                const pedidoSelect = document.getElementById('pedidoClienteId');
+                const histSelect = document.getElementById('clienteHistoricoSelect');
+                if(pedidoSelect) pedidoSelect.innerHTML = opts;
+                if(histSelect) histSelect.innerHTML = opts;
             }
 
-            function renderEstoque() {
-                document.querySelector('#productTable tbody').innerHTML = products.map(p => {
-                    const s = p.estoque <= 5 ? 'Crítico' : p.estoque <= 12 ? 'Baixo' : 'Saudável';
-                    const c = p.estoque <= 5 ? '#f87171' : p.estoque <= 12 ? '#fbbf24' : '#a3e635';
+            function renderClientes() {
+                const tbody = document.querySelector('#clientesTable tbody');
+                if(!clientes.length){ 
+                    tbody.innerHTML='<tr><td colspan="5" class="empty-state">✨ Nenhum cliente cadastrado. Clique em "+ Novo Cliente" ✨</td></tr>'; 
+                    return; 
+                }
+                tbody.innerHTML = clientes.map(c => { 
+                    const deb = getDebitoCliente(c.id); 
                     return `<tr>
-                        <td>${p.nome}</td>
-                        <td>${formatarReal(p.precoVenda)}</td>
-                        <td>${p.estoque}</td>
-                        <td><span class="badge" style="background:${c}20;color:${c}">${s}</span></td>
-                        <td><div class="estoque-control">
-                            <button class="btn btn-sm" data-estoque="menos" data-id="${p.id}">−</button>
-                            <input type="number" class="estoque-input" value="${p.estoque}" data-id="${p.id}">
-                            <button class="btn btn-sm" data-estoque="mais" data-id="${p.id}">+</button>
-                        </div></td>
+                        <td>${c.nome}</td>
+                        <td>${c.telefone || '—'}</td>
+                        <td style="font-weight:${deb>0?700:400}">${deb>0 ? formatMoney(deb) : 'R$ 0,00'}</td>
+                        <td>${deb>0 ? '<span class="badge badge-danger">⚠️ Em débito</span>' : '<span class="badge">✅ Em dia</span>'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" data-novo-pedido="${c.id}" style="margin-right:0.5rem;">+ Pedido</button>
+                            <button class="btn btn-sm btn-danger" data-excluir-cliente="${c.id}">🗑️ Apagar</button>
+                        </td>
                     </tr>`;
                 }).join('');
             }
 
-            function renderFinanceiro() {
-                document.querySelector('#financeTable tbody').innerHTML = pedidos.length ? pedidos.slice().reverse().map(p => `<tr>
-                    <td>${p.cliente}</td>
-                    <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
-                    <td>${formatarReal(p.total)}</td>
-                    <td><span class="badge" style="background:${p.status==='pago'?'#10b98125':'#f59e0b25'};color:${p.status==='pago'?'#a3e635':'#fbbf24'}">${p.status === 'pago' ? 'Pago' : 'Pendente'}</span></td>
+            function renderPedidos(){
+                const tbody = document.querySelector('#pedidosTable tbody');
+                if(!pedidos.length){ 
+                    tbody.innerHTML='<tr><td colspan="6" class="empty-state">✨ Nenhum pedido registrado ✨</td></tr>'; 
+                    return; 
+                }
+                tbody.innerHTML = pedidos.slice().reverse().map(p => { 
+                    const c = clientes.find(c=>c.id===p.clienteId); 
+                    return `<tr>
+                        <td>${c ? c.nome : '?'}</td>
+                        <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
+                        <td>${formatMoney(p.total)}</td>
+                        <td><span class="badge ${p.status==='pendente'?'badge-danger':''}">${p.status==='pago'?'Pago':'Pendente'}</span></td>
+                        <td>${new Date(p.date).toLocaleDateString()}</td>
+                        <td>
+                            ${p.status==='pendente' ? `<button class="btn btn-sm btn-success" data-quitar="${p.id}" style="margin-right:0.4rem;">💰 Quitar</button>` : ''}
+                            <button class="btn btn-sm btn-danger" data-excluir-pedido="${p.id}">🗑️</button>
+                        </td>
+                    </tr>`;
+                }).join('');
+            }
+
+            function renderEstoque(){
+                document.querySelector('#productTable tbody').innerHTML = products.map(p => `<tr>
+                    <td>${p.nome}</td>
+                    <td>${formatMoney(p.precoVenda)}</td>
+                    <td>${p.estoque}</td>
+                    <td><span class="badge">${p.estoque<=0 ? 'Esgotado' : p.estoque<=5 ? 'Baixo' : 'Bom'}</span></td>
+                    <td><div style="display:flex; gap:0.4rem;">
+                        <button class="btn-sm" data-estoque-menos="${p.id}" style="padding:0.3rem 0.8rem;">−</button>
+                        <input class="estoque-input" value="${p.estoque}" data-id="${p.id}">
+                        <button class="btn-sm" data-estoque-mais="${p.id}" style="padding:0.3rem 0.8rem;">+</button>
+                    </div></td>
+                </tr>`).join('');
+            }
+
+            function renderFinanceiro(){
+                document.querySelector('#financeTable tbody').innerHTML = pedidos.slice().reverse().map(p => { 
+                    const c = clientes.find(c=>c.id===p.clienteId); 
+                    return `<tr>
+                        <td>${c?c.nome:'?'}</td>
+                        <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
+                        <td>${formatMoney(p.total)}</td>
+                        <td><span class="badge">${p.status}</span></td>
+                        <td>${new Date(p.date).toLocaleDateString()}</td>
+                    </tr>`;
+                }).join('');
+                if(pedidos.length === 0){
+                    document.querySelector('#financeTable tbody').innerHTML = '<tr><td colspan="5" class="empty-state">✨ Nenhuma movimentação financeira ✨</td></tr>';
+                }
+            }
+
+            function renderDebtors(){
+                const devedores = clientes.filter(c => getDebitoCliente(c.id) > 0);
+                document.getElementById('debtorsTable').innerHTML = devedores.map(c => `<tr>
+                    <td>${c.nome}</td>
+                    <td>${formatMoney(getDebitoCliente(c.id))}</td>
+                    <td><button class="btn btn-sm" data-ver-historico="${c.id}">Ver pedidos</button></td>
+                </tr>`).join('') || '<tr><td colspan="3" class="empty-state">🎉 Nenhum cliente em débito! 🎉</td></tr>';
+            }
+
+            async function renderHistoricoCliente(){
+                const clienteId = parseInt(document.getElementById('clienteHistoricoSelect').value);
+                const tbody = document.getElementById('historicoBody');
+                if(!clienteId){ 
+                    tbody.innerHTML='<tr><td colspan="4" class="empty-state">Selecione um cliente</td></tr>'; 
+                    return; 
+                }
+                const historico = pedidos.filter(p=>p.clienteId===clienteId).sort((a,b)=>new Date(b.date)-new Date(a.date));
+                tbody.innerHTML = historico.map(p => `<tr>
                     <td>${new Date(p.date).toLocaleDateString()}</td>
-                </tr>`).join('') : '<tr><td colspan="5" class="empty-state">Nenhuma transação</td></tr>';
+                    <td>${p.itens.map(i=>`${i.quantidade}x ${i.nome}`).join(', ')}</td>
+                    <td>${formatMoney(p.total)}</td>
+                    <td><span class="badge">${p.status}</span></td>
+                </tr>`).join('') || '<tr><td colspan="4" class="empty-state">Nenhuma compra registrada</td></tr>';
             }
 
-            let chartV;
-            function updateChart() {
+            let chartVendas;
+            function updateChart(){
                 const ctx = document.getElementById('chartVendas')?.getContext('2d');
-                if (!ctx) return;
-                if (chartV) chartV.destroy();
-                const data = products.map(p => {
-                    let t = 0;
-                    pedidos.forEach(ped => ped.itens.forEach(i => { if (i.produtoId === p.id) t += i.quantidade; }));
-                    return t;
-                });
-                chartV = new Chart(ctx, {
-                    type: 'bar',
-                    data: { labels: products.map(p => p.nome), datasets: [{ label: 'Unidades vendidas', data, backgroundColor: ['#8b5cf6', '#a855f7', '#c084fc', '#d8b4fe'], borderRadius: 10 }] },
-                    options: { responsive: true, plugins: { legend: { labels: { color: '#ddd6fe' } } } }
+                if(!ctx) return;
+                if(chartVendas) chartVendas.destroy();
+                const data = products.map(p => pedidos.reduce((sum, ped)=> sum + (ped.itens.filter(i=>i.produtoId===p.id).reduce((a,i)=>a+i.quantidade,0)),0));
+                chartVendas = new Chart(ctx, { 
+                    type:'bar', 
+                    data:{ 
+                        labels: products.map(p=>p.nome), 
+                        datasets:[{ 
+                            label:'Unidades vendidas', 
+                            data, 
+                            backgroundColor:['#FFD700','#DAA520','#B8860B','#CDA434'], 
+                            borderRadius:12, 
+                            barPercentage:0.7 
+                        }] 
+                    }, 
+                    options:{ 
+                        responsive:true, 
+                        maintainAspectRatio:true, 
+                        plugins:{ 
+                            legend:{ 
+                                labels:{ 
+                                    color:'#FFD700', 
+                                    font:{size:12, weight:'bold'} 
+                                } 
+                            } 
+                        }, 
+                        scales:{ 
+                            y:{ 
+                                grid:{ color:'rgba(212,175,55,0.2)' }, 
+                                ticks:{ color:'#ccc' } 
+                            }, 
+                            x:{ 
+                                ticks:{ color:'#FFD700' } 
+                            } 
+                        } 
+                    } 
                 });
             }
 
-            // Event listeners
-            document.getElementById('menuToggle').onclick = () => { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); };
-            document.getElementById('overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); };
+            // Eventos
+            document.getElementById('menuToggle').onclick = () => { 
+                document.getElementById('sidebar').classList.toggle('open'); 
+                document.getElementById('overlay').classList.toggle('active'); 
+            };
+            document.getElementById('overlay').onclick = () => { 
+                document.getElementById('sidebar').classList.remove('open'); 
+                document.getElementById('overlay').classList.remove('active'); 
+            };
+            
             document.querySelectorAll('.nav-item').forEach(el => el.onclick = function() {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
                 this.classList.add('active');
-                document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
-                document.getElementById('view-' + this.dataset.view).classList.add('active-view');
-                document.getElementById('sidebar').classList.remove('open');
+                document.querySelectorAll('.view').forEach(v=>v.classList.remove('active-view'));
+                document.getElementById('view-'+this.dataset.view).classList.add('active-view');
+                document.getElementById('sidebar').classList.remove('open'); 
                 document.getElementById('overlay').classList.remove('active');
                 updateUI();
             });
-            document.getElementById('fabBtn').onclick = () => { carrinhoItens = [{ produtoId: '', quantidade: 1 }]; atualizarCarrinhoUI(); document.getElementById('modalOverlay').classList.add('active'); };
-            document.getElementById('abrirModalBtn').onclick = () => { carrinhoItens = [{ produtoId: '', quantidade: 1 }]; atualizarCarrinhoUI(); document.getElementById('modalOverlay').classList.add('active'); };
-            document.getElementById('addItemBtn').onclick = () => { carrinhoItens.push({ produtoId: '', quantidade: 1 }); atualizarCarrinhoUI(); };
-            document.getElementById('confirmarModalVendaBtn').onclick = confirmarVenda;
-            document.getElementById('cancelarModalBtn').onclick = () => document.getElementById('modalOverlay').classList.remove('active');
+            
+            document.getElementById('fabBtn').onclick = () => { 
+                carrinhoItens = [{ produtoId:'', quantidade:1 }]; 
+                atualizarCarrinhoUI(); 
+                document.getElementById('pedidoModal').classList.add('active'); 
+            };
+            document.getElementById('abrirModalBtn').onclick = () => { 
+                carrinhoItens = [{ produtoId:'', quantidade:1 }]; 
+                atualizarCarrinhoUI(); 
+                document.getElementById('pedidoModal').classList.add('active'); 
+            };
+            document.getElementById('novoClienteBtn').onclick = () => document.getElementById('clienteModal').classList.add('active');
+            document.getElementById('salvarClienteBtn').onclick = adicionarCliente;
+            document.getElementById('cancelarClienteBtn').onclick = () => document.getElementById('clienteModal').classList.remove('active');
+            document.getElementById('addItemBtn').onclick = () => { 
+                carrinhoItens.push({ produtoId:'', quantidade:1 }); 
+                atualizarCarrinhoUI(); 
+            };
+            document.getElementById('confirmarPedidoBtn').onclick = finalizarPedido;
+            document.getElementById('cancelarPedidoBtn').onclick = () => document.getElementById('pedidoModal').classList.remove('active');
+            document.getElementById('clienteHistoricoSelect').addEventListener('change', renderHistoricoCliente);
 
             document.addEventListener('click', async (e) => {
                 const btn = e.target.closest('button');
-                if (!btn) return;
-                if (btn.dataset.delete) { if (confirm('Excluir pedido?')) { await deleteItem('pedidos', parseInt(btn.dataset.delete)); pedidos = pedidos.filter(p => p.id !== parseInt(btn.dataset.delete)); updateUI(); } }
-                if (btn.dataset.marcarPago) { await marcarComoPago(parseInt(btn.dataset.marcarPago)); }
-                if (btn.dataset.estoque === 'mais') { const p = products.find(x => x.id === parseInt(btn.dataset.id)); p.estoque++; await putItem('products', p); updateUI(); }
-                if (btn.dataset.estoque === 'menos') { const p = products.find(x => x.id === parseInt(btn.dataset.id)); if (p.estoque > 0) { p.estoque--; await putItem('products', p); updateUI(); } }
-                if (btn.classList.contains('remover-item')) { carrinhoItens.splice(parseInt(btn.dataset.index), 1); atualizarCarrinhoUI(); }
+                if(!btn) return;
+                if(btn.dataset.novoPedido){ 
+                    carrinhoItens = [{ produtoId:'', quantidade:1 }]; 
+                    atualizarCarrinhoUI(); 
+                    document.getElementById('pedidoClienteId').value = btn.dataset.novoPedido; 
+                    document.getElementById('pedidoModal').classList.add('active'); 
+                }
+                if(btn.dataset.quitar){ 
+                    await quitarDebito(parseInt(btn.dataset.quitar)); 
+                }
+                if(btn.dataset.excluirPedido){ 
+                    await excluirPedido(parseInt(btn.dataset.excluirPedido)); 
+                }
+                if(btn.dataset.excluirCliente){ 
+                    if(confirm('Excluir cliente?')) await excluirCliente(parseInt(btn.dataset.excluirCliente)); 
+                }
+                if(btn.dataset.verHistorico){ 
+                    document.getElementById('clienteHistoricoSelect').value = btn.dataset.verHistorico; 
+                    renderHistoricoCliente(); 
+                    document.querySelector('.nav-item[data-view="clientes"]').click(); 
+                }
+                if(btn.dataset.estoqueMais){ 
+                    const p = products.find(x=>x.id===parseInt(btn.dataset.estoqueMais)); 
+                    p.estoque++; 
+                    await putItem('products', p); 
+                    updateUI(); 
+                }
+                if(btn.dataset.estoqueMenos){ 
+                    const p = products.find(x=>x.id===parseInt(btn.dataset.estoqueMenos)); 
+                    if(p.estoque>0) p.estoque--; 
+                    await putItem('products', p); 
+                    updateUI(); 
+                }
+                if(btn.classList.contains('remover-item')){ 
+                    carrinhoItens.splice(parseInt(btn.dataset.index),1); 
+                    atualizarCarrinhoUI(); 
+                }
             });
-
+            
             document.addEventListener('change', (e) => {
-                if (e.target.classList.contains('estoque-input')) { const id = parseInt(e.target.dataset.id); const v = parseInt(e.target.value); if (!isNaN(v) && v >= 0) { products.find(p => p.id === id).estoque = v; putItem('products', products.find(p => p.id === id)); updateUI(); } }
-                if (e.target.classList.contains('carrinho-sabor') || e.target.classList.contains('carrinho-qtd')) { const idx = parseInt(e.target.dataset.index); if (e.target.classList.contains('carrinho-sabor')) carrinhoItens[idx].produtoId = e.target.value; if (e.target.classList.contains('carrinho-qtd')) carrinhoItens[idx].quantidade = parseInt(e.target.value) || 1; calcularTotalCarrinho(); }
+                if(e.target.classList.contains('estoque-input')){ 
+                    const id = parseInt(e.target.dataset.id); 
+                    const val = parseInt(e.target.value); 
+                    if(!isNaN(val) && val>=0){ 
+                        products.find(p=>p.id===id).estoque = val; 
+                        putItem('products', products.find(p=>p.id===id)); 
+                        updateUI(); 
+                    } 
+                }
+                if(e.target.classList.contains('carrinho-sabor') || e.target.classList.contains('carrinho-qtd')){ 
+                    const idx = e.target.dataset.index; 
+                    if(e.target.classList.contains('carrinho-sabor')) carrinhoItens[idx].produtoId = e.target.value; 
+                    if(e.target.classList.contains('carrinho-qtd')) carrinhoItens[idx].quantidade = Math.max(1, parseInt(e.target.value)||1); 
+                    calcularTotal(); 
+                }
             });
 
-            openDB().then(async () => { await loadData(); updateUI(); });
+            openDB().then(async () => { 
+                await loadData(); 
+                updateUI(); 
+            });
         })();
     </script>
 </body>
