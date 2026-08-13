@@ -389,15 +389,15 @@ tr:last-child td{border-bottom:none;}
 <script>
 /* ============ ESTADO ============ */
 const LS_KEY = 'gvSweetData';
-let data = carregarDados();
-let vendaAtual = {}; // {produtoId: qtd}
-
 const PRODUTOS_INICIAIS = [
   {id:'ninho',            nome:'Ninho',               preco:8,  custo:3, estoque:10},
   {id:'ninho-kitkat',     nome:'Ninho + Kit Kat',     preco:10, custo:4, estoque:10},
   {id:'nutella',          nome:'Nutella',             preco:10, custo:4, estoque:10},
   {id:'ninho-nutella',    nome:'Ninho + Nutella',     preco:10, custo:4, estoque:10},
 ];
+let data = carregarDados();
+let vendaAtual = {}; // {produtoId: qtd}
+
 function carregarDados(){
   const raw = localStorage.getItem(LS_KEY);
   const jaSemeado = localStorage.getItem(LS_KEY+'_seeded');
@@ -496,6 +496,8 @@ function salvarProduto(id){
   const custo=parseFloat(document.getElementById('fpCusto').value)||0;
   const estoque=parseInt(document.getElementById('fpEstoque').value)||0;
   if(!nome){ toast('Digite o nome do produto'); return; }
+  if(preco<=0){ toast('Informe um preço de venda maior que zero'); return; }
+  if(estoque<0){ toast('Estoque não pode ser negativo'); return; }
   if(id){
     const p=data.produtos.find(x=>x.id===id);
     Object.assign(p,{nome,preco,custo,estoque});
@@ -1084,18 +1086,29 @@ function escapeHtml(s){ return String(s??'').replace(/[&<>"']/g, m=>({'&':'&amp;
 
 /* ============ RENDER GERAL ============ */
 function renderAll(){
-  renderDashboard();
-  renderProdGrid();
-  renderClientes();
-  renderEstoque();
-  renderCaixa();
-  renderRelatorios();
-  renderHistorico();
-  renderProdutosConfig();
+  // cada render é isolado: um erro em uma tela não derruba as demais nem trava o app
+  const renders = [renderDashboard, renderProdGrid, renderClientes, renderEstoque, renderCaixa, renderRelatorios, renderHistorico, renderProdutosConfig];
+  renders.forEach(fn=>{
+    try{ fn(); }catch(err){ console.error('Erro ao renderizar', fn.name, err); }
+  });
 }
 
-irPara('dashboard');
-renderAll();
+// Enter confirma o formulário aberto no modal (usa o botão dourado como ação principal)
+document.getElementById('overlay').addEventListener('keydown', function(e){
+  if(e.key==='Enter' && e.target.tagName==='INPUT'){
+    const btn=document.querySelector('#modalBox .btn.gold, #modalBox .btn.green');
+    if(btn){ e.preventDefault(); btn.click(); }
+  }
+});
+
+try{
+  irPara('dashboard');
+  renderAll();
+}catch(err){
+  console.error('Erro ao iniciar o sistema:', err);
+  document.body.innerHTML = '<div style="padding:40px 20px;text-align:center;color:#eaf2fa;font-family:sans-serif;"><h2>⚠️ Ocorreu um erro ao carregar o sistema</h2><p style="color:#8296b8;margin-top:10px;">Tente recarregar a página. Se o problema continuar, seus dados salvos não foram perdidos.</p></div>';
+}
 </script>
 </body>
 </html>
+
